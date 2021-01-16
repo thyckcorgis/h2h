@@ -17,14 +17,14 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
 
   const hostGameHandler = () => {
     socket.emit("create", name, (code: number) => {
-      navigation.navigate("Waiting", { code, users: [name] });
+      navigation.navigate("Waiting", { name, code, users: [name] });
     });
   };
 
   const joinGameHandler = () => {
     socket.emit("join", name, code, (data: any) => {
       if (data.ok) {
-        navigation.navigate("Waiting", { code, users: data.users });
+        navigation.navigate("Waiting", { name, code, users: data.users });
       }
     });
   };
