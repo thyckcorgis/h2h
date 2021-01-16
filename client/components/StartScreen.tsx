@@ -1,6 +1,7 @@
 import { StackNavigationHelpers } from "@react-navigation/stack/lib/typescript/src/types";
 import * as React from "react";
 import { View, Text, Button, Image, StyleSheet } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 interface StartScreenProps {
   navigation: StackNavigationHelpers;
@@ -9,10 +10,13 @@ interface StartScreenProps {
 export default function LoadingScreen({ navigation }: StartScreenProps) {
   return (
     <View style={styles.screen}>
-      <Image source={require("../assets/images/h2h_logo.png")} />
-      <Text>This is the start screen....</Text>
-      <Button title="next" onPress={() => navigation.navigate("Register")} />
-      <Image source={require("../assets/images/corgi_logo.png")} />
+      <TouchableOpacity onPress={() => navigation.navigate("Register")}>
+        <Image source={require("../assets/images/h2h_logo.png")} />
+        <Text>This is the start screen....</Text>
+        <View style={styles.corgiBox}>
+          <Image source={require("../assets/images/corgi_logo.png")} />
+        </View>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -41,5 +45,8 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#892cdc",
     paddingVertical: 30,
+  },
+  corgiBox: {
+    alignItems: "center",
   },
 });
