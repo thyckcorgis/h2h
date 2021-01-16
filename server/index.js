@@ -32,10 +32,14 @@ const io = require("socket.io")(server, {
 });
 
 io.on("connection", (socket) => {
-  console.log(socket);
-  socket.on("create", (name) => {
+  // socket.on("create", (name, fn) => {
+  //   const code = createRoom(name);
+  //   console.log({ name, code });
+  //   fn(code);
+  // });
+  // socket.emit("message", "hello");
+  socket.on("create", (name, fn) => {
     const code = createRoom(name);
-    socket.emit("create", code);
+    fn(code);
   });
-  socket.emit("message", "hello");
 });
