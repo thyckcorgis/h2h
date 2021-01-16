@@ -10,12 +10,17 @@ router.get("/", (req, res) => {
 });
 
 const rooms = {};
+const roomExists = (code) => rooms[code] != null;
+const addUserToRoom = (name, code) => {
+  rooms[code].users.push(name);
+};
+const userExistsInRoom = (name, code) => rooms[code].users.includes(name);
 
 const randCode = () => (Math.floor(Math.random() * 90000) + 10000).toString();
 
 const createRoom = (name) => {
   let code = randCode();
-  if (rooms[code] != null) {
+  while (roomExists(code)) {
     code = randCode();
   }
 
@@ -40,6 +45,15 @@ io.on("connection", (socket) => {
   // socket.emit("message", "hello");
   socket.on("create", (name, fn) => {
     const code = createRoom(name);
+    socket.join(code);
     fn(code);
+  });
+  socket.on("join", (name, code, fn) => {
+    if (!roomExists(code))
+      return fn({ ok: false, message: "room does not exist" });
+
+    addUserToRoom(name, code);
+    socket.join(code);
+    fn({ ok: true, message: `joined room ${code}` });
   });
 });

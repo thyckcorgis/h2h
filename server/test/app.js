@@ -11,3 +11,9 @@ createRoom.addEventListener("click", () => {
     console.log(data);
   });
 });
+
+joinRoom.addEventListener("click", () => {
+  socket.emit("join", playerName, code, (data) => {
+    console.log(data);
+  });
+});
