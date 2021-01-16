@@ -65,14 +65,17 @@ const styles = StyleSheet.create({
   container: {
     padding: 10,
     marginVertical: 20,
+    alignItems: "center",
   },
   bigText: {
     fontSize: 30,
     color: "white",
+    paddingBottom: 10,
   },
   inputField: {
     padding: 5,
     margin: 10,
+    marginBottom: 20,
     width: 250,
     textAlign: "left",
     alignSelf: "center",
