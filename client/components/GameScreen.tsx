@@ -1,15 +1,23 @@
 import { StackNavigationHelpers } from "@react-navigation/stack/lib/typescript/src/types";
-import * as React from "react";
+import React from "react";
 import { View, Text, Button, StyleSheet } from "react-native";
 
 interface GameScreenProps {
   navigation: StackNavigationHelpers;
+  route: any;
 }
 
-export default function GameScren({ navigation }: GameScreenProps) {
+export default function GameScren({ route, navigation }: GameScreenProps) {
+  const { name, users } = route.params;
   return (
     <View style={styles.screen}>
-      <Text>This is the game screen....</Text>
+      <Text style={styles.bigText}>{name}</Text>
+      <Text style={styles.smallText}>
+        It is your turn. Ask the group the question below.
+      </Text>
+      <View style={styles.cardContainer}>
+        <Text style={styles.bigText}>Who are you?</Text>
+      </View>
       <Button title="next" onPress={() => navigation.navigate("Game")} />
     </View>
   );
@@ -22,34 +30,23 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flex: 1,
     backgroundColor: "black",
+    textAlign: "center",
+  },
+  cardContainer: {
+    width: 250,
+    height: 400,
+    backgroundColor: "#892cdc",
+    borderRadius: 20,
+    alignItems: "center",
+    justifyContent: "center",
+    margin: 20,
   },
   bigText: {
     fontSize: 30,
     color: "white",
-  },
-  listContainer: {
-    borderWidth: 1,
-    borderColor: "white",
-    borderRadius: 20,
-    width: 250,
-    height: 500,
-  },
-  list: {
-    color: "white",
-  },
-  inputField: {
-    padding: 5,
-    margin: 10,
-    width: 250,
-    textAlign: "left",
-    alignSelf: "center",
-    borderBottomWidth: 1,
-    borderColor: "white",
-    fontSize: 18,
-    color: "white",
+    paddingVertical: 20,
   },
   smallText: {
-    fontFamily: "Georgia",
     fontSize: 18,
     color: "white",
     textAlign: "center",

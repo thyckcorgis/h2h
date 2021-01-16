@@ -1,6 +1,7 @@
 import { StackNavigationHelpers } from "@react-navigation/stack/lib/typescript/src/types";
 import React, { useState, useEffect } from "react";
-import { View, Text, Button, FlatList, StyleSheet } from "react-native";
+import { View, Text, FlatList, StyleSheet, Image } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 import socket from "../socket";
 
@@ -19,29 +20,51 @@ export default function WaitingScreen({
   navigation,
   route,
 }: WaitingScreenProps) {
-  const { code, users } = route.params;
+  const { name, code, users } = route.params;
   const [roomUsers, setRoomUsers] = useState(users);
   const renderItem = ({ item }: { item: any }) => <Item title={item} />;
   useEffect(() => {
     socket.on("player-joined", ({ user }: { user: string }) => {
       setRoomUsers((roomUsers: string[]) => [...roomUsers, user]);
     });
+    socket.on("start-game", (data: any) => {
+      if (data.ok) navigation.navigate("Game", { name, users });
+    });
   }, []);
+
+  const startGameHandler = () => {
+    socket.emit("start-game", code);
+    navigation.navigate("Game", { name, users });
+  };
 
   return (
     <View style={styles.screen}>
-      <Text style={styles.bigText}>Room Code: {code}</Text>
-      <Text style={styles.bigText}>Who's in the room?</Text>
-      <View style={styles.listContainer}>
-        <FlatList
-          data={roomUsers}
-          renderItem={renderItem}
-          keyExtractor={(item) => item}
-          extraData={roomUsers}
-        />
+      <View style={{ flex: 1 }}>
+        <Text style={styles.codeText}>Room Code: {code}</Text>
       </View>
-      <Button title="Settings" onPress={() => navigation.navigate("Waiting")} />
-      <Button title="START" onPress={() => navigation.navigate("Game")} />
+      <View style={{ flex: 3 }}>
+        <Text style={styles.bigText}>Who's in the room?</Text>
+        <View style={styles.listContainer}>
+          <FlatList
+            data={roomUsers}
+            renderItem={renderItem}
+            keyExtractor={(item) => item}
+            extraData={roomUsers}
+          />
+        </View>
+        <TouchableOpacity
+          style={styles.buttonContainer}
+          onPress={() => navigation.navigate("Waiting")}
+        >
+          <Image source={require("../assets/images/settings_button.png")} />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.buttonContainer}
+          onPress={startGameHandler}
+        >
+          <Image source={require("../assets/images/start_button.png")} />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -49,10 +72,15 @@ export default function WaitingScreen({
 const styles = StyleSheet.create({
   screen: {
     padding: 50,
+    paddingTop: 100,
     alignItems: "center",
     justifyContent: "center",
     flex: 1,
     backgroundColor: "black",
+  },
+  codeText: {
+    fontSize: 30,
+    color: "#892cdc",
   },
   bigText: {
     fontSize: 30,
@@ -63,10 +91,16 @@ const styles = StyleSheet.create({
     borderColor: "white",
     borderRadius: 20,
     width: 250,
-    height: 500,
+    height: 300,
+    margin: 10,
+    padding: 10,
+    alignItems: "center",
   },
   list: {
     color: "white",
+  },
+  buttonContainer: {
+    margin: 5,
   },
   inputField: {
     padding: 5,
@@ -80,7 +114,6 @@ const styles = StyleSheet.create({
     color: "white",
   },
   smallText: {
-    fontFamily: "Georgia",
     fontSize: 18,
     color: "white",
     textAlign: "center",
