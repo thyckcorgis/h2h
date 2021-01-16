@@ -14,7 +14,9 @@ const roomExists = (code) => rooms[code] != null;
 const addUserToRoom = (name, code) => {
   rooms[code].users.push(name);
 };
-const userExistsInRoom = (name, code) => rooms[code].users.includes(name);
+
+// unnecessary edge case for the presentation
+// const userExistsInRoom = (name, code) => rooms[code].users.includes(name);
 
 const randCode = () => (Math.floor(Math.random() * 90000) + 10000).toString();
 
@@ -55,5 +57,11 @@ io.on("connection", (socket) => {
     addUserToRoom(name, code);
     socket.join(code);
     fn({ ok: true, message: `joined room ${code}` });
+  });
+  socket.on("start-game", (code) => {
+    socket.to(code).emit("start-game", {
+      ok: true,
+      message: "game has been started by host",
+    });
   });
 });
