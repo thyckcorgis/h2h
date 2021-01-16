@@ -22,7 +22,7 @@ export default function WaitingScreen({
   const { code, users } = route.params;
   const [roomUsers, setRoomUsers] = useState(users);
   const renderItem = ({ item }: { item: any }) => <Item title={item} />;
-  socket.on("player-joined", (user: string) => {
+  socket.on("player-joined", ({ user }: { user: string }) => {
     setRoomUsers((roomUsers: string[]) => [...roomUsers, user]);
   });
 
