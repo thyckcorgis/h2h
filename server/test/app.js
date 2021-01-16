@@ -5,6 +5,9 @@ const socket = io("https://thyck.top", {
 const createRoom = document.getElementById("create");
 const joinRoom = document.getElementById("join");
 
+let playerName = "charles";
 createRoom.addEventListener("click", () => {
-  socket.emit("create", name);
+  socket.emit("create", playerName, (data) => {
+    console.log(data);
+  });
 });
