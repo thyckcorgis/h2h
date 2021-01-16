@@ -37,6 +37,8 @@ export default function WaitingScreen({
     navigation.navigate("Game", { name, users });
   };
 
+  const settingsHandler = () => {};
+
   return (
     <View style={styles.screen}>
       <Text style={styles.bigText}>Room Code: {code}</Text>
@@ -49,7 +51,7 @@ export default function WaitingScreen({
           extraData={roomUsers}
         />
       </View>
-      <TouchableOpacity onPress={() => navigation.navigate("Waiting")}>
+      <TouchableOpacity onPress={settingsHandler}>
         <Image source={require("../assets/images/settings_button.png")} />
       </TouchableOpacity>
       <TouchableOpacity onPress={startGameHandler}>
