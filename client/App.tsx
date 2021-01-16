@@ -1,23 +1,39 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import * as React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
 
-import useCachedResources from './hooks/useCachedResources';
-import useColorScheme from './hooks/useColorScheme';
-import Navigation from './navigation';
+import LoadingScreen from "./components/LoadingScreen";
+import StartScreen from "./components/StartScreen";
+
+const Stack = createStackNavigator();
+
+const forFade = ({ current }: { current: any }) => ({
+  cardStyle: {
+    opacity: current.progress,
+  },
+});
 
 export default function App() {
-  const isLoadingComplete = useCachedResources();
-  const colorScheme = useColorScheme();
-
-  if (!isLoadingComplete) {
-    return null;
-  } else {
-    return (
-      <SafeAreaProvider>
-        <Navigation colorScheme={colorScheme} />
-        <StatusBar />
-      </SafeAreaProvider>
-    );
+  function hideHeader() {
+    return { headerShown: false };
   }
+
+  return (
+    <NavigationContainer>
+      <Stack.Navigator
+        screenOptions={{ ...hideHeader, cardStyleInterpolator: forFade }}
+      >
+        <Stack.Screen
+          name="Loading"
+          component={LoadingScreen}
+          options={hideHeader}
+        />
+        <Stack.Screen
+          name="Start"
+          component={StartScreen}
+          options={hideHeader}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
 }
