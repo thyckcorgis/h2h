@@ -31,6 +31,7 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
 
   return (
     <View style={styles.screen}>
+      {/* <Button title="Next" onPress={() => navigation.navigate("Waiting")} /> */}
       <Text style={styles.bigText}>Host Confessation</Text>
       <Button title="Host" onPress={hostGameHandler} />
       <Text style={styles.bigText}>Join Confessation</Text>

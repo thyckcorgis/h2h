@@ -11,12 +11,15 @@ export default function LoadingScreen({ navigation }: StartScreenProps) {
   return (
     <View style={styles.screen}>
       <TouchableOpacity onPress={() => navigation.navigate("Register")}>
-        <Image source={require("../assets/images/h2h_logo.png")} />
-        <Text>This is the start screen....</Text>
-        <View style={styles.corgiBox}>
-          <Image source={require("../assets/images/corgi_logo.png")} />
+        <View style={styles.screen}>
+          <Image source={require("../assets/images/h2h_logo.png")} />
+          <Text>This is the start screen....</Text>
         </View>
       </TouchableOpacity>
+
+      <View style={styles.corgiBox}>
+        <Image source={require("../assets/images/corgi_logo.png")} />
+      </View>
     </View>
   );
 }
