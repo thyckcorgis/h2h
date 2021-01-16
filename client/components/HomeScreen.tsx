@@ -58,8 +58,9 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
 const styles = StyleSheet.create({
   screen: {
     padding: 50,
+    paddingTop: 200,
     alignItems: "center",
-    justifyContent: "center",
+    // justifyContent: "center",
     flex: 1,
     backgroundColor: "black",
   },
