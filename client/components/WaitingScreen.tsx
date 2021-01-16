@@ -1,6 +1,13 @@
 import { StackNavigationHelpers } from "@react-navigation/stack/lib/typescript/src/types";
 import React, { useState, useEffect } from "react";
-import { View, Text, FlatList, StyleSheet, Image } from "react-native";
+import {
+  SafeAreaView,
+  View,
+  Text,
+  FlatList,
+  StyleSheet,
+  Image,
+} from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 import socket from "../socket";
@@ -40,7 +47,7 @@ export default function WaitingScreen({
   const settingsHandler = () => {};
 
   return (
-    <View style={styles.screen}>
+    <SafeAreaView style={styles.screen}>
       <View style={{ flex: 1 }}>
         <Text style={styles.codeText}>Room Code: {code}</Text>
       </View>
@@ -67,7 +74,7 @@ export default function WaitingScreen({
           <Image source={require("../assets/images/start_button.png")} />
         </TouchableOpacity>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -83,10 +90,12 @@ const styles = StyleSheet.create({
   codeText: {
     fontSize: 30,
     color: "#892cdc",
+    paddingTop: 30,
   },
   bigText: {
     fontSize: 30,
     color: "white",
+    textAlign: "center",
   },
   listContainer: {
     borderWidth: 1,
