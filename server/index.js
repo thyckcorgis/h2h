@@ -20,7 +20,7 @@ const getCurrentPlayer = (code) => rooms[code].users(rooms[code].current);
 const questions = require("./questions.json");
 const drawCard = (code) => {
   const idx = rooms[code].cards.pop();
-  return questions(idx);
+  return questions[idx];
 };
 
 const shuffleArray = (array) => {
