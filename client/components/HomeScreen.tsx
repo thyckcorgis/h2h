@@ -13,13 +13,20 @@ interface HomeScreenProps {
 export default function HomeScreen({ navigation, route }: HomeScreenProps) {
   const [code, setCode] = useState("");
   const { name } = route.params;
+  const socket = io("http://thyck.top", {
+    path: "/h2h",
+  });
 
   const hostGameHandler = () => {
-    const socket = io("http://thyck.top", {
-      path: "/h2h",
+    socket.emit("create", name, (code: number) => {
+      navigation.navigate("Waiting", { socket, code });
     });
-    socket.emit("create-game", name, (code: number) => {
-      navigation.navigate("Waiting", { code });
+  };
+
+  const joinGameHandler = () => {
+    socket.emit("join", name, code, (data: any) => {
+      console.log(data);
+      navigation.navigate("Waiting", { socket, code });
     });
   };
 
@@ -34,7 +41,7 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
         value={code}
         keyboardType="number-pad"
       />
-      <Button title="Join" onPress={() => navigation.navigate("Waiting")} />
+      <Button title="Join" onPress={joinGameHandler} />
     </View>
   );
 }
