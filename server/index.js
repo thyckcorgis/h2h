@@ -18,6 +18,23 @@ const endTurn = (code) => {
 };
 const getCurrentPlayer = (code) => rooms[code].users(rooms[code].current);
 const questions = require("./questions.json");
+const drawCard = (code) => {
+  const idx = rooms[code].cards.pop();
+  return questions(idx);
+};
+
+const shuffleArray = (array) => {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; --i) {
+    const j = (Math.floor(Math.random() * (i + 1))[(arr[i], arr[j])] = [
+      arr[j],
+      arr[i],
+    ]);
+  }
+  return arr;
+};
+
+const getRandArray = () => shuffleArray([...Array(questions.length).keys]);
 
 // unnecessary edge case for the presentation
 // const userExistsInRoom = (name, code) => rooms[code].users.includes(name);
@@ -30,7 +47,7 @@ const createRoom = (name) => {
     code = randCode();
   }
 
-  rooms[code] = { users: [name], current: 0 };
+  rooms[code] = { users: [name], current: 0, cards: getRandArray() };
   return code;
 };
 
@@ -69,6 +86,7 @@ io.on("connection", (socket) => {
       ok: true,
       message: "game has been started by host",
       current: getCurrentPlayer(code),
+      card: drawCard(code),
     });
   });
   socket.on("next-card", (code) => {
@@ -77,6 +95,7 @@ io.on("connection", (socket) => {
     socket.to(code).emit("next-card", {
       ok: true,
       current: nextPlayer,
+      card: drawCard(code),
     });
   });
 });
