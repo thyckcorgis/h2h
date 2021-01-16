@@ -40,7 +40,7 @@ export default function WaitingScreen({
 
   return (
     <View>
-      <Text>Room Code (roomCode)</Text>
+      <Text>Room Code: {code}</Text>
       <Text>Who's in the room?</Text>
       <FlatList
         data={users}
