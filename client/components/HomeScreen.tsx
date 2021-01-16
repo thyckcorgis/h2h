@@ -2,10 +2,10 @@ import { StackNavigationHelpers } from "@react-navigation/stack/lib/typescript/s
 import * as React from "react";
 import { View, Text, Button, StyleSheet, TextInput, Image } from "react-native";
 import { useState } from "react";
-import { io } from "socket.io-client";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 import socket from "../socket";
+
 interface HomeScreenProps {
   navigation: StackNavigationHelpers;
   route: any;
