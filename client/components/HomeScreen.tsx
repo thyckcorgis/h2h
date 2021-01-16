@@ -24,7 +24,9 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
 
   const joinGameHandler = () => {
     socket.emit("join", name, code, (data: any) => {
-      navigation.navigate("Waiting", { code, users: data.users });
+      if (data.ok) {
+        navigation.navigate("Waiting", { code, users: data.users });
+      }
     });
   };
 

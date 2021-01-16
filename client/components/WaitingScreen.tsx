@@ -9,24 +9,9 @@ interface WaitingScreenProps {
   route: any;
 }
 
-const users = [
-  {
-    id: "1",
-    title: "User 1",
-  },
-  {
-    id: "2",
-    title: "User 2",
-  },
-  {
-    id: "3",
-    title: "User 3",
-  },
-];
-
 const Item = ({ title }: { title: any }) => (
   <View>
-    <Text>{title}</Text>
+    <Text style={styles.bigText}>{title}</Text>
   </View>
 );
 
@@ -35,7 +20,7 @@ export default function WaitingScreen({
   route,
 }: WaitingScreenProps) {
   const { code, users } = route.params;
-  const renderItem = ({ item }: { item: any }) => <Item title={item.title} />;
+  const renderItem = ({ item }: { item: any }) => <Item title={item} />;
   socket.on("player-joined", (user: string) => {
     users.push(user);
   });
@@ -47,7 +32,7 @@ export default function WaitingScreen({
       <FlatList
         data={users}
         renderItem={renderItem}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item}
       />
       <Button title="Settings" onPress={() => navigation.navigate("Waiting")} />
       <Button title="START" onPress={() => navigation.navigate("Game")} />
