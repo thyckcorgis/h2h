@@ -27,7 +27,7 @@ export default function RegisterScreen({ navigation }: RegisterScreenProps) {
         value={name}
       />
       <TouchableOpacity onPress={() => navigation.navigate("Home", { name })}>
-        <Image source={require("../assets/images/register_icon.png")} />
+        <Image source={require("../assets/images/register_button.png")} />
       </TouchableOpacity>
     </View>
   );
