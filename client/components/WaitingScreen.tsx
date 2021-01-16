@@ -9,7 +9,9 @@ interface WaitingScreenProps {
 export default function WaitingScreen({ navigation }: WaitingScreenProps) {
   return (
     <View>
-      <Text>Ready to Talk?</Text>
+      <Text>Room Code (roomCode)</Text>
+      <Text>Who's in the room?</Text>
+
     </View>
   );
 }
