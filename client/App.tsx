@@ -9,7 +9,6 @@ import HomeScreen from "./components/HomeScreen";
 import WaitingScreen from "./components/WaitingScreen";
 import GameScreen from "./components/GameScreen";
 
-
 const Stack = createStackNavigator();
 
 const forFade = ({ current }: { current: any }) => ({
@@ -43,21 +42,13 @@ export default function App() {
           component={RegisterScreen}
           options={hideHeader}
         />
-        <Stack.Screen
-          name="Home"
-          component={HomeScreen}
-          options={hideHeader}
-        />
+        <Stack.Screen name="Home" component={HomeScreen} options={hideHeader} />
         <Stack.Screen
           name="Waiting"
           component={WaitingScreen}
           options={hideHeader}
-        />  
-        <Stack.Screen
-          name="Game"
-          component={GameScreen}
-          options={hideHeader}
-        />       
+        />
+        <Stack.Screen name="Game" component={GameScreen} options={hideHeader} />
       </Stack.Navigator>
     </NavigationContainer>
   );
