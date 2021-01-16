@@ -42,6 +42,8 @@ export default function WaitingScreen({ navigation }: WaitingScreenProps) {
         renderItem={renderItem}
         keyExtractor={item => item.id}
       />
+      <Button title="Settings" onPress={() => navigation.navigate("Waiting")} />
+      <Button title="START" onPress={() => navigation.navigate("Waiting")} />
 
     </View>
   );
