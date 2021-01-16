@@ -1,5 +1,5 @@
 import { StackNavigationHelpers } from "@react-navigation/stack/lib/typescript/src/types";
-import * as React from "react";
+import React, { useState } from "react";
 import { View, Text, Button, FlatList, StyleSheet } from "react-native";
 
 import socket from "../socket";
@@ -20,9 +20,10 @@ export default function WaitingScreen({
   route,
 }: WaitingScreenProps) {
   const { code, users } = route.params;
+  const [roomUsers, setRoomUsers] = useState(users);
   const renderItem = ({ item }: { item: any }) => <Item title={item} />;
   socket.on("player-joined", (user: string) => {
-    users.push(user);
+    setRoomUsers((roomUsers: string[]) => [...roomUsers, user]);
   });
 
   return (
@@ -31,9 +32,10 @@ export default function WaitingScreen({
       <Text style={styles.bigText}>Who's in the room?</Text>
       <View style={styles.listContainer}>
         <FlatList
-          data={users}
+          data={roomUsers}
           renderItem={renderItem}
           keyExtractor={(item) => item}
+          extraData={roomUsers}
         />
       </View>
       <Button title="Settings" onPress={() => navigation.navigate("Waiting")} />
@@ -57,6 +59,7 @@ const styles = StyleSheet.create({
   listContainer: {
     borderWidth: 1,
     borderColor: "white",
+    borderRadius: 20,
     width: 250,
     height: 500,
   },

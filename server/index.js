@@ -59,7 +59,7 @@ io.on("connection", (socket) => {
 
     addUserToRoom(name, code);
     socket.join(code);
-    fn({ ok: true, message: `joined room ${code}`, users: room[code].users });
+    fn({ ok: true, message: `joined room ${code}`, users: rooms[code].users });
     socket.to(code).emit("player-joined", { ok: true, user: name });
   });
   socket.on("start-game", (code) => {
