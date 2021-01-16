@@ -11,9 +11,12 @@ router.get("/", (req, res) => {
 
 const rooms = {};
 const roomExists = (code) => rooms[code] != null;
-const addUserToRoom = (name, code) => {
-  rooms[code].users.push(name);
+const addUserToRoom = (name, code) => rooms[code].users.push(name);
+const endTurn = (code) => {
+  const room = rooms[code];
+  rooms[code].current = (room.current + 1) % room.users.length;
 };
+const getCurrentPlayer = (code) => rooms[code].users(rooms[code].current);
 
 // unnecessary edge case for the presentation
 // const userExistsInRoom = (name, code) => rooms[code].users.includes(name);
@@ -62,6 +65,14 @@ io.on("connection", (socket) => {
     socket.to(code).emit("start-game", {
       ok: true,
       message: "game has been started by host",
+    });
+  });
+  socket.on("next-card", (code) => {
+    endTurn(code);
+    const nextPlayer = getCurrentPlayer(code);
+    socket.to(code).emit("next-card", {
+      ok: true,
+      nextPlayer,
     });
   });
 });
