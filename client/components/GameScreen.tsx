@@ -11,7 +11,7 @@ export default function GameScren({ route, navigation }: GameScreenProps) {
   const { name, users } = route.params;
   return (
     <View style={styles.screen}>
-      <Text style={styles.bigText}>{name.toUpperCase()}</Text>
+      <Text style={styles.bigText}>{name}</Text>
       <Text style={styles.smallText}>
         It is your turn. Ask the group the question below.
       </Text>
