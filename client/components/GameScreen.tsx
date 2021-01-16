@@ -36,6 +36,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#892cdc",
     borderRadius: 20,
     alignItems: "center",
+    justifyContent: "center",
+    margin: 20,
   },
   bigText: {
     fontSize: 30,
