@@ -1,6 +1,7 @@
 import { StackNavigationHelpers } from "@react-navigation/stack/lib/typescript/src/types";
 import React, { useState, useEffect } from "react";
-import { View, Text, Button, FlatList, StyleSheet } from "react-native";
+import { View, Text, Button, FlatList, StyleSheet, Image } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 import socket from "../socket";
 
@@ -40,8 +41,12 @@ export default function WaitingScreen({
           extraData={roomUsers}
         />
       </View>
-      <Button title="Settings" onPress={() => navigation.navigate("Waiting")} />
-      <Button title="START" onPress={() => navigation.navigate("Game")} />
+      <TouchableOpacity onPress={() => navigation.navigate("Waiting")}>
+        <Image source={require("../assets/images/settings_button.png")} />
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate("Game")}>
+        <Image source={require("../assets/images/start_button.png")} />
+      </TouchableOpacity>
     </View>
   );
 }
@@ -63,7 +68,10 @@ const styles = StyleSheet.create({
     borderColor: "white",
     borderRadius: 20,
     width: 250,
-    height: 500,
+    height: 450,
+    margin: 10,
+    padding: 10,
+    alignItems: "center",
   },
   list: {
     color: "white",
