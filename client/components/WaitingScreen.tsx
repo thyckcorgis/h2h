@@ -32,6 +32,10 @@ export default function WaitingScreen({
     });
   }, []);
 
+  const startGameHandler = () => {
+    socket.emit("start-game", code);
+  };
+
   return (
     <View style={styles.screen}>
       <Text style={styles.bigText}>Room Code: {code}</Text>
@@ -47,7 +51,7 @@ export default function WaitingScreen({
       <TouchableOpacity onPress={() => navigation.navigate("Waiting")}>
         <Image source={require("../assets/images/settings_button.png")} />
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate("Game")}>
+      <TouchableOpacity onPress={startGameHandler}>
         <Image source={require("../assets/images/start_button.png")} />
       </TouchableOpacity>
     </View>
