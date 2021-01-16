@@ -4,34 +4,36 @@ import { View, Text, Button, FlatList } from "react-native";
 
 interface WaitingScreenProps {
   navigation: StackNavigationHelpers;
+  route: any;
 }
 
 const users = [
-    {
-      id: '1',
-      title: 'User 1',
-    },
-    {
-      id: '2',
-      title: 'User 2',
-    },
-    {
-      id: '3',
-      title: 'User 3',
-    },
-  ];
+  {
+    id: "1",
+    title: "User 1",
+  },
+  {
+    id: "2",
+    title: "User 2",
+  },
+  {
+    id: "3",
+    title: "User 3",
+  },
+];
 
-  const Item = ({title} : {title:any}) => (
-    <View>
-      <Text>{title}</Text>
-    </View>
-  );
-  
+const Item = ({ title }: { title: any }) => (
+  <View>
+    <Text>{title}</Text>
+  </View>
+);
 
-export default function WaitingScreen({ navigation }: WaitingScreenProps) {
-    const renderItem = ({item} : {item:any}) => (
-        <Item title={item.title} />
-      );
+export default function WaitingScreen({
+  navigation,
+  route,
+}: WaitingScreenProps) {
+  const { socket, code, users } = route.params;
+  const renderItem = ({ item }: { item: any }) => <Item title={item.title} />;
 
   return (
     <View>
@@ -40,11 +42,10 @@ export default function WaitingScreen({ navigation }: WaitingScreenProps) {
       <FlatList
         data={users}
         renderItem={renderItem}
-        keyExtractor={item => item.id}
+        keyExtractor={(item) => item.id}
       />
       <Button title="Settings" onPress={() => navigation.navigate("Waiting")} />
       <Button title="START" onPress={() => navigation.navigate("Waiting")} />
-
     </View>
   );
 }

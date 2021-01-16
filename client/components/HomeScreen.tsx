@@ -19,14 +19,13 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
 
   const hostGameHandler = () => {
     socket.emit("create", name, (code: number) => {
-      navigation.navigate("Waiting", { socket, code });
+      navigation.navigate("Waiting", { socket, code, users: [name] });
     });
   };
 
   const joinGameHandler = () => {
     socket.emit("join", name, code, (data: any) => {
-      console.log(data);
-      navigation.navigate("Waiting", { socket, code });
+      navigation.navigate("Waiting", { socket, code, users: data.users });
     });
   };
 
