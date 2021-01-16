@@ -1,5 +1,5 @@
 import { StackNavigationHelpers } from "@react-navigation/stack/lib/typescript/src/types";
-import React from "react";
+import React, { useEffect } from "react";
 import { View, Text, Button, StyleSheet } from "react-native";
 
 interface GameScreenProps {
@@ -8,7 +8,9 @@ interface GameScreenProps {
 }
 
 export default function GameScren({ route, navigation }: GameScreenProps) {
-  const { name, users } = route.params;
+  const { card, name, users } = route.params;
+
+  useEffect(() => {});
 
   const nextCardHandler = () => {};
   return (
@@ -18,7 +20,7 @@ export default function GameScren({ route, navigation }: GameScreenProps) {
         It is your turn. Ask the group the question below.
       </Text>
       <View style={styles.cardContainer}>
-        <Text style={styles.bigText}>Who are you?</Text>
+        <Text style={styles.bigText}>{card}</Text>
       </View>
       <Button title="next" onPress={nextCardHandler} />
     </View>

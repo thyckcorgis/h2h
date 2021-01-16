@@ -79,21 +79,24 @@ io.on("connection", (socket) => {
     socket.to(code).emit("player-joined", { ok: true, user: name });
   });
   socket.on("start-game", (code, fn) => {
-    fn();
+    const card = drawCard(code);
+    fn(card);
     socket.to(code).emit("start-game", {
       ok: true,
       message: "game has been started by host",
       current: getCurrentPlayer(code),
-      card: drawCard(code),
+      card,
     });
   });
-  socket.on("next-card", (code) => {
+  socket.on("next-card", (code, fn) => {
     endTurn(code);
+    const card = drawCard(code);
+    fn(card);
     const nextPlayer = getCurrentPlayer(code);
     socket.to(code).emit("next-card", {
       ok: true,
       current: nextPlayer,
-      card: drawCard(code),
+      card,
     });
   });
 });
