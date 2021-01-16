@@ -31,25 +31,26 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
 
   return (
     <View style={styles.screen}>
-      <View style={styles.container}>
-        <Text style={styles.bigText}>Host Confessation</Text>
-        <TouchableOpacity onPress={hostGameHandler}>
-          <Image source={require("../assets/images/host_button.png")} />
-        </TouchableOpacity>
-      </View>
-      <View style={styles.container}>
-        <Text style={styles.bigText}>Join Confessation</Text>
-        <TextInput
-          placeholder="Enter a room code"
-          onChangeText={(text) => setCode(text)}
-          value={code}
-          keyboardType="number-pad"
-          style={styles.inputField}
-        />
-        <TouchableOpacity onPress={joinGameHandler}>
-          <Image source={require("../assets/images/join_button.png")} />
-        </TouchableOpacity>
-      </View>
+        <View style={styles.container}>
+            <Text style={styles.bigText}>Host Confessation</Text>
+            <TouchableOpacity onPress={hostGameHandler}>
+            <Image source={require("../assets/images/host_button.png")} />
+            </TouchableOpacity>
+        </View>
+        <View style={styles.container}>
+            <Text style={styles.bigText}>Join Confessation</Text>
+            <TextInput
+            placeholder="Enter a room code"
+            placeholderTextColor='white'
+            onChangeText={(text) => setCode(text)}
+            value={code}
+            keyboardType="number-pad"
+            style={styles.inputField}
+            />
+            <TouchableOpacity onPress={joinGameHandler}>
+            <Image source={require("../assets/images/join_button.png")} />
+            </TouchableOpacity>
+        </View>
     </View>
   );
 }
