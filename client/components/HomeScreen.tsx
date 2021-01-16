@@ -7,8 +7,7 @@ import {
   StyleSheet,
   TextInput,
   Image,
-  TouchableWithoutFeedback,
-  Keyboard,
+  KeyboardAvoidingView,
 } from "react-native";
 import { useState } from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -39,8 +38,8 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
   };
 
   return (
-    <View style={styles.screen}>
-      <View style={{ flex: 1 }} />
+    <KeyboardAvoidingView style={styles.screen} behavior="padding">
+      {/* <View style={{ flex: 1 }} /> */}
       <View style={styles.container}>
         <Text style={styles.bigText}>Host Confessation</Text>
         <TouchableOpacity onPress={hostGameHandler}>
@@ -61,8 +60,8 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
           <Image source={require("../assets/images/join_button.png")} />
         </TouchableOpacity>
       </View>
-      <View style={{ flex: 2 }} />
-    </View>
+      {/* <View style={{ flex: 2 }} /> */}
+    </KeyboardAvoidingView>
   );
 }
 
