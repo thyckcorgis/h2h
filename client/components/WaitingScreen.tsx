@@ -29,11 +29,13 @@ export default function WaitingScreen({
     <View style={styles.screen}>
       <Text style={styles.bigText}>Room Code: {code}</Text>
       <Text style={styles.bigText}>Who's in the room?</Text>
-      <FlatList
-        data={users}
-        renderItem={renderItem}
-        keyExtractor={(item) => item}
-      />
+      <View style={styles.listContainer}>
+        <FlatList
+          data={users}
+          renderItem={renderItem}
+          keyExtractor={(item) => item}
+        />
+      </View>
       <Button title="Settings" onPress={() => navigation.navigate("Waiting")} />
       <Button title="START" onPress={() => navigation.navigate("Game")} />
     </View>
@@ -50,6 +52,15 @@ const styles = StyleSheet.create({
   },
   bigText: {
     fontSize: 30,
+    color: "white",
+  },
+  listContainer: {
+    borderWidth: 1,
+    borderColor: "white",
+    width: 250,
+    height: 500,
+  },
+  list: {
     color: "white",
   },
   inputField: {
