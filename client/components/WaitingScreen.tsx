@@ -2,15 +2,14 @@ import { StackNavigationHelpers } from "@react-navigation/stack/lib/typescript/s
 import * as React from "react";
 import { View, Text, Button } from "react-native";
 
-interface StartScreenProps {
+interface WaitingScreenProps {
   navigation: StackNavigationHelpers;
 }
 
-export default function LoadingScreen({ navigation }: StartScreenProps) {
+export default function WaitingScreen({ navigation }: WaitingScreenProps) {
   return (
     <View>
-      <Text>This is the start screen....</Text>
-      <Button title="next" onPress={() => navigation.navigate("Register")} />
+      <Text>Ready to Talk?</Text>
     </View>
   );
 }
