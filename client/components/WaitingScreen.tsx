@@ -1,6 +1,6 @@
 import { StackNavigationHelpers } from "@react-navigation/stack/lib/typescript/src/types";
 import React, { useState, useEffect } from "react";
-import { View, Text, Button, FlatList, StyleSheet, Image } from "react-native";
+import { View, Text, FlatList, StyleSheet, Image } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 import socket from "../socket";
@@ -26,6 +26,9 @@ export default function WaitingScreen({
   useEffect(() => {
     socket.on("player-joined", ({ user }: { user: string }) => {
       setRoomUsers((roomUsers: string[]) => [...roomUsers, user]);
+    });
+    socket.on("start-game", (data: any) => {
+      if (data.ok) navigation.navigate("Game", { users });
     });
   }, []);
 

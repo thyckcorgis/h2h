@@ -1,6 +1,6 @@
 import { StackNavigationHelpers } from "@react-navigation/stack/lib/typescript/src/types";
 import * as React from "react";
-import { View, Text, Button, StyleSheet, TextInput, Image } from "react-native";
+import { View, Text, StyleSheet, TextInput, Image } from "react-native";
 import { useState } from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
@@ -31,26 +31,26 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
 
   return (
     <View style={styles.screen}>
-        <View style={styles.container}>
-            <Text style={styles.bigText}>Host Confessation</Text>
-            <TouchableOpacity onPress={hostGameHandler}>
-            <Image source={require("../assets/images/host_button.png")} />
-            </TouchableOpacity>
-        </View>
-        <View style={styles.container}>
-            <Text style={styles.bigText}>Join Confessation</Text>
-            <TextInput
-            placeholder="Enter a room code"
-            placeholderTextColor='white'
-            onChangeText={(text) => setCode(text)}
-            value={code}
-            keyboardType="number-pad"
-            style={styles.inputField}
-            />
-            <TouchableOpacity onPress={joinGameHandler}>
-            <Image source={require("../assets/images/join_button.png")} />
-            </TouchableOpacity>
-        </View>
+      <View style={styles.container}>
+        <Text style={styles.bigText}>Host Confessation</Text>
+        <TouchableOpacity onPress={hostGameHandler}>
+          <Image source={require("../assets/images/host_button.png")} />
+        </TouchableOpacity>
+      </View>
+      <View style={styles.container}>
+        <Text style={styles.bigText}>Join Confessation</Text>
+        <TextInput
+          placeholder="Enter a room code"
+          placeholderTextColor="white"
+          onChangeText={(text) => setCode(text)}
+          value={code}
+          keyboardType="number-pad"
+          style={styles.inputField}
+        />
+        <TouchableOpacity onPress={joinGameHandler}>
+          <Image source={require("../assets/images/join_button.png")} />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }

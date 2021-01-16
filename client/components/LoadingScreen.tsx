@@ -1,5 +1,5 @@
 import { StackNavigationHelpers } from "@react-navigation/stack/lib/typescript/src/types";
-import * as React from "react";
+import React from "react";
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 
 interface LoadingScreenProps {
