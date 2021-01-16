@@ -37,6 +37,8 @@ export default function WaitingScreen({
     navigation.navigate("Game", { name, users });
   };
 
+  const settingsHandler = () => {};
+
   return (
     <View style={styles.screen}>
       <View style={{ flex: 1 }}>
@@ -54,7 +56,7 @@ export default function WaitingScreen({
         </View>
         <TouchableOpacity
           style={styles.buttonContainer}
-          onPress={() => navigation.navigate("Waiting")}
+          onPress={settingsHandler}
         >
           <Image source={require("../assets/images/settings_button.png")} />
         </TouchableOpacity>

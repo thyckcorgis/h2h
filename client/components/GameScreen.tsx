@@ -9,6 +9,8 @@ interface GameScreenProps {
 
 export default function GameScren({ route, navigation }: GameScreenProps) {
   const { name, users } = route.params;
+
+  const nextCardHandler = () => {};
   return (
     <View style={styles.screen}>
       <Text style={styles.bigText}>{name}</Text>
@@ -18,7 +20,7 @@ export default function GameScren({ route, navigation }: GameScreenProps) {
       <View style={styles.cardContainer}>
         <Text style={styles.bigText}>Who are you?</Text>
       </View>
-      <Button title="next" onPress={() => navigation.navigate("Game")} />
+      <Button title="next" onPress={nextCardHandler} />
     </View>
   );
 }
