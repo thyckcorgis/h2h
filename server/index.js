@@ -34,7 +34,7 @@ const shuffleArray = (array) => {
   return arr;
 };
 
-const getRandArray = () => shuffleArray([...Array(questions.length).keys]);
+const getRandArray = () => shuffleArray([...Array(questions.length).keys()]);
 
 // unnecessary edge case for the presentation
 // const userExistsInRoom = (name, code) => rooms[code].users.includes(name);
