@@ -7,6 +7,7 @@ import StartScreen from "./components/StartScreen";
 import RegisterScreen from "./components/RegisterScreen";
 import HomeScreen from "./components/HomeScreen";
 import WaitingScreen from "./components/WaitingScreen";
+import GameScreen from "./components/GameScreen";
 
 
 const Stack = createStackNavigator();
@@ -51,7 +52,12 @@ export default function App() {
           name="Waiting"
           component={WaitingScreen}
           options={hideHeader}
-        />        
+        />  
+        <Stack.Screen
+          name="Game"
+          component={GameScreen}
+          options={hideHeader}
+        />       
       </Stack.Navigator>
     </NavigationContainer>
   );
