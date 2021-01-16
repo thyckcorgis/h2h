@@ -83,10 +83,4 @@ const styles = StyleSheet.create({
     color: "white",
     textAlign: "center",
   },
-  continueText: {
-    fontFamily: "Comfortaa",
-    fontSize: 14,
-    color: "#892cdc",
-    paddingVertical: 30,
-  },
 });
