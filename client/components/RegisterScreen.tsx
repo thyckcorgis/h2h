@@ -23,6 +23,7 @@ export default function RegisterScreen({ navigation }: RegisterScreenProps) {
       <TextInput
         style={styles.inputField}
         placeholder="Your name"
+        placeholderTextColor="white"
         onChangeText={(text) => setName(text)}
         value={name}
       />
