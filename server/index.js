@@ -68,6 +68,7 @@ io.on("connection", (socket) => {
     socket.to(code).emit("start-game", {
       ok: true,
       message: "game has been started by host",
+      current: getCurrentPlayer(code),
     });
   });
   socket.on("next-card", (code) => {
@@ -75,7 +76,7 @@ io.on("connection", (socket) => {
     const nextPlayer = getCurrentPlayer(code);
     socket.to(code).emit("next-card", {
       ok: true,
-      nextPlayer,
+      current: nextPlayer,
     });
   });
 });
