@@ -1,8 +1,14 @@
 import { StackNavigationHelpers } from "@react-navigation/stack/lib/typescript/src/types";
 import * as React from "react";
-import { View, Text, Button, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TextInput,
+  TouchableOpacity,
+} from "react-native";
 import { useState } from "react";
-import { TextInput } from "react-native-gesture-handler";
 
 interface RegisterScreenProps {
   navigation: StackNavigationHelpers;
@@ -20,10 +26,9 @@ export default function RegisterScreen({ navigation }: RegisterScreenProps) {
         onChangeText={(text) => setName(text)}
         value={name}
       />
-      <Button
-        title="I'm ready"
-        onPress={() => navigation.navigate("Home", { name })}
-      />
+      <TouchableOpacity onPress={() => navigation.navigate("Home", { name })}>
+        <Image source={require("../assets/images/register_icon.png")} />
+      </TouchableOpacity>
     </View>
   );
 }
@@ -42,7 +47,7 @@ const styles = StyleSheet.create({
   },
   inputField: {
     padding: 5,
-    margin: 10,
+    marginVertical: 20,
     width: 250,
     textAlign: "left",
     alignSelf: "center",
@@ -56,11 +61,5 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: "white",
     textAlign: "center",
-  },
-  continueText: {
-    fontFamily: "Comfortaa",
-    fontSize: 14,
-    color: "#892cdc",
-    paddingVertical: 30,
   },
 });
