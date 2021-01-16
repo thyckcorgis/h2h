@@ -1,6 +1,6 @@
 import { StackNavigationHelpers } from "@react-navigation/stack/lib/typescript/src/types";
 import * as React from "react";
-import { View, Text, Button, StyleSheet, TextInput, Image } from "react-native";
+import { View, Text, Button, StyleSheet, TextInput, Image, TouchableWithoutFeedback, Keyboard } from "react-native";
 import { useState } from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
@@ -14,6 +14,7 @@ interface HomeScreenProps {
 export default function HomeScreen({ navigation, route }: HomeScreenProps) {
   const [code, setCode] = useState("");
   const { name } = route.params;
+
 
   const hostGameHandler = () => {
     socket.emit("create", name, (code: number) => {
@@ -29,7 +30,14 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
     });
   };
 
+  const DismissKeyboard = ({children} : {children:any}) => (
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      {children}
+    </TouchableWithoutFeedback>
+  );
+
   return (
+    <DismissKeyboard>
     <View style={styles.screen}>
         <View style={styles.container}>
             <Text style={styles.bigText}>Host Confessation</Text>
@@ -40,18 +48,19 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
         <View style={styles.container}>
             <Text style={styles.bigText}>Join Confessation</Text>
             <TextInput
-            placeholder="Enter a room code"
-            placeholderTextColor='white'
-            onChangeText={(text) => setCode(text)}
-            value={code}
-            keyboardType="number-pad"
-            style={styles.inputField}
+                placeholder="Enter a room code"
+                placeholderTextColor='white'
+                onChangeText={(text) => setCode(text)}
+                value={code}
+                keyboardType="number-pad"
+                style={styles.inputField}
             />
             <TouchableOpacity onPress={joinGameHandler}>
             <Image source={require("../assets/images/join_button.png")} />
             </TouchableOpacity>
         </View>
     </View>
+    </DismissKeyboard>
   );
 }
 
