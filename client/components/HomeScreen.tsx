@@ -12,12 +12,10 @@ interface HomeScreenProps {
 }
 
 export default function HomeScreen({ navigation, route }: HomeScreenProps) {
-  console.log(socket.connected);
   const [code, setCode] = useState("");
   const { name } = route.params;
 
   const hostGameHandler = () => {
-    console.log(socket.connected);
     socket.emit("create", name, (code: number) => {
       navigation.navigate("Waiting", { code, users: [name] });
     });
