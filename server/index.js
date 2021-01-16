@@ -17,6 +17,7 @@ const endTurn = (code) => {
   rooms[code].current = (room.current + 1) % room.users.length;
 };
 const getCurrentPlayer = (code) => rooms[code].users(rooms[code].current);
+const questions = require("./questions.json");
 
 // unnecessary edge case for the presentation
 // const userExistsInRoom = (name, code) => rooms[code].users.includes(name);
@@ -62,7 +63,8 @@ io.on("connection", (socket) => {
     fn({ ok: true, message: `joined room ${code}`, users: rooms[code].users });
     socket.to(code).emit("player-joined", { ok: true, user: name });
   });
-  socket.on("start-game", (code) => {
+  socket.on("start-game", (code, fn) => {
+    fn();
     socket.to(code).emit("start-game", {
       ok: true,
       message: "game has been started by host",
