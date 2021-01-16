@@ -27,6 +27,9 @@ export default function WaitingScreen({
     socket.on("player-joined", ({ user }: { user: string }) => {
       setRoomUsers((roomUsers: string[]) => [...roomUsers, user]);
     });
+    socket.on("start-game", (data: any) => {
+      if (data.ok) navigation.navigate("Game", { users });
+    });
   }, []);
 
   return (
