@@ -34,6 +34,9 @@ export default function WaitingScreen({
 }: WaitingScreenProps) {
   const { socket, code, users } = route.params;
   const renderItem = ({ item }: { item: any }) => <Item title={item.title} />;
+  socket.on("player-joined", (user: string) => {
+    users.push(user);
+  });
 
   return (
     <View>
