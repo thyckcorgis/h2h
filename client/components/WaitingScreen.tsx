@@ -34,6 +34,7 @@ export default function WaitingScreen({
 
   const startGameHandler = () => {
     socket.emit("start-game", code);
+    navigation.navigate("Game", { users });
   };
 
   return (
