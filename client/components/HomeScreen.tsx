@@ -13,11 +13,12 @@ interface HomeScreenProps {
 export default function HomeScreen({ navigation, route }: HomeScreenProps) {
   const [code, setCode] = useState("");
   const { name } = route.params;
-  const socket = io("http://thyck.top", {
+  const socket = io("https://thyck.top/", {
     path: "/h2h",
   });
 
   const hostGameHandler = () => {
+    console.log(socket.connected);
     socket.emit("create", name, (code: number) => {
       navigation.navigate("Waiting", { socket, code, users: [name] });
     });
