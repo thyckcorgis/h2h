@@ -1,6 +1,6 @@
 import { StackNavigationHelpers } from "@react-navigation/stack/lib/typescript/src/types";
 import * as React from "react";
-import { View, Text, Button, FlatList } from "react-native";
+import { View, Text, Button, FlatList, StyleSheet } from "react-native";
 
 interface WaitingScreenProps {
   navigation: StackNavigationHelpers;
@@ -39,9 +39,9 @@ export default function WaitingScreen({
   });
 
   return (
-    <View>
-      <Text>Room Code: {code}</Text>
-      <Text>Who's in the room?</Text>
+    <View style={styles.screen}>
+      <Text style={styles.bigText}>Room Code: {code}</Text>
+      <Text style={styles.bigText}>Who's in the room?</Text>
       <FlatList
         data={users}
         renderItem={renderItem}
@@ -52,3 +52,40 @@ export default function WaitingScreen({
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  screen: {
+    padding: 50,
+    alignItems: "center",
+    justifyContent: "center",
+    flex: 1,
+    backgroundColor: "black",
+  },
+  bigText: {
+    fontSize: 30,
+    color: "white",
+  },
+  inputField: {
+    padding: 5,
+    margin: 10,
+    width: 250,
+    textAlign: "left",
+    alignSelf: "center",
+    borderBottomWidth: 1,
+    borderColor: "white",
+    fontSize: 18,
+    color: "white",
+  },
+  smallText: {
+    fontFamily: "Georgia",
+    fontSize: 18,
+    color: "white",
+    textAlign: "center",
+  },
+  continueText: {
+    fontFamily: "Comfortaa",
+    fontSize: 14,
+    color: "#892cdc",
+    paddingVertical: 30,
+  },
+});
