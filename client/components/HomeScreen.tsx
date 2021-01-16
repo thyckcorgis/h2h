@@ -1,9 +1,9 @@
 import { StackNavigationHelpers } from "@react-navigation/stack/lib/typescript/src/types";
 import * as React from "react";
-import { View, Text, Button, StyleSheet } from "react-native";
-import { TextInput } from "react-native-gesture-handler";
+import { View, Text, Button, StyleSheet, TextInput, Image } from "react-native";
 import { useState } from "react";
 import { io } from "socket.io-client";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 interface HomeScreenProps {
   navigation: StackNavigationHelpers;
@@ -32,18 +32,25 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
 
   return (
     <View style={styles.screen}>
-      {/* <Button title="Next" onPress={() => navigation.navigate("Waiting")} /> */}
-      <Text style={styles.bigText}>Host Confessation</Text>
-      <Button title="Host" onPress={hostGameHandler} />
-      <Text style={styles.bigText}>Join Confessation</Text>
-      <TextInput
-        placeholder="Enter a room code"
-        onChangeText={(text) => setCode(text)}
-        value={code}
-        keyboardType="number-pad"
-        style={styles.inputField}
-      />
-      <Button title="Join" onPress={joinGameHandler} />
+      <View style={styles.container}>
+        <Text style={styles.bigText}>Host Confessation</Text>
+        <TouchableOpacity onPress={hostGameHandler}>
+          <Image source={require("../assets/images/host_button.png")} />
+        </TouchableOpacity>
+      </View>
+      <View styles={styles.container}>
+        <Text style={styles.bigText}>Join Confessation</Text>
+        <TextInput
+          placeholder="Enter a room code"
+          onChangeText={(text) => setCode(text)}
+          value={code}
+          keyboardType="number-pad"
+          style={styles.inputField}
+        />
+        <TouchableOpacity onPress={joinGameHandler}>
+          <Image source={require("../assets/images/join_button.png")} />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -55,6 +62,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flex: 1,
     backgroundColor: "black",
+  },
+  container: {
+    padding: 10,
+    marginVertical: 20,
   },
   bigText: {
     fontSize: 30,
