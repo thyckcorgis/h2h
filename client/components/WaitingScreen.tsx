@@ -2,6 +2,8 @@ import { StackNavigationHelpers } from "@react-navigation/stack/lib/typescript/s
 import * as React from "react";
 import { View, Text, Button, FlatList, StyleSheet } from "react-native";
 
+import socket from "../socket";
+
 interface WaitingScreenProps {
   navigation: StackNavigationHelpers;
   route: any;
@@ -32,7 +34,7 @@ export default function WaitingScreen({
   navigation,
   route,
 }: WaitingScreenProps) {
-  const { socket, code, users } = route.params;
+  const { code, users } = route.params;
   const renderItem = ({ item }: { item: any }) => <Item title={item.title} />;
   socket.on("player-joined", (user: string) => {
     users.push(user);

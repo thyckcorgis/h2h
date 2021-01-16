@@ -5,28 +5,27 @@ import { useState } from "react";
 import { io } from "socket.io-client";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
+import socket from "../socket";
 interface HomeScreenProps {
   navigation: StackNavigationHelpers;
   route: any;
 }
 
 export default function HomeScreen({ navigation, route }: HomeScreenProps) {
+  console.log(socket.connected);
   const [code, setCode] = useState("");
   const { name } = route.params;
-  const socket = io("https://thyck.top/", {
-    path: "/h2h",
-  });
 
   const hostGameHandler = () => {
     console.log(socket.connected);
     socket.emit("create", name, (code: number) => {
-      navigation.navigate("Waiting", { socket, code, users: [name] });
+      navigation.navigate("Waiting", { code, users: [name] });
     });
   };
 
   const joinGameHandler = () => {
     socket.emit("join", name, code, (data: any) => {
-      navigation.navigate("Waiting", { socket, code, users: data.users });
+      navigation.navigate("Waiting", { code, users: data.users });
     });
   };
 
@@ -38,7 +37,7 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
           <Image source={require("../assets/images/host_button.png")} />
         </TouchableOpacity>
       </View>
-      <View styles={styles.container}>
+      <View style={styles.container}>
         <Text style={styles.bigText}>Join Confessation</Text>
         <TextInput
           placeholder="Enter a room code"
