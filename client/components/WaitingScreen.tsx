@@ -1,5 +1,5 @@
 import { StackNavigationHelpers } from "@react-navigation/stack/lib/typescript/src/types";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, Button, FlatList, StyleSheet } from "react-native";
 
 import socket from "../socket";
@@ -22,9 +22,11 @@ export default function WaitingScreen({
   const { code, users } = route.params;
   const [roomUsers, setRoomUsers] = useState(users);
   const renderItem = ({ item }: { item: any }) => <Item title={item} />;
-  socket.on("player-joined", ({ user }: { user: string }) => {
-    setRoomUsers((roomUsers: string[]) => [...roomUsers, user]);
-  });
+  useEffect(() => {
+    socket.on("player-joined", ({ user }: { user: string }) => {
+      setRoomUsers((roomUsers: string[]) => [...roomUsers, user]);
+    });
+  }, []);
 
   return (
     <View style={styles.screen}>
