@@ -49,6 +49,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: "white",
     fontSize: 18,
+    color: "white",
   },
   smallText: {
     fontFamily: "Georgia",
