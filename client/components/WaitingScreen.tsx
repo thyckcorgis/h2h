@@ -20,7 +20,7 @@ export default function WaitingScreen({
   navigation,
   route,
 }: WaitingScreenProps) {
-  const { code, users } = route.params;
+  const { name, code, users } = route.params;
   const [roomUsers, setRoomUsers] = useState(users);
   const renderItem = ({ item }: { item: any }) => <Item title={item} />;
   useEffect(() => {
@@ -28,12 +28,13 @@ export default function WaitingScreen({
       setRoomUsers((roomUsers: string[]) => [...roomUsers, user]);
     });
     socket.on("start-game", (data: any) => {
-      if (data.ok) navigation.navigate("Game", { users });
+      if (data.ok) navigation.navigate("Game", { name, users });
     });
   }, []);
 
   const startGameHandler = () => {
     socket.emit("start-game", code);
+    navigation.navigate("Game", { name, users });
   };
 
   return (

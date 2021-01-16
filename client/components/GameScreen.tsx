@@ -4,12 +4,14 @@ import { View, Text, Button, StyleSheet } from "react-native";
 
 interface GameScreenProps {
   navigation: StackNavigationHelpers;
+  route: any;
 }
 
-export default function GameScren({ navigation }: GameScreenProps) {
+export default function GameScren({ route, navigation }: GameScreenProps) {
+  const { name, users } = route.params;
   return (
     <View style={styles.screen}>
-      <Text style={styles.bigText}>JOHN</Text>
+      <Text style={styles.bigText}>{name}</Text>
       <Text style={styles.smallText}>
         It is your turn. Ask the group the question below.
       </Text>
