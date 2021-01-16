@@ -2,15 +2,15 @@ import { StackNavigationHelpers } from "@react-navigation/stack/lib/typescript/s
 import * as React from "react";
 import { View, Text, Button } from "react-native";
 
-interface StartScreenProps {
+interface HomeScreenProps {
   navigation: StackNavigationHelpers;
 }
 
-export default function LoadingScreen({ navigation }: StartScreenProps) {
+export default function HomeScreen({ navigation }: HomeScreenProps) {
   return (
     <View>
-      <Text>This is the start screen....</Text>
-      <Button title="next" onPress={() => navigation.navigate("Register")} />
+      <Text>Host Confessation</Text>
+      <Button title="Host" onPress={() => navigation.navigate("Waiting")} />
     </View>
   );
 }

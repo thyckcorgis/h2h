@@ -4,6 +4,10 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 import LoadingScreen from "./components/LoadingScreen";
 import StartScreen from "./components/StartScreen";
+import RegisterScreen from "./components/RegisterScreen";
+import HomeScreen from "./components/HomeScreen";
+import WaitingScreen from "./components/WaitingScreen";
+
 
 const Stack = createStackNavigator();
 
@@ -33,6 +37,21 @@ export default function App() {
           component={StartScreen}
           options={hideHeader}
         />
+        <Stack.Screen
+          name="Register"
+          component={RegisterScreen}
+          options={hideHeader}
+        />
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
+          options={hideHeader}
+        />
+        <Stack.Screen
+          name="Waiting"
+          component={WaitingScreen}
+          options={hideHeader}
+        />        
       </Stack.Navigator>
     </NavigationContainer>
   );
