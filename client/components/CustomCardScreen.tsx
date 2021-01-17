@@ -49,7 +49,7 @@ export default function CustomCardScreen({
 
   return (
     <KeyboardAvoidingView style={styles.screen} behavior="padding">
-      <Text style={styles.bigText}>Add custom card to be read anonymously</Text>
+      <Text style={styles.bigText}>Add custom card(s) to be read anonymously</Text>
       <TextInput
         multiline={true}
         style={styles.inputField}
