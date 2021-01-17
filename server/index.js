@@ -1,16 +1,17 @@
 const express = require("express");
 const app = express();
 const { randCode, shuffleArray } = require("./random");
+const categories = require("./categories.json");
 
 const port = 5001;
 
 const router = express.Router();
-
 router.get("/", (req, res) => {
   res.send("Hello, thyck bois and gorls of the world!");
 });
 
 const rooms = {};
+const join = (arr1, arr2) => [...arr1, ...arr2];
 const roomExists = (code) => rooms[code] != null;
 const addUserToRoom = (name, code) => rooms[code]?.users.push(name);
 const endTurn = (code) => {
@@ -21,7 +22,6 @@ const changeRoomSettings = (code, settings) => {
   rooms[code].settings = settings;
 };
 const getCurrentPlayer = (code) => rooms[code]?.users[rooms[code].current];
-const categories = require("./categories.json");
 const drawCard = (code) => {
   const card = rooms[code]?.cards.pop();
   rooms[code].currentCard = card;
@@ -32,11 +32,11 @@ const getCardCategories = (code) => {
   let arr = [];
   Object.entries(settings).forEach(([key, val]) => {
     if (val && key !== "customCards") {
-      arr = [...arr, ...categories[key]];
+      arr = join(arr, categories[key]);
     }
   });
 
-  if (settings.customCards) arr = [...arr, ...customs];
+  if (settings.customCards) arr = join(arr, customs);
   arr = shuffleArray(arr);
   return arr;
 };
