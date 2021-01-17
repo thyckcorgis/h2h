@@ -80,18 +80,19 @@ io.on("connection", (socket) => {
   });
   socket.on("start-game", (code, fn) => {
     const card = drawCard(code);
-    fn(card);
+    const current = getCurrentPlayer(code);
+    fn({ current, card });
     socket.to(code).emit("start-game", {
       ok: true,
       message: "game has been started by host",
-      current: getCurrentPlayer(code),
+      current,
       card,
     });
   });
   socket.on("next-card", (code, fn) => {
     endTurn(code);
     const card = drawCard(code);
-    fn(card);
+    fn({ current, card });
     const nextPlayer = getCurrentPlayer(code);
     socket.to(code).emit("next-card", {
       ok: true,
