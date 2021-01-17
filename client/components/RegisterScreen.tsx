@@ -16,6 +16,15 @@ interface RegisterScreenProps {
 
 export default function RegisterScreen({ navigation }: RegisterScreenProps) {
   const [name, setName] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const registerHandler = () => {
+    if (name === "") {
+      setErrorMessage("Please enter a name.");
+      return;
+    }
+    navigation.navigate("Home", { name });
+  };
 
   return (
     <View style={styles.screen}>
@@ -27,7 +36,10 @@ export default function RegisterScreen({ navigation }: RegisterScreenProps) {
         onChangeText={(text) => setName(text)}
         value={name}
       />
-      <TouchableOpacity onPress={() => navigation.navigate("Home", { name })}>
+      <Text style={{ ...styles.smallText, color: "red", padding: 10 }}>
+        {errorMessage}
+      </Text>
+      <TouchableOpacity onPress={registerHandler}>
         <Image source={require("../assets/images/register_button.png")} />
       </TouchableOpacity>
     </View>
@@ -59,7 +71,7 @@ const styles = StyleSheet.create({
     color: "white",
   },
   smallText: {
-    fontFamily: "Futura",
+    fontFamily: "Comfortaa-Regular",
     fontSize: 18,
     color: "white",
     textAlign: "center",
