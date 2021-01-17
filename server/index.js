@@ -7,7 +7,7 @@ const port = 5001;
 const router = express.Router();
 
 router.get("/", (req, res) => {
-  res.send("hello, world!");
+  res.send("Hello, thyck bois and gorls of the world!");
 });
 
 const rooms = {};
