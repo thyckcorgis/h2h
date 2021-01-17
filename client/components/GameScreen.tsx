@@ -23,14 +23,18 @@ export default function GameScren({ route, navigation }: GameScreenProps) {
   const [currentCard, setCurrentCard] = useState(card);
   const [currentPlayer, setCurrentPlayer] = useState(current);
 
-  useEffect(() => {});
+  const updateCurrent = (data: any) => {
+    const { current, card } = data;
+    setCurrentCard(card);
+    setCurrentPlayer(current);
+  };
+
+  useEffect(() => {
+    socket.on("next-card", updateCurrent);
+  });
 
   const nextCardHandler = () => {
-    socket.emit("next-card", code, (data: any) => {
-      const { current, card } = data;
-      setCurrentCard(card);
-      setCurrentPlayer(current);
-    });
+    socket.emit("next-card", code, updateCurrent);
   };
 
   const [modalVisible, setModalVisible] = useState(false);
