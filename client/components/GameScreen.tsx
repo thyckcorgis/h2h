@@ -49,6 +49,8 @@ const styles = StyleSheet.create({
     fontSize: 30,
     color: "white",
     paddingVertical: 20,
+    padding: 10,
+    textAlign: "center",
   },
   smallText: {
     fontSize: 18,
