@@ -7,6 +7,8 @@ import {
   FlatList,
   StyleSheet,
   Image,
+  Modal,
+  Alert,
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
@@ -27,6 +29,8 @@ export default function WaitingScreen({
   navigation,
   route,
 }: WaitingScreenProps) {
+  const [modalVisible, setModalVisible] = useState(false);
+
   const { name, code, users: _users, isHost: _isHost } = route.params;
   const [users, setUsers] = useState(_users);
   const [isHost, setHost] = useState(_isHost);
@@ -91,12 +95,49 @@ export default function WaitingScreen({
             extraData={users}
           />
         </View>
-        {start}
-      </View>
-      <View style={styles.quit}>
-        <TouchableOpacity onPress={quitLobbyHandler}>
-          <Image source={require("../assets/images/quit_button.png")} />
-        </TouchableOpacity>
+        <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert("Modal has been closed.");
+        }}
+        >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalView}>
+            <Text style={styles.bigText}>Game Mode?</Text>
+            <FlatList
+              data={users}
+              renderItem={renderItem}
+              keyExtractor={(item) => item}
+              extraData={users}
+            />
+
+            <TouchableOpacity
+              onPress={() => {
+                setModalVisible(!modalVisible);
+              }}
+            >
+              <Text style={styles.smallText}>Close</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        </Modal>
+        <View style={styles.navBar}>
+            <TouchableOpacity
+            onPress={() => {
+                setModalVisible(true);
+            }}
+            >
+            <Image source={require("../assets/images/settings_button.png")} />
+            </TouchableOpacity>
+            {start}
+        </View>
+        <View style={styles.quit}>
+            <TouchableOpacity onPress={quitLobbyHandler}>
+            <Image source={require("../assets/images/quit_button.png")} />
+            </TouchableOpacity>
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -146,5 +187,28 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignSelf: "flex-start",
     margin: 40,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    margin: 10,
+  },
+  navBar: {
+   // flexDirection: "row",
+    alignItems: "baseline",
+    justifyContent: "center",
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "black",
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: "white",
+    padding: 10,
+    // justifyContent: "center",
+    height: 300,
+    width: 300,
+    opacity: 0.9,
   },
 });
