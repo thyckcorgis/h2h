@@ -1,26 +1,42 @@
 import { StackNavigationHelpers } from "@react-navigation/stack/lib/typescript/src/types";
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, Button, StyleSheet } from "react-native";
 
+import socket from "../socket";
 interface GameScreenProps {
   navigation: StackNavigationHelpers;
   route: any;
 }
 
+const isTurn = (name: string, current: string) => name === current;
+
 export default function GameScren({ route, navigation }: GameScreenProps) {
-  const { card, name, users } = route.params;
+  const { code, current, card, name, users } = route.params;
+  const [currentCard, setCurrentCard] = useState(card);
+  const [currentPlayer, setCurrentPlayer] = useState(current);
 
   useEffect(() => {});
 
-  const nextCardHandler = () => {};
+  const nextCardHandler = () => {
+    socket.emit("next-card", code, (data: any) => {
+      const { current, card } = data;
+      setCurrentCard(card);
+      setCurrentPlayer(current);
+    });
+  };
+
   return (
     <View style={styles.screen}>
       <Text style={styles.bigText}>{name}</Text>
       <Text style={styles.smallText}>
-        It is your turn. Ask the group the question below.
+        {isTurn(name, currentPlayer)
+          ? `It is your turn. Ask the group the question below.`
+          : `It is ${currentPlayer}'s turn.`}
       </Text>
       <View style={styles.cardContainer}>
-        <Text style={styles.bigText}>{card}</Text>
+        <Text style={styles.bigText}>
+          {isTurn(name, currentPlayer) ? currentCard : ""}
+        </Text>
       </View>
       <Button title="next" onPress={nextCardHandler} />
     </View>
