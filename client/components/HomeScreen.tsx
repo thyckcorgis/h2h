@@ -19,6 +19,7 @@ interface HomeScreenProps {
   route: any;
 }
 
+
 export default function HomeScreen({ navigation, route }: HomeScreenProps) {
   const [code, setCode] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -42,7 +43,7 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
     }
 
     socket.emit("join", name, code, (data: any) => {
-      const { ok, users, gameStarted } = data;
+      const { ok, users, gameStarted, message } = data;
       if (ok) {
         if (gameStarted) {
         navigation.navigate("Game", {
@@ -60,7 +61,7 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
         });
         }
       } else {
-        setErrorMessage("Room does not exist");
+        setErrorMessage(message);
       }
     });
   };
