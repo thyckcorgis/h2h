@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   continueText: {
-    fontFamily: "Comfortaa",
+    fontFamily: "Futura",
     fontSize: 14,
     color: "#892cdc",
   },
