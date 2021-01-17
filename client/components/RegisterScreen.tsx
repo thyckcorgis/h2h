@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     backgroundColor: "black",
   },
   bigText: {
-    fontFamily: "Arial Rounded MT Bold",
+    fontFamily: "Avenir-Light",
     fontSize: 30,
     color: "white",
   },
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     color: "white",
   },
   smallText: {
-    fontFamily: "Arial Rounded MT Bold",
+    fontFamily: "Avenir-Light",
     fontSize: 18,
     color: "white",
     textAlign: "center",

@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   continueText: {
-    fontFamily: "Arial Rounded MT Bold",
+    fontFamily: "Avenir-Light",
     fontSize: 14,
     color: "#892cdc",
     paddingVertical: 30,
