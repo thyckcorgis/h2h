@@ -1,4 +1,4 @@
-//@ts-nocheck
+// @ts-nocheck
 export { default as UserButton } from "./users_button.svg";
 export { default as NextButton } from "./next_button.svg";
 export { default as SettingsButton } from "./settings_button.svg";
