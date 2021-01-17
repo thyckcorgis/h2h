@@ -21,8 +21,9 @@ const getCurrentPlayer = (code) => rooms[code].users[rooms[code].current];
 const questions = require("./questions.json");
 const drawCard = (code) => {
   const idx = rooms[code].cards.pop();
-  return questions[idx];
+  rooms[code].currentCard = questions[idx];
 };
+const getCurrentCard = (code) => rooms[code].currentCard;
 
 // unnecessary edge case for the presentation
 // const userExistsInRoom = (name, code) => rooms[code].users.includes(name);
@@ -37,6 +38,8 @@ const createRoom = (name) => {
     users: [name],
     current: 0,
     cards: getRandArray(questions.length),
+    gameStarted: false,
+    currentCard: "",
   };
 
   return code;
@@ -51,12 +54,6 @@ const io = require("socket.io")(server, {
 });
 
 io.on("connection", (socket) => {
-  // socket.on("create", (name, fn) => {
-  //   const code = createRoom(name);
-  //   console.log({ name, code });
-  //   fn(code);
-  // });
-  // socket.emit("message", "hello");
   socket.on("create", (name, fn) => {
     const code = createRoom(name);
     socket.join(code);
@@ -68,11 +65,23 @@ io.on("connection", (socket) => {
 
     addUserToRoom(name, code);
     socket.join(code);
-    fn({ ok: true, message: `joined room ${code}`, users: rooms[code].users });
+    const current = getCurrentPlayer(code);
+    const card = getCurrentCard(code);
+    fn({
+      ok: true,
+      message: `joined room ${code}`,
+      users: rooms[code].users,
+      current,
+      card,
+      gameStarted,
+    });
     socket.to(code).emit("player-joined", { ok: true, user: name });
   });
+
   socket.on("start-game", (code, fn) => {
-    const card = drawCard(code);
+    rooms[code].gameStarted = true;
+    drawCard(code);
+    const card = getCurrentCard(code);
     const current = getCurrentPlayer(code);
     fn({ current, card });
     socket.to(code).emit("start-game", {
@@ -85,7 +94,8 @@ io.on("connection", (socket) => {
   socket.on("next-card", (code, fn) => {
     endTurn(code);
     const current = getCurrentPlayer(code);
-    const card = drawCard(code);
+    drawCard(code);
+    const card = getCurrentCard(code);
     fn({ current, card });
     socket.to(code).emit("next-card", {
       ok: true,
