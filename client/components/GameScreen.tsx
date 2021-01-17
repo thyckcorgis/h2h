@@ -89,6 +89,7 @@ export default function GameScren({ route, navigation }: GameScreenProps) {
   return (
     <View style={styles.screen}>
       <Text style={{ ...styles.smallText, color: "red" }}>{message}</Text>
+      <Text style={styles.bigText}>Rooom code: {code}</Text>
       <Text style={styles.bigText}>{name}</Text>
       <Text style={styles.smallText}>
         {isTurn(name, current)
@@ -96,7 +97,11 @@ export default function GameScren({ route, navigation }: GameScreenProps) {
           : `It is ${current}'s turn.`}
       </Text>
       <View style={styles.cardContainer}>
-        <Text style={styles.bigText}>{isTurn(name, current) ? card : ""}</Text>
+        {isTurn(name, current) ? (
+          <Text style={styles.bigText}>{card}</Text>
+        ) : (
+          <CardBack width={250} />
+        )}
       </View>
 
       <Modal
