@@ -73,17 +73,19 @@ export default function WaitingScreen({
       setUsers(users);
       setHost(newHost === "" ? isHost : name === newHost);
     });
-    socket.on("setting", (settings) => {
-      const { happy, heavy, selfReflection, toTheSpeaker } = settings;
-      setHappy(happy);
-      setHeavy(heavy);
-      setSelfReflection(selfReflection);
-      setToTheSpeaker(toTheSpeaker);
-    });
+    if (!isHost) {
+      socket.on("setting", (settings) => {
+        const { happy, heavy, selfReflection, toTheSpeaker } = settings;
+        setHappy(happy);
+        setHeavy(heavy);
+        setSelfReflection(selfReflection);
+        setToTheSpeaker(toTheSpeaker);
+      });
+    }
     socket.on("player-joined", ({ user }: { user: string }) => {
       setUsers((users: string[]) => [...users, user]);
     });
-  }, []);
+  }, [isHost]);
 
   useEffect(() => {
     if (isHost) {
@@ -94,7 +96,7 @@ export default function WaitingScreen({
         toTheSpeaker,
       });
     }
-  }, [happy, heavy, selfReflection, toTheSpeaker]);
+  }, [happy, heavy, selfReflection, toTheSpeaker, isHost]);
 
   const startGameHandler = () => {
     socket.emit("start-game", code, (data: any) => {
