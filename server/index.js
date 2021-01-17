@@ -55,7 +55,7 @@ const createRoom = (name) => {
     gameStarted: false,
     currentCard: "",
     settings: {
-      light: true,
+      happy: true,
       heavy: true,
       toTheSpeaker: true,
       selfReflection: true,
