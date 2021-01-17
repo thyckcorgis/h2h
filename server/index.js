@@ -54,7 +54,7 @@ const createRoom = (name) => {
     cards: getRandArray(questions.length),
     gameStarted: false,
     currentCard: "",
-    categories: {
+    settings: {
       light: true,
       heavy: true,
       toTheSpeaker: true,
