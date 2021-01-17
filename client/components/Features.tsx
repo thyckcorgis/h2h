@@ -26,9 +26,6 @@ export default function Features() {
         5. Custom cards: Write your own cards to be shuffled into the deck anonymously. 
         This can offer a way for you to ask questions you would be too scared to say outloud.
       </Text>
-      <Text style={styles.smallText}>
-        5. Answer honestly and let everyone have a chance to speak and listen.
-      </Text>
     </View>
   );
 }
@@ -39,6 +36,7 @@ const styles = StyleSheet.create({
     color: "white",
     paddingBottom: 10,
     fontFamily: "Avenir-Light",
+    textAlign: 'center',
   },
   smallText: {
     fontSize: 14,
