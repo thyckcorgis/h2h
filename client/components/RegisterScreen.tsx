@@ -64,7 +64,8 @@ const styles = StyleSheet.create({
   },
   inputField: {
     padding: 5,
-    marginVertical: 20,
+    marginTop: 10,
+    // marginBottom: 20,
     width: 250,
     textAlign: "left",
     alignSelf: "center",
@@ -75,9 +76,10 @@ const styles = StyleSheet.create({
     fontFamily: "Avenir-Light",
   },
   smallText: {
-    fontFamily: "Avenir-Light",
-    fontSize: 18,
+    fontSize: 14,
     color: "white",
     textAlign: "center",
+    padding: 5,
+    marginBottom: 30,
   },
 });
