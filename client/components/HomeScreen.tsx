@@ -133,6 +133,7 @@ const styles = StyleSheet.create({
     borderColor: "white",
     fontSize: 18,
     color: "white",
+    fontFamily: "Avenir-Light",
   },
   smallText: {
     fontSize: 18,

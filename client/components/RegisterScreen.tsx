@@ -72,6 +72,7 @@ const styles = StyleSheet.create({
     borderColor: "white",
     fontSize: 18,
     color: "white",
+    fontFamily: "Avenir-Light",
   },
   smallText: {
     fontFamily: "Avenir-Light",
