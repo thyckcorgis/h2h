@@ -5,14 +5,14 @@ import {
   Text,
   StyleSheet,
   TextInput,
-  Image,
+  Modal,
   KeyboardAvoidingView,
 } from "react-native";
 import { useState } from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import socket from "../socket";
 
-import { HostButton, JoinButton } from "../assets/images/";
+import { HostButton, JoinButton, HelpButton } from "../assets/images/";
 
 interface HomeScreenProps {
   navigation: StackNavigationHelpers;
@@ -20,6 +20,7 @@ interface HomeScreenProps {
 }
 
 export default function HomeScreen({ navigation, route }: HomeScreenProps) {
+  const [modalVisible, setModalVisible] = useState(false);
   const [code, setCode] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const { name } = route.params;
@@ -73,31 +74,85 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
 
   return (
     <KeyboardAvoidingView style={styles.screen} behavior="padding">
-      {/* <View style={{ flex: 1 }} /> */}
-      <View style={styles.container}>
-        <Text style={styles.bigText}>Host Confessation</Text>
-        <TouchableOpacity onPress={hostGameHandler}>
-          <HostButton width={250} />
+      <View style={styles.helpContainer}>
+        <Modal animationType="slide" transparent={true} visible={modalVisible}>
+          <View style={styles.modalContainer}>
+            <View style={styles.modalView}>
+              <View style={{ flex: 9 }}>
+                <Text style={styles.bigText}>Our Mission:</Text>
+                <Text style={styles.smallText}>
+                  Heart 2 Heart Confessations was built with the intention of
+                  fostering meaningful connections with your peers. It allows
+                  users to deepen existing relationships as well as form new
+                  ones.
+                </Text>
+                <Text style={styles.smallText}>
+                  Here’s our suggestion on how to use this app:
+                </Text>
+                <Text style={styles.smallText}>
+                  1. Find people you’d like to know better; whether it be your
+                  friends, family, or significant other.
+                </Text>
+                <Text style={styles.smallText}>
+                  2. Arrange a group call on another device.
+                </Text>
+                <Text style={styles.smallText}>
+                  3. Host a confessation room and send the code to your peers.
+                </Text>
+                <Text style={styles.smallText}>
+                  4. The person who’s turn it is can pose the question on the
+                  screen to the rest of the group.
+                </Text>
+                <Text style={styles.smallText}>
+                  5. Answer honestly and let everyone have a chance to speak and
+                  listen.
+                </Text>
+              </View>
+              <View style={styles.closeContainer}>
+                <TouchableOpacity
+                  onPress={() => {
+                    setModalVisible(!modalVisible);
+                  }}
+                >
+                  <Text style={styles.smallText}>Close</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        </Modal>
+        <TouchableOpacity
+          onPress={() => {
+            setModalVisible(!modalVisible);
+          }}
+        >
+          <HelpButton />
         </TouchableOpacity>
       </View>
-      <View style={styles.container}>
-        <Text style={styles.bigText}>Join Confessation</Text>
-        <TextInput
-          placeholder="Enter a room code"
-          placeholderTextColor="white"
-          onChangeText={(text) => setCode(text)}
-          value={code}
-          keyboardType="number-pad"
-          style={styles.inputField}
-        />
-        <Text style={{ ...styles.smallText, color: "red" }}>
-          {errorMessage}
-        </Text>
-        <TouchableOpacity onPress={joinGameHandler}>
-          <JoinButton width={250} />
-        </TouchableOpacity>
+      <View style={styles.itemContainer}>
+        <View style={styles.container}>
+          <Text style={styles.bigText}>Host Confessation</Text>
+          <TouchableOpacity onPress={hostGameHandler}>
+            <HostButton width={250} />
+          </TouchableOpacity>
+        </View>
+        <View style={styles.container}>
+          <Text style={styles.bigText}>Join Confessation</Text>
+          <TextInput
+            placeholder="Enter a room code"
+            placeholderTextColor="white"
+            onChangeText={(text) => setCode(text)}
+            value={code}
+            keyboardType="number-pad"
+            style={styles.inputField}
+          />
+          <Text style={{ ...styles.smallText, color: "red" }}>
+            {errorMessage}
+          </Text>
+          <TouchableOpacity style={{ marginTop: 30 }} onPress={joinGameHandler}>
+            <JoinButton width={250} />
+          </TouchableOpacity>
+        </View>
       </View>
-      {/* <View style={{ flex: 2 }} /> */}
     </KeyboardAvoidingView>
   );
 }
@@ -110,10 +165,47 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "black",
   },
+  helpContainer: {
+    flexDirection: "row",
+    flex: 1,
+    alignSelf: "flex-end",
+    marginTop: 30,
+  },
   container: {
     padding: 10,
     marginVertical: 20,
     alignItems: "center",
+  },
+  itemContainer: {
+    flex: 4,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    margin: 10,
+    padding: 20,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "black",
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: "white",
+    padding: 20,
+    // justifyContent: "center",
+    height: 600,
+    width: 350,
+    opacity: 0.9,
+    alignItems: "center",
+  },
+  closeContainer: {
+    marginTop: 50,
+    justifyContent: "flex-end",
+    borderWidth: 1,
+    borderColor: "white",
+    borderRadius: 20,
+    paddingHorizontal: 10,
   },
   bigText: {
     fontSize: 30,
@@ -124,7 +216,6 @@ const styles = StyleSheet.create({
   inputField: {
     padding: 5,
     marginTop: 10,
-    // marginBottom: 20,
     width: 250,
     textAlign: "left",
     alignSelf: "center",
@@ -139,7 +230,6 @@ const styles = StyleSheet.create({
     color: "white",
     textAlign: "center",
     padding: 5,
-    marginBottom: 30,
   },
   continueText: {
     fontFamily: "Avenir-Light",
