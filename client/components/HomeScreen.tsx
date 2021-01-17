@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   continueText: {
-    fontFamily: "Comfortaa",
+    fontFamily: "Futura",
     fontSize: 14,
     color: "#892cdc",
     paddingVertical: 30,

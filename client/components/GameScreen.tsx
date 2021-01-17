@@ -175,7 +175,7 @@ const styles = StyleSheet.create({
   },
   smallText: {
     fontSize: 18,
-    fontFamily: "Comfortaa-Regular",
+    fontFamily: "Futura",
     color: "white",
     textAlign: "center",
   },
