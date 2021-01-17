@@ -23,7 +23,6 @@ const changeRoomSettings = (code, settings) => {
   rooms[code].settings = settings;
 };
 const getCurrentPlayer = (code) => rooms[code].users[rooms[code].current];
-const questions = require("./questions.json");
 const categories = require("./categories.json");
 const drawCard = (code) => {
   const card = rooms[code].cards.pop();
@@ -46,21 +45,12 @@ const removeUser = (code, name) => {
   rooms[code].users = rooms[code].users.filter((arrName) => arrName !== name);
   rooms[code].current = rooms[code].current % rooms[code].users.length;
 };
-const getNewHost = (code, isHost) => {
-  if (!isHost) {
-    return "";
-  }
-  return rooms[code]?.users[0];
-};
-
-// unnecessary edge case for the presentation
+const getNewHost = (code, isHost) => (isHost ? rooms[code]?.users[0] : "");
 const userExistsInRoom = (name, code) => rooms[code].users.includes(name);
 
 const createRoom = (name) => {
   let code = randCode();
-  while (roomExists(code)) {
-    code = randCode();
-  }
+  while (roomExists(code)) code = randCode();
 
   rooms[code] = {
     users: [name],
