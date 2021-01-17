@@ -9,6 +9,7 @@ import {
   Image,
   Modal,
   Alert,
+  Button,
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import CheckBox from "./Checkbox";
@@ -33,8 +34,17 @@ export default function WaitingScreen({
   navigation,
   route,
 }: WaitingScreenProps) {
-  const [toggleCheckBox, setToggleCheckBox] = useState(false);
+  // const [toggleCheckBox, setToggleCheckBox] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+  const [happy, setHappy] = useState(true);
+  const [heavy, setHeavy] = useState(true);
+  const [toTheSpeaker, setToTheSpeaker] = useState(true);
+  const [selfReflection, setSelfReflection] = useState(true);
+
+  const toggleHappy = () => setHappy(!happy);
+  const toggleHeavy = () => setHeavy(!heavy);
+  const toggleToTheSpeaker = () => setToTheSpeaker(!toTheSpeaker);
+  const toggleSelfReflection = () => setSelfReflection(!selfReflection);
 
   const { name, code, users: _users, isHost: _isHost } = route.params;
   const [users, setUsers] = useState(_users);
@@ -111,11 +121,19 @@ export default function WaitingScreen({
           <View style={styles.modalContainer}>
             <View style={styles.modalView}>
               <Text style={styles.bigText}>Game Mode</Text>
-              <Text>Happy</Text>
-              <CheckBox
-                disabled={false}
-                value={toggleCheckBox}
-                onValueChange={(newValue) => setToggleCheckBox(newValue)}
+              <Text style={styles.smallText}>Happy</Text>
+              <Button onPress={toggleHappy} title={happy ? "on" : "off"} />
+              <Text style={styles.smallText}>Self-reflection</Text>
+              <Button
+                onPress={toggleSelfReflection}
+                title={selfReflection ? "on" : "off"}
+              />
+              <Text style={styles.smallText}>Heavy</Text>
+              <Button onPress={toggleHeavy} title={heavy ? "on" : "off"} />
+              <Text style={styles.smallText}>To the Speaker</Text>
+              <Button
+                onPress={toggleToTheSpeaker}
+                title={toTheSpeaker ? "on" : "off"}
               />
 
               <TouchableOpacity
