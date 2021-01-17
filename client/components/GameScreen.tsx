@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Modal,
   Alert,
+  Image,
   TouchableHighlight,
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -41,7 +42,9 @@ export default function GameScren({ route, navigation }: GameScreenProps) {
   const [modalVisible, setModalVisible] = useState(false);
 
   const button = isTurn(name, currentPlayer) ? (
-    <Button title="next" onPress={nextCardHandler} />
+    <TouchableOpacity onPress={nextCardHandler}>
+      <Image source={require("../assets/images/next_button.png")} />
+    </TouchableOpacity>
   ) : null;
 
   return (
@@ -81,14 +84,19 @@ export default function GameScren({ route, navigation }: GameScreenProps) {
         </View>
       </Modal>
 
-      <TouchableOpacity
-        onPress={() => {
-          setModalVisible(true);
-        }}
-      >
-        <Text style={styles.smallText}>Participants</Text>
-      </TouchableOpacity>
-      {button}
+      <View style={styles.navBar}>
+        <TouchableOpacity
+          onPress={() => {
+            setModalVisible(true);
+          }}
+        >
+          <Image source={require("../assets/images/users_button.png")} />
+        </TouchableOpacity>
+        {button}
+        <TouchableOpacity>
+          <Image source={require("../assets/images/quit_button.png")} />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -116,6 +124,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     margin: 20,
+  },
+  navBar: {
+    flexDirection: "row",
+    alignItems: "baseline",
   },
   bigText: {
     fontSize: 30,
