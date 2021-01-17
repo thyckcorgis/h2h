@@ -40,6 +40,7 @@ export default function WaitingScreen({
   const [heavy, setHeavy] = useState(true);
   const [toTheSpeaker, setToTheSpeaker] = useState(true);
   const [selfReflection, setSelfReflection] = useState(true);
+  const [message, setMessage] = useState("");
 
   const { name, code, users: _users, isHost: _isHost } = route.params;
   const [users, setUsers] = useState(_users);
@@ -77,7 +78,7 @@ export default function WaitingScreen({
   }, []);
 
   useEffect(() => {
-    console.log("changed");
+    setMessage("changed");
     socket.emit("setting", code, {
       happy,
       heavy,
@@ -168,6 +169,22 @@ export default function WaitingScreen({
               >
                 <Text style={styles.smallText}>Close</Text>
               </TouchableOpacity>
+              <Button
+                title="print"
+                onPress={() => {
+                  setMessage(
+                    JSON.stringify({
+                      happy,
+                      heavy,
+                      toTheSpeaker,
+                      selfReflection,
+                    })
+                  );
+                }}
+              />
+              <Text style={{ ...styles.smallText, color: "white" }}>
+                {message}
+              </Text>
             </View>
           </View>
         </Modal>
