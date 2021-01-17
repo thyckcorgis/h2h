@@ -5,15 +5,13 @@ import {
   Text,
   StyleSheet,
   TextInput,
-  Modal,
   KeyboardAvoidingView,
 } from "react-native";
 import { useState } from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import socket from "../socket";
 
-import { HostButton, JoinButton, HelpButton } from "../assets/images/";
-import FAQ from "./FAQ";
+import { HostButton, JoinButton } from "../assets/images/";
 
 interface HomeScreenProps {
   navigation: StackNavigationHelpers;
@@ -21,7 +19,6 @@ interface HomeScreenProps {
 }
 
 export default function HomeScreen({ navigation, route }: HomeScreenProps) {
-  const [modalVisible, setModalVisible] = useState(false);
   const [code, setCode] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const { name } = route.params;
@@ -76,33 +73,6 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
 
   return (
     <KeyboardAvoidingView style={styles.screen} behavior="padding">
-      <View style={styles.helpContainer}>
-        <Modal animationType="slide" transparent={true} visible={modalVisible}>
-          <View style={styles.modalContainer}>
-            <View style={styles.modalView}>
-              <View style={{ flex: 9 }}>
-                <FAQ />
-              </View>
-              <View style={styles.closeContainer}>
-                <TouchableOpacity
-                  onPress={() => {
-                    setModalVisible(!modalVisible);
-                  }}
-                >
-                  <Text style={styles.smallText}>Close</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>
-        </Modal>
-        <TouchableOpacity
-          onPress={() => {
-            setModalVisible(!modalVisible);
-          }}
-        >
-          <HelpButton />
-        </TouchableOpacity>
-      </View>
       <View style={styles.itemContainer}>
         <View style={styles.container}>
           <Text style={styles.bigText}>Host Confessation</Text>

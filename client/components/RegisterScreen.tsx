@@ -8,10 +8,13 @@ import {
   TextInput,
   TouchableOpacity,
   KeyboardAvoidingView,
+  Modal,
 } from "react-native";
 import { useState } from "react";
+import FAQ from "./FAQ";
 
-import { RegisterButton } from "../assets/images/";
+
+import { RegisterButton, HelpButton } from "../assets/images/";
 
 interface RegisterScreenProps {
   navigation: StackNavigationHelpers;
@@ -20,6 +23,8 @@ interface RegisterScreenProps {
 export default function RegisterScreen({ navigation }: RegisterScreenProps) {
   const [name, setName] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+
+  const [modalVisible, setModalVisible] = useState(false);
 
   const registerHandler = () => {
     if (name === "") {
@@ -31,6 +36,33 @@ export default function RegisterScreen({ navigation }: RegisterScreenProps) {
 
   return (
     <KeyboardAvoidingView style={styles.screen} behavior="padding">
+       <View style={styles.helpContainer}>
+        <Modal animationType="slide" transparent={true} visible={modalVisible}>
+          <View style={styles.modalContainer}>
+            <View style={styles.modalView}>
+              <View style={{ flex: 9 }}>
+                <FAQ />
+              </View>
+              <View style={styles.closeContainer}>
+                <TouchableOpacity
+                  onPress={() => {
+                    setModalVisible(!modalVisible);
+                  }}
+                >
+                  <Text style={styles.smallText}>Close</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        </Modal>
+        <TouchableOpacity
+          onPress={() => {
+            setModalVisible(!modalVisible);
+          }}
+        >
+          <HelpButton />
+        </TouchableOpacity>
+      </View>
       <Text style={styles.bigText}>Ready to Talk?</Text>
       <TextInput
         style={styles.inputField}
@@ -81,5 +113,39 @@ const styles = StyleSheet.create({
     textAlign: "center",
     padding: 5,
     marginBottom: 30,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    margin: 10,
+    padding: 20,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "black",
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: "white",
+    padding: 20,
+    // justifyContent: "center",
+    height: 600,
+    width: 350,
+    opacity: 0.9,
+    alignItems: "center",
+  },
+  closeContainer: {
+    marginTop: 50,
+    justifyContent: "flex-end",
+    borderWidth: 1,
+    borderColor: "white",
+    borderRadius: 20,
+    paddingHorizontal: 10,
+  },
+  helpContainer: {
+    flexDirection: "row",
+    flex: 1,
+    alignSelf: "flex-end",
+    marginTop: 30,
   },
 });
