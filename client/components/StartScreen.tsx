@@ -3,11 +3,10 @@ import { View, Text, Image, StyleSheet, Dimensions } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { StackNavigationHelpers } from "@react-navigation/stack/lib/typescript/src/types";
 
-import H2HLogo from "../assets/images/h2h_logo.svg";
-import CorgiLogo from "../assets/images/corgi_logo.svg";
+import { H2HLogo, CorgiLogo } from "../assets/images/";
 
 const screenWidth = Dimensions.get("window").width;
-const screenHeight = Dimensions.get("window").height;
+// const screenHeight = Dimensions.get("window").height;
 
 interface StartScreenProps {
   navigation: StackNavigationHelpers;

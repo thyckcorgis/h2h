@@ -12,8 +12,7 @@ import { useState } from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import socket from "../socket";
 
-import HostButton from "../assets/images/host_button.svg";
-import JoinButton from "../assets/images/join_button.svg";
+import { HostButton, JoinButton } from "../assets/images/";
 
 interface HomeScreenProps {
   navigation: StackNavigationHelpers;

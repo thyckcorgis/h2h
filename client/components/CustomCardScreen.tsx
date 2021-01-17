@@ -1,14 +1,17 @@
 import { StackNavigationHelpers } from "@react-navigation/stack/lib/typescript/src/types";
 import * as React from "react";
 import { View, Text, Button, TextInput, StyleSheet } from "react-native";
-import {useState} from 'react';
+import { useState } from "react";
 
 interface CustomCardScreenProps {
   navigation: StackNavigationHelpers;
-  route: any
+  route: any;
 }
 
-export default function CustomCardScreen({ navigation, route }: CustomCardScreenProps) {
+export default function CustomCardScreen({
+  navigation,
+  route,
+}: CustomCardScreenProps) {
   const {
     code,
     name,
@@ -17,7 +20,7 @@ export default function CustomCardScreen({ navigation, route }: CustomCardScreen
     users: users,
     isHost: isHost,
   } = route.params;
-  const [question, setQuestion] = useState('');
+  const [question, setQuestion] = useState("");
   return (
     <View style={styles.screen}>
       <Text style={styles.bigText}>Add custom card</Text>
@@ -28,13 +31,22 @@ export default function CustomCardScreen({ navigation, route }: CustomCardScreen
         onChangeText={(text) => setQuestion(text)}
         value={question}
       />
-      <Button title="Submit" onPress={() => 
-            navigation.navigate("Game", { code, current, card, name, users, isHost })
-          } />
+      <Button
+        title="Submit"
+        onPress={() =>
+          navigation.navigate("Game", {
+            code,
+            current,
+            card,
+            name,
+            users,
+            isHost,
+          })
+        }
+      />
     </View>
   );
 }
-
 
 const styles = StyleSheet.create({
   screen: {
@@ -62,4 +74,4 @@ const styles = StyleSheet.create({
     fontSize: 30,
     color: "white",
   },
-})
+});

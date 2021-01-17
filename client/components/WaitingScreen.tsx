@@ -15,9 +15,7 @@ import CheckBox from "./Checkbox";
 
 import socket from "../socket";
 
-import SettingsButton from "../assets/images/settings_button.svg";
-import StartButton from "../assets/images/start_button.svg";
-import QuitButton from "../assets/images/quit_button.svg";
+import { SettingsButton, StartButton, QuitButton } from "../assets/images/";
 
 interface WaitingScreenProps {
   navigation: StackNavigationHelpers;
@@ -102,7 +100,14 @@ export default function WaitingScreen({
     socket.emit("start-game", code, (data: any) => {
       const { current, card, users } = data;
 
-      navigation.navigate("Custom", { code, current, card, name, users, isHost });
+      navigation.navigate("Custom", {
+        code,
+        current,
+        card,
+        name,
+        users,
+        isHost,
+      });
     });
   };
 

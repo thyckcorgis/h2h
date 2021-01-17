@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import { useState } from "react";
 
-import RegisterButton from "../assets/images/register_button.svg";
+import { RegisterButton } from "../assets/images/";
 
 interface RegisterScreenProps {
   navigation: StackNavigationHelpers;

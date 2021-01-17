@@ -1,8 +1,7 @@
 import React from "react";
 import { TouchableOpacity } from "react-native";
 
-import EnOn from "../assets/images/en_on.svg";
-import EnOff from "../assets/images/en_off.svg";
+import { EnOn, EnOff } from "../assets/images/";
 
 export default function Checkbox({ disabled, value, onValueChange }) {
   const touchHandler = () => {
