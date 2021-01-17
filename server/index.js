@@ -33,7 +33,12 @@ const createRoom = (name) => {
     code = randCode();
   }
 
-  rooms[code] = { users: [name], current: 0, cards: getRandArray() };
+  rooms[code] = {
+    users: [name],
+    current: 0,
+    cards: getRandArray(questions.length),
+  };
+
   return code;
 };
 
