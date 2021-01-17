@@ -82,7 +82,7 @@ export default function WaitingScreen({
     navigation.navigate("Home", { name });
   };
 
-  const settingsHandler = () => {};
+  const toggle = (fn) => (newVal) => fn(newVal);
 
   const start = isHost ? (
     <TouchableOpacity style={styles.buttonContainer} onPress={startGameHandler}>
@@ -120,25 +120,25 @@ export default function WaitingScreen({
               <CheckBox
                 disabled={false}
                 value={happy}
-                onValueChange={(newVal) => setHappy(newVal)}
+                onValueChange={toggle(setHappy)}
               />
               <Text style={styles.smallText}>Self-reflection</Text>
               <CheckBox
                 disabled={false}
                 value={selfReflection}
-                onValueChange={(newVal) => setSelfReflection(newVal)}
+                onValueChange={toggle(setSelfReflection)}
               />
               <Text style={styles.smallText}>Heavy</Text>
               <CheckBox
                 disabled={false}
                 value={heavy}
-                onValueChange={(newVal) => setHeavy(newVal)}
+                onValueChange={toggle(setHeavy)}
               />
               <Text style={styles.smallText}>To the Speaker</Text>
               <CheckBox
                 disabled={false}
                 value={toTheSpeaker}
-                onValueChange={(newVal) => setToTheSpeaker(newVal)}
+                onValueChange={toggle(setToTheSpeaker)}
               />
 
               <TouchableOpacity
