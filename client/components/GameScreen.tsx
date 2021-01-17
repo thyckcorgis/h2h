@@ -59,6 +59,15 @@ export default function GameScren({ route, navigation }: GameScreenProps) {
         <View>
           <Text style={styles.smallText}>Hello World!</Text>
 
+<<<<<<< HEAD
+            <TouchableHighlight
+              onPress={() => {
+                setModalVisible(!modalVisible);
+              }}
+            >
+              <Text style={styles.smallText}>Close</Text>
+            </TouchableHighlight>
+=======
           <TouchableHighlight
             onPress={() => {
               setModalVisible(!modalVisible);
@@ -66,6 +75,7 @@ export default function GameScren({ route, navigation }: GameScreenProps) {
           >
             <Text style={styles.smallText}>Hide Modal</Text>
           </TouchableHighlight>
+>>>>>>> 918e3d3d4aedaa34d94d1d8b9998231e6a76916e
         </View>
       </Modal>
       <TouchableHighlight
@@ -73,8 +83,13 @@ export default function GameScren({ route, navigation }: GameScreenProps) {
           setModalVisible(true);
         }}
       >
+<<<<<<< HEAD
+        <Text style={styles.smallText}>Participants</Text>
+      </TouchableHighlight>      
+=======
         <Text style={styles.smallText}>Show Modal</Text>
       </TouchableHighlight>
+>>>>>>> 918e3d3d4aedaa34d94d1d8b9998231e6a76916e
       <Button title="next" onPress={nextCardHandler} />
     </View>
   );
@@ -110,4 +125,16 @@ const styles = StyleSheet.create({
     color: "white",
     textAlign: "center",
   },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+},
 });
