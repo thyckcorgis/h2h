@@ -11,6 +11,8 @@ import {
 } from "react-native";
 import { useState } from "react";
 
+import RegisterButton from "../assets/images/register_button.svg";
+
 interface RegisterScreenProps {
   navigation: StackNavigationHelpers;
 }
@@ -28,7 +30,7 @@ export default function RegisterScreen({ navigation }: RegisterScreenProps) {
   };
 
   return (
-    <KeyboardAvoidingView style={styles.screen} behavior='padding'>
+    <KeyboardAvoidingView style={styles.screen} behavior="padding">
       <Text style={styles.bigText}>Ready to Talk?</Text>
       <TextInput
         style={styles.inputField}
@@ -41,7 +43,7 @@ export default function RegisterScreen({ navigation }: RegisterScreenProps) {
         {errorMessage}
       </Text>
       <TouchableOpacity onPress={registerHandler}>
-        <Image source={require("../assets/images/register_button.png")} />
+        <RegisterButton />
       </TouchableOpacity>
     </KeyboardAvoidingView>
   );
