@@ -82,6 +82,11 @@ export default function WaitingScreen({
         </View>
         {start}
       </View>
+      <View style={styles.quit}>
+        <TouchableOpacity>
+          <Image source={require("../assets/images/quit_button.png")} />
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 }
@@ -121,20 +126,14 @@ const styles = StyleSheet.create({
   buttonContainer: {
     margin: 5,
   },
-  inputField: {
-    padding: 5,
-    margin: 10,
-    width: 250,
-    textAlign: "left",
-    alignSelf: "center",
-    borderBottomWidth: 1,
-    borderColor: "white",
-    fontSize: 18,
-    color: "white",
-  },
   smallText: {
     fontSize: 18,
     color: "white",
     textAlign: "center",
+  },
+  quit: {
+    flexDirection: "row",
+    alignSelf: "flex-start",
+    margin: 40,
   },
 });
