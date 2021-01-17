@@ -30,7 +30,9 @@ const drawCard = (code) => {
 const getCardCategories = (settings) => {
   let arr = [];
   Object.entries(settings).forEach(([key, val]) => {
-    if (val) arr = [...arr, ...categories[key]];
+    if (val && key !== "customCards") {
+      arr = [...arr, ...categories[key]];
+    }
   });
 
   arr = shuffleArray(arr);
