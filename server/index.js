@@ -105,11 +105,10 @@ io.on("connection", (socket) => {
   });
   socket.on("quit-lobby", (code, name, isHost) => {
     removeUser(code, name);
-    const newHost = getNewHost(code, isHost);
     socket.leave(code);
     socket.to(code).emit("quit-lobby", {
-      newHost,
-      users,
+      newHost: getNewHost(code, isHost),
+      users: rooms[code].users,
     });
   });
 
