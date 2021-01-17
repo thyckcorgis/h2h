@@ -6,9 +6,11 @@ import {
   Button,
   TextInput,
   StyleSheet,
+  TouchableOpacity,
 } from "react-native";
 import { useState } from "react";
 import socket from "../socket";
+import { StartButton, SubmitCardButton } from "../assets/images";
 
 interface CustomCardScreenProps {
   navigation: StackNavigationHelpers;
@@ -40,7 +42,9 @@ export default function CustomCardScreen({
   };
 
   const start = isHost ? (
-    <Button title="Start game" onPress={startGameHandler} />
+    <TouchableOpacity onPress={startGameHandler}>
+      <StartButton width={250} />
+    </TouchableOpacity>
   ) : null;
 
   return (
@@ -52,11 +56,16 @@ export default function CustomCardScreen({
         multiline={true}
         style={styles.inputField}
         placeholder="Input question"
-        placeholderTextColor="black"
+        placeholderTextColor="grey"
         onChangeText={(text) => setQuestion(text)}
         value={question}
       />
-      <Button title="Submit card" onPress={submitCardHandler} />
+      <TouchableOpacity
+        style={{ margin: 10, marginTop: 20 }}
+        onPress={submitCardHandler}
+      >
+        <SubmitCardButton width={250} />
+      </TouchableOpacity>
       {start}
     </KeyboardAvoidingView>
   );

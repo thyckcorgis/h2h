@@ -83,7 +83,7 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
         <Text style={styles.bigText}>Join Confessation</Text>
         <TextInput
           placeholder="Enter a room code"
-          placeholderTextColor="white"
+          placeholderTextColor="grey"
           onChangeText={(text) => setCode(text)}
           value={code}
           keyboardType="number-pad"
