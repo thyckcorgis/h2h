@@ -12,21 +12,19 @@ router.get("/", (req, res) => {
 
 const rooms = {};
 const roomExists = (code) => rooms[code] != null;
-const addUserToRoom = (name, code) => rooms[code].users.push(name);
+const addUserToRoom = (name, code) => rooms[code]?.users.push(name);
 const endTurn = (code) => {
   const room = rooms[code];
-  if (room == null) return;
-  rooms[code].current = (room.current + 1) % room.users.length;
+  rooms[code]?.current = (room?.current + 1) % room?.users.length;
 };
 const changeRoomSettings = (code, settings) => {
-  if (rooms[code] == null) return;
-  rooms[code].settings = settings;
+  rooms[code]?.settings = settings;
 };
-const getCurrentPlayer = (code) => rooms[code].users[rooms[code].current];
+const getCurrentPlayer = (code) => rooms[code]?.users[rooms[code].current];
 const categories = require("./categories.json");
 const drawCard = (code) => {
-  const card = rooms[code].cards.pop();
-  rooms[code].currentCard = card;
+  const card = rooms[code]?.cards.pop();
+  rooms[code]?.currentCard = card;
   return card;
 };
 const getCardCategories = (settings) => {
@@ -41,12 +39,11 @@ const getCardCategories = (settings) => {
 
 const getCurrentCard = (code) => rooms[code].currentCard;
 const removeUser = (code, name) => {
-  if (rooms[code] == null) return;
-  rooms[code].users = rooms[code].users.filter((arrName) => arrName !== name);
-  rooms[code].current = rooms[code].current % rooms[code].users.length;
+  rooms[code]?.users = rooms[code]?.users.filter((arrName) => arrName !== name);
+  rooms[code]?.current = rooms[code]?.current % rooms[code]?.users.length;
 };
 const getNewHost = (code, isHost) => (isHost ? rooms[code]?.users[0] : "");
-const userExistsInRoom = (name, code) => rooms[code].users.includes(name);
+const userExistsInRoom = (name, code) => rooms[code]?.users.includes(name);
 
 const createRoom = (name) => {
   let code = randCode();
