@@ -91,12 +91,12 @@ io.on("connection", (socket) => {
   });
   socket.on("next-card", (code, fn) => {
     endTurn(code);
+    const current = getCurrentPlayer(code);
     const card = drawCard(code);
     fn({ current, card });
-    const nextPlayer = getCurrentPlayer(code);
     socket.to(code).emit("next-card", {
       ok: true,
-      current: nextPlayer,
+      current,
       card,
     });
   });
