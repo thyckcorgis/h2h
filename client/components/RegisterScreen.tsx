@@ -10,7 +10,7 @@ import {
   Modal,
 } from "react-native";
 import { useState } from "react";
-import FAQ from "./FAQ";
+import Mission from "./Mission";
 import Features from "./Features";
 
 import { RegisterButton, HelpButton, MissionButton } from "../assets/images/";
@@ -38,6 +38,7 @@ export default function RegisterScreen({ navigation }: RegisterScreenProps) {
     <KeyboardAvoidingView style={styles.screen} behavior="padding">
       {/* This is the view containing the modals */}
       <View style={styles.topContainer}>
+        {/* Makes features visible */}
         <Modal
           animationType="slide"
           transparent={true}
@@ -62,11 +63,12 @@ export default function RegisterScreen({ navigation }: RegisterScreenProps) {
         </Modal>
         <TouchableOpacity
           onPress={() => {
-            setFeaturesVisible(!missionVisible);
+            setFeaturesVisible(!featuresVisible);
           }}
         >
-          <MissionButton />
+          <HelpButton />
         </TouchableOpacity>
+        {/* Makes mission visible */}
         <Modal
           animationType="slide"
           transparent={true}
@@ -75,7 +77,7 @@ export default function RegisterScreen({ navigation }: RegisterScreenProps) {
           <View style={styles.modalContainer}>
             <View style={styles.modalView}>
               <View style={{ flex: 9 }}>
-                <FAQ />
+                <Mission />
               </View>
               <View style={styles.closeContainer}>
                 <TouchableOpacity
@@ -91,10 +93,10 @@ export default function RegisterScreen({ navigation }: RegisterScreenProps) {
         </Modal>
         <TouchableOpacity
           onPress={() => {
-            setFeaturesVisible(!featuresVisible);
+            setMissionVisible(!missionVisible);
           }}
         >
-          <HelpButton />
+          <MissionButton />
         </TouchableOpacity>
       </View>
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, View, StyleSheet } from "react-native";
 
-export default function FAQ() {
+export default function Mission() {
   return (
     <View>
       <Text style={styles.bigText}>Our Mission:</Text>
