@@ -77,6 +77,7 @@ export default function WaitingScreen({
   }, []);
 
   useEffect(() => {
+    console.log("changed");
     socket.emit("setting", code, {
       happy,
       heavy,
@@ -84,6 +85,7 @@ export default function WaitingScreen({
       toTheSpeaker,
     });
   }, [happy, heavy, selfReflection, toTheSpeaker]);
+
   const startGameHandler = () => {
     socket.emit("start-game", code, (data: any) => {
       const { current, card, users } = data;
@@ -97,7 +99,10 @@ export default function WaitingScreen({
     navigation.navigate("Home", { name });
   };
 
-  const toggle = (fn) => (newVal) => fn(newVal);
+  const toggle = (fn) => {
+    console.log("oopo");
+    return (newVal) => fn(newVal);
+  };
 
   const start = isHost ? (
     <TouchableOpacity style={styles.buttonContainer} onPress={startGameHandler}>

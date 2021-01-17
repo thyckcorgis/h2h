@@ -3,8 +3,8 @@ import { TouchableOpacity } from "react-native";
 
 import EnOn from "../assets/images/en_on.svg";
 import EnOff from "../assets/images/en_off.svg";
-import DisOn from "../assets/images/dis_on.svg";
-import DisOff from "../assets/images/dis_off.svg";
+// import DisOn from "../assets/images/dis_on.svg";
+// import DisOff from "../assets/images/dis_off.svg";
 
 export default function Checkbox({ disabled, value, onValueChange }) {
   const touchHandler = () => {
@@ -15,13 +15,8 @@ export default function Checkbox({ disabled, value, onValueChange }) {
   };
 
   const showSVG = () => {
-    if (disabled) {
-      if (value) return <DisOn width={20} />;
-      return <DisOff width={20} />;
-    } else {
-      if (value) return <EnOn width={20} />;
-      return <EnOff width={20} />;
-    }
+    if (value) return <EnOn width={40} />;
+    return <EnOff width={40} />;
   };
   return disabled ? (
     showSVG()
