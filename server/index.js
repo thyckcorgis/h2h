@@ -15,9 +15,11 @@ const roomExists = (code) => rooms[code] != null;
 const addUserToRoom = (name, code) => rooms[code].users.push(name);
 const endTurn = (code) => {
   const room = rooms[code];
+  if (room == null) return;
   rooms[code].current = (room.current + 1) % room.users.length;
 };
 const changeRoomSettings = (code, settings) => {
+  if (rooms[code] == null) return;
   rooms[code].settings = settings;
 };
 const getCurrentPlayer = (code) => rooms[code].users[rooms[code].current];
@@ -29,6 +31,7 @@ const drawCard = (code) => {
 };
 const getCurrentCard = (code) => rooms[code].currentCard;
 const removeUser = (code, name) => {
+  if (rooms[code] == null) return;
   rooms[code].users = rooms[code].users.filter((arrName) => arrName !== name);
   rooms[code].current = rooms[code].current % rooms[code].users.length;
 };
@@ -36,7 +39,7 @@ const getNewHost = (code, isHost) => {
   if (!isHost) {
     return "";
   }
-  return rooms[code].users[0];
+  return rooms[code]?.users[0];
 };
 
 // unnecessary edge case for the presentation
@@ -98,6 +101,7 @@ io.on("connection", (socket) => {
       current,
       card,
       gameStarted: rooms[code].gameStarted,
+      settings: rooms[code].settings,
     });
     socket.to(code).emit("player-joined", { ok: true, user: name });
   });
