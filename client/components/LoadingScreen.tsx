@@ -1,4 +1,6 @@
 import React from "react";
+// import * as Font from "expo-font";
+// import { Ionicons } from "@expo/vector-icons";
 import { StackNavigationHelpers } from "@react-navigation/stack/lib/typescript/src/types";
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 
@@ -52,8 +54,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   continueText: {
-    // fontFamily:
-    // "C:\\Users\\annet\\Downloads\\Other\\Projects\\HackED 2021\\h2h\\client\\assets\\fonts\\Comfortaa.ttf",
+    // fontFamily: "Comfortaa-Regular",
     fontSize: 14,
     color: "#892cdc",
     paddingVertical: 30,
