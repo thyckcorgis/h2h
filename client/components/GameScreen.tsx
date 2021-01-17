@@ -11,6 +11,10 @@ import {
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
+import UserButton from "../assets/images/users_button.svg";
+import NextButton from "../assets/images/next_button.svg";
+import QuitButton from "../assets/images/quit_button.svg";
+
 import socket from "../socket";
 interface GameScreenProps {
   navigation: StackNavigationHelpers;
@@ -68,15 +72,12 @@ export default function GameScren({ route, navigation }: GameScreenProps) {
 
   const [modalVisible, setModalVisible] = useState(false);
 
-  const button = isTurn(name, current) ? (
+  const nextButton = isTurn(name, current) ? (
     <TouchableOpacity onPress={nextCardHandler}>
-      <Image source={require("../assets/images/next_button.png")} />
+      <NextButton />
     </TouchableOpacity>
   ) : (
-    <Image
-      style={{ opacity: 0.5 }}
-      source={require("../assets/images/next_button.png")}
-    />
+    <NextButton opacity={0.5} />
   );
 
   return (
@@ -126,11 +127,11 @@ export default function GameScren({ route, navigation }: GameScreenProps) {
             setModalVisible(true);
           }}
         >
-          <Image source={require("../assets/images/users_button.png")} />
+          <UserButton />
         </TouchableOpacity>
-        {button}
+        {nextButton}
         <TouchableOpacity onPress={quitGameHandler}>
-          <Image source={require("../assets/images/quit_button.png")} />
+          <QuitButton />
         </TouchableOpacity>
       </View>
     </View>
@@ -149,7 +150,7 @@ const styles = StyleSheet.create({
   modalContainer: {
     flex: 1,
     justifyContent: "center",
-    alignItems: "center",
+    alignContent: "center",
     margin: 10,
   },
   cardContainer: {
@@ -163,8 +164,7 @@ const styles = StyleSheet.create({
   },
   navBar: {
     flexDirection: "row",
-    alignItems: "baseline",
-    justifyContent: "center",
+    alignItems: "center",
   },
   bigText: {
     fontSize: 30,
@@ -175,7 +175,7 @@ const styles = StyleSheet.create({
   },
   smallText: {
     fontSize: 18,
-    fontFamily: "Comfortaa-Regular",
+    fontFamily: "Futura",
     color: "white",
     textAlign: "center",
   },

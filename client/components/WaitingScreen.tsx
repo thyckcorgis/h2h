@@ -11,10 +11,12 @@ import {
   Alert,
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import CheckBox from '@react-native-community/checkbox';
-
+import CheckBox from "@react-native-community/checkbox";
 
 import socket from "../socket";
+
+import StartButton from "../assets/images/start_button.svg";
+import QuitButton from "../assets/images/quit_button.svg";
 
 interface WaitingScreenProps {
   navigation: StackNavigationHelpers;
@@ -79,7 +81,7 @@ export default function WaitingScreen({
 
   const start = isHost ? (
     <TouchableOpacity style={styles.buttonContainer} onPress={startGameHandler}>
-      <Image source={require("../assets/images/start_button.png")} />
+      <StartButton width={250} />
     </TouchableOpacity>
   ) : null;
 
@@ -99,12 +101,12 @@ export default function WaitingScreen({
           />
         </View>
         <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
-        }}
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            Alert.alert("Modal has been closed.");
+          }}
         >
         <View style={styles.modalContainer}>
           <View style={styles.modalView}>
@@ -116,30 +118,30 @@ export default function WaitingScreen({
                 onValueChange={(newValue) => setToggleCheckBox(newValue)}
             />
 
-            <TouchableOpacity
-              onPress={() => {
-                setModalVisible(!modalVisible);
-              }}
-            >
-              <Text style={styles.smallText}>Close</Text>
-            </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  setModalVisible(!modalVisible);
+                }}
+              >
+                <Text style={styles.smallText}>Close</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
         </Modal>
         <View style={styles.navBar}>
-            <TouchableOpacity
+          <TouchableOpacity
             onPress={() => {
-                setModalVisible(true);
+              setModalVisible(true);
             }}
-            >
+          >
             <Image source={require("../assets/images/settings_button.png")} />
-            </TouchableOpacity>
-            {start}
+          </TouchableOpacity>
+          {start}
         </View>
         <View style={styles.quit}>
-            <TouchableOpacity onPress={quitLobbyHandler}>
+          <TouchableOpacity onPress={quitLobbyHandler}>
             <Image source={require("../assets/images/quit_button.png")} />
-            </TouchableOpacity>
+          </TouchableOpacity>
         </View>
       </View>
     </SafeAreaView>
@@ -180,6 +182,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     margin: 5,
+    alignItems: "center",
   },
   smallText: {
     fontSize: 18,
@@ -198,7 +201,7 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   navBar: {
-   // flexDirection: "row",
+    // flexDirection: "row",
     alignItems: "baseline",
     justifyContent: "center",
   },
