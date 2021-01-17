@@ -48,48 +48,35 @@ export default function GameScren({ route, navigation }: GameScreenProps) {
           {isTurn(name, currentPlayer) ? currentCard : ""}
         </Text>
       </View>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
-        }}
-      >
-        <View>
-          <Text style={styles.smallText}>Hello World!</Text>
-
-<<<<<<< HEAD
-            <TouchableHighlight
-              onPress={() => {
-                setModalVisible(!modalVisible);
-              }}
-            >
-              <Text style={styles.smallText}>Close</Text>
-            </TouchableHighlight>
-=======
-          <TouchableHighlight
-            onPress={() => {
-              setModalVisible(!modalVisible);
+      <View style={styles.modalView}>
+        <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={() => {
+            Alert.alert("Modal has been closed.");
             }}
-          >
-            <Text style={styles.smallText}>Hide Modal</Text>
-          </TouchableHighlight>
->>>>>>> 918e3d3d4aedaa34d94d1d8b9998231e6a76916e
+        >
+            <View>
+            <Text style={styles.smallText}>Hello World!</Text>
+
+                <TouchableHighlight
+                onPress={() => {
+                    setModalVisible(!modalVisible);
+                }}
+                >
+                <Text style={styles.smallText}>Close</Text>
+                </TouchableHighlight>
+            </View>
+        </Modal>
         </View>
-      </Modal>
       <TouchableHighlight
         onPress={() => {
           setModalVisible(true);
         }}
       >
-<<<<<<< HEAD
         <Text style={styles.smallText}>Participants</Text>
       </TouchableHighlight>      
-=======
-        <Text style={styles.smallText}>Show Modal</Text>
-      </TouchableHighlight>
->>>>>>> 918e3d3d4aedaa34d94d1d8b9998231e6a76916e
       <Button title="next" onPress={nextCardHandler} />
     </View>
   );
