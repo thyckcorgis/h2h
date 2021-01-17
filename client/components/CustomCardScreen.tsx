@@ -8,6 +8,7 @@ import {
   StyleSheet,
 } from "react-native";
 import { useState } from "react";
+import socket from "../socket";
 
 interface CustomCardScreenProps {
   navigation: StackNavigationHelpers;
@@ -27,6 +28,22 @@ export default function CustomCardScreen({
     isHost: isHost,
   } = route.params;
   const [question, setQuestion] = useState("");
+
+  const submitCardHandler = () => {
+    socket.emit('custom', code, question, 
+    (data: any) => {
+      console.log(data);
+    })
+    navigation.navigate("Game", {
+      code,
+      current,
+      card,
+      name,
+      users,
+      isHost,
+    })
+  }
+
   return (
     <KeyboardAvoidingView style={styles.screen} behavior="padding">
       <Text style={styles.bigText}>Add custom card to be read anonymously</Text>
@@ -40,16 +57,7 @@ export default function CustomCardScreen({
       />
       <Button
         title="Submit"
-        onPress={() =>
-          navigation.navigate("Game", {
-            code,
-            current,
-            card,
-            name,
-            users,
-            isHost,
-          })
-        }
+        onPress={submitCardHandler}
       />
     </KeyboardAvoidingView>
   );
