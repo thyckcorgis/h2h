@@ -1,6 +1,6 @@
 import { StackNavigationHelpers } from "@react-navigation/stack/lib/typescript/src/types";
-import React, { useEffect } from "react";
-import { View, Text, Button, StyleSheet } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, Text, Button, StyleSheet, Modal, Alert, TouchableHighlight } from "react-native";
 
 interface GameScreenProps {
   navigation: StackNavigationHelpers;
@@ -13,6 +13,9 @@ export default function GameScren({ route, navigation }: GameScreenProps) {
   useEffect(() => {});
 
   const nextCardHandler = () => {};
+
+  const [modalVisible, setModalVisible] = useState(false);
+
   return (
     <View style={styles.screen}>
       <Text style={styles.bigText}>{name}</Text>
@@ -22,6 +25,33 @@ export default function GameScren({ route, navigation }: GameScreenProps) {
       <View style={styles.cardContainer}>
         <Text style={styles.bigText}>{card}</Text>
       </View>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert("Modal has been closed.");
+        }}
+      >
+        <View>
+            <Text style={styles.smallText}>Hello World!</Text>
+
+            <TouchableHighlight
+              onPress={() => {
+                setModalVisible(!modalVisible);
+              }}
+            >
+              <Text style={styles.smallText}>Hide Modal</Text>
+            </TouchableHighlight>
+        </View>
+      </Modal>
+      <TouchableHighlight
+        onPress={() => {
+          setModalVisible(true);
+        }}
+      >
+        <Text style={styles.smallText}>Show Modal</Text>
+      </TouchableHighlight>      
       <Button title="next" onPress={nextCardHandler} />
     </View>
   );
