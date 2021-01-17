@@ -66,7 +66,12 @@ export default function GameScren({ route, navigation }: GameScreenProps) {
     <TouchableOpacity onPress={nextCardHandler}>
       <Image source={require("../assets/images/next_button.png")} />
     </TouchableOpacity>
-  ) : null;
+  ) : (
+    <Image
+      style={{ opacity: 0.5 }}
+      source={require("../assets/images/next_button.png")}
+    />
+  );
 
   return (
     <View style={styles.screen}>
