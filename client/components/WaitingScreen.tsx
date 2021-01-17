@@ -6,7 +6,6 @@ import {
   Text,
   FlatList,
   StyleSheet,
-  Image,
   Modal,
   Alert,
   Button,
@@ -41,11 +40,6 @@ export default function WaitingScreen({
   const [heavy, setHeavy] = useState(true);
   const [toTheSpeaker, setToTheSpeaker] = useState(true);
   const [selfReflection, setSelfReflection] = useState(true);
-
-  const toggleHappy = () => setHappy(!happy);
-  const toggleHeavy = () => setHeavy(!heavy);
-  const toggleToTheSpeaker = () => setToTheSpeaker(!toTheSpeaker);
-  const toggleSelfReflection = () => setSelfReflection(!selfReflection);
 
   const { name, code, users: _users, isHost: _isHost } = route.params;
   const [users, setUsers] = useState(_users);
@@ -88,7 +82,7 @@ export default function WaitingScreen({
     navigation.navigate("Home", { name });
   };
 
-  const settingsHandler = () => {};
+  const toggle = (fn) => (newVal) => fn(newVal);
 
   const start = isHost ? (
     <TouchableOpacity style={styles.buttonContainer} onPress={startGameHandler}>
@@ -123,23 +117,29 @@ export default function WaitingScreen({
             <View style={styles.modalView}>
               <Text style={styles.bigText}>Game Mode</Text>
               <Text style={styles.smallText}>Happy</Text>
-              <Button onPress={toggleHappy} title={happy ? "on" : "off"} />
-              <CheckBox />
+              <CheckBox
+                disabled={false}
+                value={happy}
+                onValueChange={toggle(setHappy)}
+              />
               <Text style={styles.smallText}>Self-reflection</Text>
-              <Button
-                onPress={toggleSelfReflection}
-                title={selfReflection ? "on" : "off"}
+              <CheckBox
+                disabled={false}
+                value={selfReflection}
+                onValueChange={toggle(setSelfReflection)}
               />
-              <CheckBox />
               <Text style={styles.smallText}>Heavy</Text>
-              <Button onPress={toggleHeavy} title={heavy ? "on" : "off"} />
-              <CheckBox />
-              <Text style={styles.smallText}>To the Speaker</Text>
-              <Button
-                onPress={toggleToTheSpeaker}
-                title={toTheSpeaker ? "on" : "off"}
+              <CheckBox
+                disabled={false}
+                value={heavy}
+                onValueChange={toggle(setHeavy)}
               />
-              <CheckBox />
+              <Text style={styles.smallText}>To the Speaker</Text>
+              <CheckBox
+                disabled={false}
+                value={toTheSpeaker}
+                onValueChange={toggle(setToTheSpeaker)}
+              />
 
               <TouchableOpacity
                 onPress={() => {
