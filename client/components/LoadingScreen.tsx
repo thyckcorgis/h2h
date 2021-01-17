@@ -36,7 +36,7 @@ export default function LoadingScreen({ navigation }: LoadingScreenProps) {
 
 const styles = StyleSheet.create({
   screen: {
-    padding: 50,
+    padding: 40,
     alignItems: "center",
     justifyContent: "center",
     flex: 1,
