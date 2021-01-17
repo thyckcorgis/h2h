@@ -9,6 +9,7 @@ import {
   Alert,
   Image,
   TouchableHighlight,
+  FlatList,
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
@@ -20,10 +21,19 @@ interface GameScreenProps {
 
 const isTurn = (name: string, current: string) => name === current;
 
+const Item = ({ title }: { title: any }) => (
+    <View>
+      <Text style={styles.bigText}>{title}</Text>
+    </View>
+  );
+
 export default function GameScren({ route, navigation }: GameScreenProps) {
   const { code, current, card, name, users } = route.params;
   const [currentCard, setCurrentCard] = useState(card);
   const [currentPlayer, setCurrentPlayer] = useState(current);
+
+  const renderItem = ({ item }: { item: any }) => <Item title={item} />;
+
 
   const updateCurrent = (data: any) => {
     const { current, card } = data;
@@ -72,6 +82,12 @@ export default function GameScren({ route, navigation }: GameScreenProps) {
         <View style={styles.modalContainer}>
           <View style={styles.modalView}>
             <Text style={styles.bigText}>Who's in the room?</Text>
+            <FlatList
+                data={users}
+                renderItem={renderItem}
+                keyExtractor={(item) => item}
+                extraData={users}
+            />
 
             <TouchableOpacity
               onPress={() => {
