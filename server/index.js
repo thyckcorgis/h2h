@@ -103,7 +103,7 @@ io.on("connection", (socket) => {
       gameStarted: rooms[code].gameStarted,
       settings: rooms[code].settings,
     });
-    socket.to(code).emit("player-joined", { ok: true, user: name });
+    socket.to(code).emit("player-joined", name);
   });
 
   socket.on("quit-game", (code, name, isHost) => {
