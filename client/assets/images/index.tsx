@@ -12,3 +12,4 @@ export { default as EnOn } from "./en_on.svg";
 export { default as EnOff } from "./en_off.svg";
 export { default as H2HLogo } from "./h2h_logo.svg";
 export { default as CorgiLogo } from "./corgi_logo.svg";
+export { default as HelpButton } from "./help_button.svg";
