@@ -26,18 +26,18 @@ const getCurrentPlayer = (code) => rooms[code].users[rooms[code].current];
 const questions = require("./questions.json");
 const categories = require("./categories.json");
 const drawCard = (code) => {
-  const idx = rooms[code].cards.pop();
-  rooms[code].currentCard = questions[idx];
+  const card = rooms[code].cards.pop();
+  rooms[code].currentCard = card;
+  return card;
 };
-
 const getCardCategories = (settings) => {
   let arr = [];
-  for (const [key, val] in Object.entries(settings)) {
-    if (val) {
-      arr = [...arr, categories[key]];
-    }
-  }
-  return shuffleArray(arr);
+  Object.entries(settings).forEach(([key, val]) => {
+    if (val) arr = [...arr, ...categories[key]];
+  });
+
+  arr = shuffleArray(arr);
+  return arr;
 };
 
 const getCurrentCard = (code) => rooms[code].currentCard;
@@ -140,7 +140,7 @@ io.on("connection", (socket) => {
 
   socket.on("start-game", (code, fn) => {
     rooms[code].gameStarted = true;
-    rooms[code].cards = getCardCategories(rooms[code].settings);
+    rooms[code].cards = [...getCardCategories(rooms[code].settings)];
     drawCard(code);
     const card = getCurrentCard(code);
     const current = getCurrentPlayer(code);
