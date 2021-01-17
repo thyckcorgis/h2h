@@ -44,7 +44,7 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
     socket.emit("join", name, code, (data: any) => {
       const { ok, users, gameStarted } = data;
       if (ok) {
-        if (!users.hasOwnProperty(name)) {
+        if (!(name in users)) {
             if (gameStarted) {
             navigation.navigate("Game", {
                 name,
