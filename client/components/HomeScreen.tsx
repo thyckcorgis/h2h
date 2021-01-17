@@ -21,7 +21,7 @@ interface HomeScreenProps {
 
 export default function HomeScreen({ navigation, route }: HomeScreenProps) {
   const [code, setCode] = useState("");
-  const [errorMessage, setErroMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const { name } = route.params;
 
   const hostGameHandler = () => {
@@ -37,7 +37,7 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
 
   const joinGameHandler = () => {
     if (code.length !== 5) {
-      setErroMessage("Please enter a valid room code (5 digits)");
+      setErrorMessage("Please enter a valid room code (5 digits)");
       return;
     }
 
@@ -50,7 +50,7 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
           isHost: false,
         });
       } else {
-        setErroMessage("Room does not exist");
+        setErrorMessage("Room does not exist");
       }
     });
   };
