@@ -59,7 +59,7 @@ export default function WaitingScreen({
     socket.on("start-game", (data: any) => {
       const { ok, current, card, users } = data;
       if (ok)
-        navigation.navigate("Custom", {
+        navigation.navigate("Game", {
           code,
           current,
           card,
@@ -67,6 +67,13 @@ export default function WaitingScreen({
           users,
           isHost,
         });
+    });
+    socket.on("add-custom", () => {
+      navigation.navigate("Game", {
+        code,
+        name,
+        isHost,
+      });
     });
     socket.on("quit-lobby", (data: any) => {
       const { newHost, users } = data;
@@ -107,18 +114,27 @@ export default function WaitingScreen({
   }, [happy, heavy, selfReflection, toTheSpeaker, isHost, customCards]);
 
   const startGameHandler = () => {
-    socket.emit("start-game", code, (data: any) => {
-      const { current, card, users } = data;
+    if (!customCards) {
+      socket.emit("start-game", code, (data: any) => {
+        const { current, card, users } = data;
 
+        navigation.navigate("Game", {
+          code,
+          current,
+          card,
+          name,
+          users,
+          isHost,
+        });
+      });
+    } else {
+      socket.emit("add-custom", code);
       navigation.navigate("Custom", {
         code,
-        current,
-        card,
         name,
-        users,
         isHost,
       });
-    });
+    }
   };
 
   const quitLobbyHandler = () => {
