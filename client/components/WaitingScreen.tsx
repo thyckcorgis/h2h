@@ -52,6 +52,7 @@ export default function WaitingScreen({
   const startGameHandler = () => {
     socket.emit("start-game", code, (data: any) => {
       const { current, card, users } = data;
+
       navigation.navigate("Game", { code, current, card, name, users, isHost });
     });
   };
