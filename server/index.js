@@ -74,11 +74,7 @@ io.on("connection", (socket) => {
       return fn({ ok: false, message: "Room does not exist" });
 
     if (userExistsInRoom(name, code)) {
-<<<<<<< HEAD
-      return fn({ ok: false, message: "name is already taken" });
-=======
       return fn({ ok: false, message: "Name is already taken" });
->>>>>>> 644c531bcf2317d326c6ad7aa643169b46145043
     }
 
     addUserToRoom(name, code);

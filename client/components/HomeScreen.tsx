@@ -46,19 +46,19 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
       const { ok, users, gameStarted, message } = data;
       if (ok) {
         if (gameStarted) {
-        navigation.navigate("Game", {
+          navigation.navigate("Game", {
             name,
             code,
             users,
             isHost: false,
-        });
+          });
         } else {
-        navigation.navigate("Waiting", {
+          navigation.navigate("Waiting", {
             name,
             code,
             users,
             isHost: false,
-        });
+          });
         }
       } else {
         setErrorMessage(message);
