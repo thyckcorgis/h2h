@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import { useState } from "react";
 import FAQ from "./FAQ";
+import Features from './Features';
 
 import { RegisterButton, HelpButton } from "../assets/images/";
 
@@ -23,7 +24,9 @@ export default function RegisterScreen({ navigation }: RegisterScreenProps) {
   const [name, setName] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
-  const [modalVisible, setModalVisible] = useState(false);
+  const [modalVisible1, setModalVisible1] = useState(false);
+  const [modalVisible2, setModalVisible2] = useState(false);
+
 
   const registerHandler = () => {
     if (name === "") {
@@ -35,17 +38,17 @@ export default function RegisterScreen({ navigation }: RegisterScreenProps) {
 
   return (
     <KeyboardAvoidingView style={styles.screen} behavior="padding">
-      <View style={styles.helpContainer}>
-        <Modal animationType="slide" transparent={true} visible={modalVisible}>
+      <View style={styles.featuresContainer}>
+        <Modal animationType="slide" transparent={true} visible={modalVisible1}>
           <View style={styles.modalContainer}>
             <View style={styles.modalView}>
               <View style={{ flex: 9 }}>
-                <FAQ />
+                <Features />
               </View>
               <View style={styles.closeContainer}>
                 <TouchableOpacity
                   onPress={() => {
-                    setModalVisible(!modalVisible);
+                    setModalVisible1(!modalVisible1);
                   }}
                 >
                   <Text style={styles.smallText}>Close</Text>
@@ -56,7 +59,34 @@ export default function RegisterScreen({ navigation }: RegisterScreenProps) {
         </Modal>
         <TouchableOpacity
           onPress={() => {
-            setModalVisible(!modalVisible);
+            setModalVisible1(!modalVisible1);
+          }}
+        >
+          <HelpButton />
+        </TouchableOpacity>
+      </View>
+      <View style={styles.helpContainer}>
+        <Modal animationType="slide" transparent={true} visible={modalVisible2}>
+          <View style={styles.modalContainer}>
+            <View style={styles.modalView}>
+              <View style={{ flex: 9 }}>
+                <FAQ />
+              </View>
+              <View style={styles.closeContainer}>
+                <TouchableOpacity
+                  onPress={() => {
+                    setModalVisible2(!modalVisible2);
+                  }}
+                >
+                  <Text style={styles.smallText}>Close</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        </Modal>
+        <TouchableOpacity
+          onPress={() => {
+            setModalVisible2(!modalVisible2);
           }}
         >
           <HelpButton />
@@ -157,6 +187,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flex: 1,
     alignSelf: "flex-end",
+    marginTop: 30,
+  },
+  featuresContainer: {
+    flexDirection: "row",
+    flex: 1,
+    alignSelf: "flex-start",
     marginTop: 30,
   },
 });
