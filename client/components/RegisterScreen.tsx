@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     backgroundColor: "black",
   },
   bigText: {
-    // fontFamily: "Futura",
+    fontFamily: "Arial Rounded MT Bold",
     fontSize: 30,
     color: "white",
   },
