@@ -52,7 +52,8 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   continueText: {
-    fontFamily: "Futura",
+    // fontFamily:
+    // "C:\\Users\\annet\\Downloads\\Other\\Projects\\HackED 2021\\h2h\\client\\assets\\fonts\\Comfortaa.ttf",
     fontSize: 14,
     color: "#892cdc",
     paddingVertical: 30,
