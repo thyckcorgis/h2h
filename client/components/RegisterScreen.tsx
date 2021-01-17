@@ -43,6 +43,7 @@ const styles = StyleSheet.create({
     backgroundColor: "black",
   },
   bigText: {
+    // fontFamily: "Futura",
     fontSize: 30,
     color: "white",
   },
@@ -58,7 +59,7 @@ const styles = StyleSheet.create({
     color: "white",
   },
   smallText: {
-    fontFamily: "Georgia",
+    fontFamily: "Futura",
     fontSize: 18,
     color: "white",
     textAlign: "center",
