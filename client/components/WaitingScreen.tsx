@@ -50,6 +50,15 @@ export default function WaitingScreen({
 
   const settingsHandler = () => {};
 
+  const start = isHost ?         
+    <TouchableOpacity
+        style={styles.buttonContainer}
+        onPress={startGameHandler}
+    >
+        <Image source={require("../assets/images/start_button.png")} />
+    </TouchableOpacity> 
+    : null;
+
   return (
     <SafeAreaView style={styles.screen}>
       <View style={{ flex: 1 }}>
@@ -71,12 +80,7 @@ export default function WaitingScreen({
         >
           <Image source={require("../assets/images/settings_button.png")} />
         </TouchableOpacity> */}
-        <TouchableOpacity
-          style={styles.buttonContainer}
-          onPress={startGameHandler}
-        >
-          <Image source={require("../assets/images/start_button.png")} />
-        </TouchableOpacity>
+        {start}
       </View>
     </SafeAreaView>
   );
