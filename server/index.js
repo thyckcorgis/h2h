@@ -71,12 +71,11 @@ io.on("connection", (socket) => {
   });
   socket.on("join", (name, code, fn) => {
     if (!roomExists(code))
-      return fn({ ok: false, message: "room does not exist" });
+      return fn({ ok: false, message: "Room does not exist" });
 
-    if (!userExistsInRoom(name, code)) {
-      return fn({ ok: false, message: "name is already taken" });
+    if (userExistsInRoom(name, code)) {
+      return fn({ ok: false, message: "Name is already taken" });
     }
-
 
     addUserToRoom(name, code);
     socket.join(code);
