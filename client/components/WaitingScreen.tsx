@@ -152,7 +152,7 @@ export default function WaitingScreen({
         >
           <View style={styles.modalContainer}>
             <View style={styles.modalView}>
-              <Text style={styles.bigText}>Game Mode</Text>
+              <Text style={styles.bigText}>Game Settings</Text>
 
               <View style={styles.filterContainer}>
                 <Text style={styles.smallText}>Happy</Text>
