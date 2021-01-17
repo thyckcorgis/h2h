@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     color: "white",
     paddingBottom: 10,
-    fontFamily: "Arial Rounded MT Bold",
+    fontFamily: "Avenir-Light",
   },
   inputField: {
     padding: 5,
@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   continueText: {
-    fontFamily: "Futura",
+    fontFamily: "Avenir-Light",
     fontSize: 14,
     color: "#892cdc",
     paddingVertical: 30,

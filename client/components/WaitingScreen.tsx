@@ -229,13 +229,13 @@ const styles = StyleSheet.create({
     fontSize: 30,
     color: "#892cdc",
     paddingTop: 30,
-    fontFamily: "Arial Rounded MT Bold",
+    fontFamily: "Avenir-Light",
   },
   bigText: {
     fontSize: 30,
     color: "white",
     textAlign: "center",
-    fontFamily: "Arial Rounded MT Bold",
+    fontFamily: "Avenir-Light",
   },
   listContainer: {
     borderWidth: 1,
@@ -258,7 +258,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: "white",
     textAlign: "center",
-    fontFamily: "Arial Rounded MT Bold",
+    fontFamily: "Avenir-Light",
   },
   quit: {
     flexDirection: "row",
