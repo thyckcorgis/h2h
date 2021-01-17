@@ -71,12 +71,6 @@ export default function WaitingScreen({
             extraData={roomUsers}
           />
         </View>
-        {/* <TouchableOpacity
-          style={styles.buttonContainer}
-          onPress={settingsHandler}
-        >
-          <Image source={require("../assets/images/settings_button.png")} />
-        </TouchableOpacity> */}
         {start}
       </View>
     </SafeAreaView>
