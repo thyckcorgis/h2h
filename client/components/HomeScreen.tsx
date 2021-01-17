@@ -73,30 +73,28 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
 
   return (
     <KeyboardAvoidingView style={styles.screen} behavior="padding">
-      <View style={styles.itemContainer}>
-        <View style={styles.container}>
-          <Text style={styles.bigText}>Host Confessation</Text>
-          <TouchableOpacity onPress={hostGameHandler}>
-            <HostButton width={250} />
-          </TouchableOpacity>
-        </View>
-        <View style={styles.container}>
-          <Text style={styles.bigText}>Join Confessation</Text>
-          <TextInput
-            placeholder="Enter a room code"
-            placeholderTextColor="white"
-            onChangeText={(text) => setCode(text)}
-            value={code}
-            keyboardType="number-pad"
-            style={styles.inputField}
-          />
-          <Text style={{ ...styles.smallText, color: "red" }}>
-            {errorMessage}
-          </Text>
-          <TouchableOpacity style={{ marginTop: 30 }} onPress={joinGameHandler}>
-            <JoinButton width={250} />
-          </TouchableOpacity>
-        </View>
+      <View style={styles.container}>
+        <Text style={styles.bigText}>Host Confessation</Text>
+        <TouchableOpacity onPress={hostGameHandler}>
+          <HostButton width={250} />
+        </TouchableOpacity>
+      </View>
+      <View style={styles.container}>
+        <Text style={styles.bigText}>Join Confessation</Text>
+        <TextInput
+          placeholder="Enter a room code"
+          placeholderTextColor="white"
+          onChangeText={(text) => setCode(text)}
+          value={code}
+          keyboardType="number-pad"
+          style={styles.inputField}
+        />
+        <Text style={{ ...styles.smallText, color: "red" }}>
+          {errorMessage}
+        </Text>
+        <TouchableOpacity style={{ marginTop: 30 }} onPress={joinGameHandler}>
+          <JoinButton width={250} />
+        </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
   );
