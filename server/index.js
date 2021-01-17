@@ -16,7 +16,7 @@ const endTurn = (code) => {
   const room = rooms[code];
   rooms[code].current = (room.current + 1) % room.users.length;
 };
-const getCurrentPlayer = (code) => rooms[code].users(rooms[code].current);
+const getCurrentPlayer = (code) => rooms[code].users[rooms[code].current];
 const questions = require("./questions.json");
 const drawCard = (code) => {
   const idx = rooms[code].cards.pop();
