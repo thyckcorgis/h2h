@@ -34,9 +34,10 @@
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-40.0.1.tar.gz",
     "react-native-gesture-handler": "^1.9.0",
-    "react-native-paper": "^4.7.0",
     "react-native-safe-area-context": "^3.1.9",
     "react-native-screens": "^2.16.1",
+    "react-native-svg": "^12.1.0",
+    "react-native-svg-transformer": "^0.14.3",
     "react-native-web": "~0.13.12",
     "socket.io-client": "^3.1.0"
   },
