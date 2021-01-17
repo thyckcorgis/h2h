@@ -68,6 +68,7 @@ const createRoom = (name) => {
       selfReflection: true,
       customCards: false,
     },
+    customs: [],
   };
 
   return code;
@@ -165,5 +166,14 @@ io.on("connection", (socket) => {
     socket.to(code).emit("setting", settings);
   });
 
-  socket.on("custom", (code, question, fn) => {});
+  socket.on("custom", (code, question, fn) => {
+    if (!rooms[code].settings.customCards) {
+      return fn({
+        ok: false,
+        message: "Custom cards are not allowed in this room",
+      });
+    }
+    rooms[code].customs.push(question);
+    fn({ ok: true, message: "Added anonymous custom card" });
+  });
 });
