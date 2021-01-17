@@ -11,7 +11,7 @@ import {
   Alert,
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import CheckBox from "@react-native-community/checkbox";
+import CheckBox from "./Checkbox";
 
 import socket from "../socket";
 
@@ -33,7 +33,7 @@ export default function WaitingScreen({
   navigation,
   route,
 }: WaitingScreenProps) {
-  const [toggleCheckBox, setToggleCheckBox] = useState(false)
+  const [toggleCheckBox, setToggleCheckBox] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
 
   const { name, code, users: _users, isHost: _isHost } = route.params;
@@ -108,15 +108,15 @@ export default function WaitingScreen({
             Alert.alert("Modal has been closed.");
           }}
         >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalView}>
-            <Text style={styles.bigText}>Game Mode</Text>
-            <Text>Happy</Text>
-            <CheckBox
+          <View style={styles.modalContainer}>
+            <View style={styles.modalView}>
+              <Text style={styles.bigText}>Game Mode</Text>
+              <Text>Happy</Text>
+              <CheckBox
                 disabled={false}
                 value={toggleCheckBox}
                 onValueChange={(newValue) => setToggleCheckBox(newValue)}
-            />
+              />
 
               <TouchableOpacity
                 onPress={() => {
