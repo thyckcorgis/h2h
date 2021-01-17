@@ -28,7 +28,7 @@ const drawCard = (code) => {
   return card;
 };
 const getCardCategories = (code) => {
-  const { settings, customCards } = rooms[code];
+  const { settings, customs } = rooms[code];
   let arr = [];
   Object.entries(settings).forEach(([key, val]) => {
     if (val && key !== "customCards") {
@@ -36,7 +36,7 @@ const getCardCategories = (code) => {
     }
   });
 
-  if (settings.customCards) arr = [...arr, ...customCards];
+  if (settings.customCards) arr = [...arr, ...customs];
   arr = shuffleArray(arr);
   return arr;
 };
