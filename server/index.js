@@ -12,55 +12,50 @@ router.get("/", (req, res) => {
 
 const rooms = {};
 const roomExists = (code) => rooms[code] != null;
-const addUserToRoom = (name, code) => rooms[code].users.push(name);
+const addUserToRoom = (name, code) => rooms[code]?.users.push(name);
 const endTurn = (code) => {
   const room = rooms[code];
-  if (room == null) return;
-  rooms[code].current = (room.current + 1) % room.users.length;
+  rooms[code].current = (room?.current + 1) % room?.users.length;
 };
 const changeRoomSettings = (code, settings) => {
-  if (rooms[code] == null) return;
   rooms[code].settings = settings;
 };
-const getCurrentPlayer = (code) => rooms[code].users[rooms[code].current];
-const questions = require("./questions.json");
+const getCurrentPlayer = (code) => rooms[code]?.users[rooms[code].current];
 const categories = require("./categories.json");
 const drawCard = (code) => {
-  const card = rooms[code].cards.pop();
+  const card = rooms[code]?.cards.pop();
   rooms[code].currentCard = card;
   return card;
 };
-const getCardCategories = (settings) => {
+const getCardCategories = (code) => {
+  const { settings, customCards } = rooms[code];
   let arr = [];
   Object.entries(settings).forEach(([key, val]) => {
-    if (val) arr = [...arr, ...categories[key]];
+    if (val && key !== "customCards") {
+      arr = [...arr, ...categories[key]];
+    }
   });
 
+  if (settings.customCards) arr = [...arr, ...customCards];
   arr = shuffleArray(arr);
   return arr;
 };
 
 const getCurrentCard = (code) => rooms[code].currentCard;
 const removeUser = (code, name) => {
-  if (rooms[code] == null) return;
-  rooms[code].users = rooms[code].users.filter((arrName) => arrName !== name);
-  rooms[code].current = rooms[code].current % rooms[code].users.length;
-};
-const getNewHost = (code, isHost) => {
-  if (!isHost) {
-    return "";
+  if (rooms[code]) {
+    rooms[code].users = rooms[code]?.users.filter(
+      (arrName) => arrName !== name
+    );
+    rooms[code].current = rooms[code]?.current % rooms[code]?.users.length;
   }
-  return rooms[code]?.users[0];
 };
-
-// unnecessary edge case for the presentation
-const userExistsInRoom = (name, code) => rooms[code].users.includes(name);
+const getNewHost = (code, isHost) => (isHost ? rooms[code]?.users[0] : "");
+const userExistsInRoom = (name, code) => rooms[code]?.users.includes(name);
 
 const createRoom = (name) => {
   let code = randCode();
-  while (roomExists(code)) {
-    code = randCode();
-  }
+  while (roomExists(code)) code = randCode();
 
   rooms[code] = {
     users: [name],
@@ -73,7 +68,9 @@ const createRoom = (name) => {
       heavy: true,
       toTheSpeaker: true,
       selfReflection: true,
+      customCards: false,
     },
+    customs: [],
   };
 
   return code;
@@ -97,9 +94,8 @@ io.on("connection", (socket) => {
     if (!roomExists(code))
       return fn({ ok: false, message: "Room does not exist" });
 
-    if (userExistsInRoom(name, code)) {
+    if (userExistsInRoom(name, code))
       return fn({ ok: false, message: "Name is already taken" });
-    }
 
     addUserToRoom(name, code);
     socket.join(code);
@@ -138,9 +134,13 @@ io.on("connection", (socket) => {
     });
   });
 
+  socket.on("add-custom", (code) => {
+    socket.to(code).emit("add-custom");
+  });
+
   socket.on("start-game", (code, fn) => {
     rooms[code].gameStarted = true;
-    rooms[code].cards = [...getCardCategories(rooms[code].settings)];
+    rooms[code].cards = [...getCardCategories(code)];
     drawCard(code);
     const card = getCurrentCard(code);
     const current = getCurrentPlayer(code);
@@ -169,5 +169,16 @@ io.on("connection", (socket) => {
   socket.on("setting", (code, settings) => {
     changeRoomSettings(code, settings);
     socket.to(code).emit("setting", settings);
+  });
+
+  socket.on("custom", (code, question, fn) => {
+    if (!rooms[code].settings.customCards) {
+      return fn({
+        ok: false,
+        message: "Custom cards are not allowed in this room",
+      });
+    }
+    rooms[code].customs.push(question);
+    fn({ ok: true, message: "Added anonymous custom card" });
   });
 });

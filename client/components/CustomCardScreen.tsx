@@ -8,6 +8,7 @@ import {
   StyleSheet,
 } from "react-native";
 import { useState } from "react";
+import socket from "../socket";
 
 interface CustomCardScreenProps {
   navigation: StackNavigationHelpers;
@@ -18,18 +19,36 @@ export default function CustomCardScreen({
   navigation,
   route,
 }: CustomCardScreenProps) {
-  const {
-    code,
-    name,
-    current: current,
-    card: card,
-    users: users,
-    isHost: isHost,
-  } = route.params;
+  const { code, name, isHost } = route.params;
   const [question, setQuestion] = useState("");
+
+  const submitCardHandler = () => {
+    socket.emit("custom", code, question, (data: any) => {
+      console.log(data);
+    });
+  };
+
+  const startGameHandler = () => {
+    socket.emit("start-game", code, (data) => {
+      const { current, card, users } = data;
+      navigation.navigate("Game", {
+        code,
+        current,
+        card,
+        name,
+        users,
+        isHost,
+      });
+    });
+  };
+
+  const start = isHost ? (
+    <Button title="Start game" onPress={startGameHandler} />
+  ) : null;
+
   return (
     <KeyboardAvoidingView style={styles.screen} behavior="padding">
-      <Text style={styles.bigText}>Add custom card</Text>
+      <Text style={styles.bigText}>Add custom card to be read anonymously</Text>
       <TextInput
         multiline={true}
         style={styles.inputField}
@@ -38,19 +57,8 @@ export default function CustomCardScreen({
         onChangeText={(text) => setQuestion(text)}
         value={question}
       />
-      <Button
-        title="Submit"
-        onPress={() =>
-          navigation.navigate("Game", {
-            code,
-            current,
-            card,
-            name,
-            users,
-            isHost,
-          })
-        }
-      />
+      <Button title="Submit card" onPress={submitCardHandler} />
+      {start}
     </KeyboardAvoidingView>
   );
 }
@@ -80,5 +88,6 @@ const styles = StyleSheet.create({
     fontFamily: "Avenir-Light",
     fontSize: 30,
     color: "white",
+    textAlign: "center",
   },
 });

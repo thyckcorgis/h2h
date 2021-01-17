@@ -36,6 +36,7 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
         heavy: true,
         toTheSpeaker: true,
         selfReflection: true,
+        customCards: false,
       });
     });
   };
