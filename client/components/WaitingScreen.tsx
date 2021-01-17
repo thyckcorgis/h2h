@@ -31,6 +31,7 @@ export default function WaitingScreen({
   navigation,
   route,
 }: WaitingScreenProps) {
+  const [toggleCheckBox, setToggleCheckBox] = useState(false)
   const [modalVisible, setModalVisible] = useState(false);
 
   const { name, code, users: _users, isHost: _isHost } = route.params;
@@ -108,11 +109,11 @@ export default function WaitingScreen({
         <View style={styles.modalContainer}>
           <View style={styles.modalView}>
             <Text style={styles.bigText}>Game Mode</Text>
-            <FlatList
-              data={users}
-              renderItem={renderItem}
-              keyExtractor={(item) => item}
-              extraData={users}
+            <Text>Happy</Text>
+            <CheckBox
+                disabled={false}
+                value={toggleCheckBox}
+                onValueChange={(newValue) => setToggleCheckBox(newValue)}
             />
 
             <TouchableOpacity
