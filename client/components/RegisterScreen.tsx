@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     backgroundColor: "black",
   },
   bigText: {
-    fontFamily: "Futura",
+    fontFamily: "Arial Rounded MT Bold",
     fontSize: 30,
     color: "white",
   },
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     color: "white",
   },
   smallText: {
-    fontFamily: "Futura",
+    fontFamily: "Arial Rounded MT Bold",
     fontSize: 18,
     color: "white",
     textAlign: "center",

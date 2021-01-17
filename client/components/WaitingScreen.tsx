@@ -229,11 +229,13 @@ const styles = StyleSheet.create({
     fontSize: 30,
     color: "#892cdc",
     paddingTop: 30,
+    fontFamily: "Arial Rounded MT Bold",
   },
   bigText: {
     fontSize: 30,
     color: "white",
     textAlign: "center",
+    fontFamily: "Arial Rounded MT Bold",
   },
   listContainer: {
     borderWidth: 1,
@@ -256,6 +258,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: "white",
     textAlign: "center",
+    fontFamily: "Arial Rounded MT Bold",
   },
   quit: {
     flexDirection: "row",

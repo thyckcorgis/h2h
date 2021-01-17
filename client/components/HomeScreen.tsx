@@ -120,6 +120,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     color: "white",
     paddingBottom: 10,
+    fontFamily: "Arial Rounded MT Bold",
   },
   inputField: {
     padding: 5,
