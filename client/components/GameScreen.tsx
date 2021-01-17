@@ -54,6 +54,14 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
   };
 
   useEffect(() => {
+    socket.on("player-joined", (name) => {
+      setMessage(`${name} has joined the game.`);
+      setTimeout(() => {
+        setMessage("");
+      }, 3000);
+      setUsers((users) => [...users, name]);
+    });
+
     socket.on("next-card", updateCurrent);
     socket.on("quit-game", (data: any) => {
       const { newHost, users, playerQuit } = data;
@@ -65,7 +73,7 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
         setMessage("");
       }, 3000);
     });
-  });
+  }, []);
 
   const nextCardHandler = () => {
     socket.emit("next-card", code, updateCurrent);
@@ -89,6 +97,7 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
   return (
     <View style={styles.screen}>
       <Text style={{ ...styles.smallText, color: "red" }}>{message}</Text>
+      <Text style={styles.codeText}>Room code: {code}</Text>
       <Text style={styles.bigText}>{name}</Text>
       <Text style={styles.smallText}>
         {isTurn(name, current)
@@ -96,7 +105,11 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
           : `It is ${current}'s turn.`}
       </Text>
       <View style={styles.cardContainer}>
-        <Text style={styles.bigText}>{isTurn(name, current) ? card : ""}</Text>
+        {isTurn(name, current) ? (
+          <Text style={styles.bigText}>{card}</Text>
+        ) : (
+          <CardBack width={250} />
+        )}
       </View>
 
       <Modal
@@ -172,6 +185,12 @@ const styles = StyleSheet.create({
   navBar: {
     flexDirection: "row",
     alignItems: "center",
+  },
+  codeText: {
+    fontSize: 30,
+    color: "#892cdc",
+    paddingTop: 30,
+    fontFamily: "Avenir-Light",
   },
   bigText: {
     fontSize: 30,

@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const { randCode, getRandArray } = require("./random");
+const { randCode, shuffleArray } = require("./random");
 
 const port = 5001;
 
@@ -29,6 +29,17 @@ const drawCard = (code) => {
   const idx = rooms[code].cards.pop();
   rooms[code].currentCard = questions[idx];
 };
+
+const getCardCategories = (settings) => {
+  let arr = [];
+  for (const [key, val] in Object.entries(settings)) {
+    if (val) {
+      arr = [...arr, categories[key]];
+    }
+  }
+  return shuffleArray(arr);
+};
+
 const getCurrentCard = (code) => rooms[code].currentCard;
 const removeUser = (code, name) => {
   if (rooms[code] == null) return;
@@ -54,7 +65,7 @@ const createRoom = (name) => {
   rooms[code] = {
     users: [name],
     current: 0,
-    cards: getRandArray(questions.length),
+    cards: [],
     gameStarted: false,
     currentCard: "",
     settings: {
@@ -103,7 +114,7 @@ io.on("connection", (socket) => {
       gameStarted: rooms[code].gameStarted,
       settings: rooms[code].settings,
     });
-    socket.to(code).emit("player-joined", { ok: true, user: name });
+    socket.to(code).emit("player-joined", name);
   });
 
   socket.on("quit-game", (code, name, isHost) => {
@@ -129,6 +140,7 @@ io.on("connection", (socket) => {
 
   socket.on("start-game", (code, fn) => {
     rooms[code].gameStarted = true;
+    rooms[code].cards = getCardCategories(rooms[code].settings);
     drawCard(code);
     const card = getCurrentCard(code);
     const current = getCurrentPlayer(code);

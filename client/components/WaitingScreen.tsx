@@ -82,8 +82,8 @@ export default function WaitingScreen({
         setToTheSpeaker(toTheSpeaker);
       });
     }
-    socket.on("player-joined", ({ user }: { user: string }) => {
-      setUsers((users: string[]) => [...users, user]);
+    socket.on("player-joined", (name) => {
+      setUsers((users: string[]) => [...users, name]);
     });
   }, [isHost]);
 
@@ -148,51 +148,50 @@ export default function WaitingScreen({
           <View style={styles.modalContainer}>
             <View style={styles.modalView}>
               <Text style={styles.bigText}>Game Mode</Text>
-              <Text style={styles.smallText}>Happy</Text>
-              <CheckBox
-                disabled={!isHost}
-                value={happy}
-                onValueChange={toggle(setHappy)}
-              />
-              <Text style={styles.smallText}>Self-reflection</Text>
-              <CheckBox
-                disabled={!isHost}
-                value={selfReflection}
-                onValueChange={toggle(setSelfReflection)}
-              />
-              <Text style={styles.smallText}>Heavy</Text>
-              <CheckBox
-                disabled={!isHost}
-                value={heavy}
-                onValueChange={toggle(setHeavy)}
-              />
-              <Text style={styles.smallText}>To the Speaker</Text>
-              <CheckBox
-                disabled={!isHost}
-                value={toTheSpeaker}
-                onValueChange={toggle(setToTheSpeaker)}
-              />
 
-              <TouchableOpacity
-                onPress={() => {
-                  setModalVisible(!modalVisible);
-                }}
-              >
-                <Text style={styles.smallText}>Close</Text>
-              </TouchableOpacity>
-              <Button
-                title="print"
-                onPress={() => {
-                  setMessage(
-                    JSON.stringify({
-                      happy,
-                      heavy,
-                      toTheSpeaker,
-                      selfReflection,
-                    })
-                  );
-                }}
-              />
+              <View style={styles.filterContainer}>
+                <Text style={styles.smallText}>Happy</Text>
+                <CheckBox
+                  disabled={!isHost}
+                  value={happy}
+                  onValueChange={toggle(setHappy)}
+                />
+              </View>
+              <View style={styles.filterContainer}>
+                <Text style={styles.smallText}>Self-reflection</Text>
+                <CheckBox
+                  disabled={!isHost}
+                  value={selfReflection}
+                  onValueChange={toggle(setSelfReflection)}
+                />
+              </View>
+              <View style={styles.filterContainer}>
+                <Text style={styles.smallText}>Heavy</Text>
+                <CheckBox
+                  disabled={!isHost}
+                  value={heavy}
+                  onValueChange={toggle(setHeavy)}
+                />
+              </View>
+              <View style={styles.filterContainer}>
+                <Text style={styles.smallText}>To the Speaker</Text>
+                <CheckBox
+                  disabled={!isHost}
+                  value={toTheSpeaker}
+                  onValueChange={toggle(setToTheSpeaker)}
+                />
+              </View>
+
+              <View style={styles.closeContainer}>
+                <TouchableOpacity
+                  onPress={() => {
+                    setModalVisible(!modalVisible);
+                  }}
+                >
+                  <Text style={styles.smallText}>Close</Text>
+                </TouchableOpacity>
+              </View>
+
               <Text style={{ ...styles.smallText, color: "white" }}>
                 {message}
               </Text>
@@ -222,7 +221,6 @@ export default function WaitingScreen({
 const styles = StyleSheet.create({
   screen: {
     padding: 50,
-    paddingTop: 100,
     alignItems: "center",
     justifyContent: "center",
     flex: 1,
@@ -257,6 +255,18 @@ const styles = StyleSheet.create({
     margin: 5,
     alignItems: "center",
   },
+  filterContainer: {
+    flexDirection: "row",
+    marginVertical: 5,
+  },
+  closeContainer: {
+    marginTop: 50,
+    justifyContent: "flex-end",
+    borderWidth: 1,
+    borderColor: "white",
+    borderRadius: 20,
+    paddingHorizontal: 10,
+  },
   smallText: {
     fontSize: 18,
     color: "white",
@@ -272,6 +282,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     margin: 10,
+    padding: 20,
   },
   navBar: {
     // flexDirection: "row",
@@ -286,7 +297,7 @@ const styles = StyleSheet.create({
     borderColor: "white",
     padding: 10,
     // justifyContent: "center",
-    height: 500,
+    height: 300,
     width: 300,
     opacity: 0.9,
     alignItems: "center",
