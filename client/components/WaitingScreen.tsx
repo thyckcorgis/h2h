@@ -11,6 +11,8 @@ import {
   Alert,
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import CheckBox from '@react-native-community/checkbox';
+
 
 import socket from "../socket";
 
@@ -105,7 +107,7 @@ export default function WaitingScreen({
         >
         <View style={styles.modalContainer}>
           <View style={styles.modalView}>
-            <Text style={styles.bigText}>Game Mode?</Text>
+            <Text style={styles.bigText}>Game Mode</Text>
             <FlatList
               data={users}
               renderItem={renderItem}
