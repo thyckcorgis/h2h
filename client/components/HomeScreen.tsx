@@ -127,10 +127,10 @@ const styles = StyleSheet.create({
     color: "white",
   },
   smallText: {
-    fontFamily: "Georgia",
     fontSize: 18,
     color: "white",
     textAlign: "center",
+    padding: 5,
   },
   continueText: {
     fontFamily: "Comfortaa",
