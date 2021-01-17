@@ -10,14 +10,35 @@ export default function Checkbox({ disabled, value, onValueChange }) {
   };
   return (
     <TouchableOpacity onPress={touchHandler}>
-      <View style={disabled ? styles.disabled : styles.enabled}></View>
+      <View
+        style={
+          disabled
+            ? { ...styles.checkbox, ...styles.disabled }
+            : { ...styles.checkbox, ...styles.enabled }
+        }
+      ></View>
     </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
-  disabled: {},
-  enabled: {},
-  on: {},
-  off: {},
+  checkbox: {
+    borderWidth: 1,
+    width: 10,
+    height: 10,
+    margin: 10,
+  },
+  disabled: {
+    borderColor: "grey",
+  },
+  enabled: {
+    borderColor: "white",
+  },
+  on: {
+    borderColor: "white",
+    backgroundColor: "white",
+  },
+  off: {
+    borderColor: "white",
+  },
 });

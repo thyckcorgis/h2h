@@ -124,18 +124,22 @@ export default function WaitingScreen({
               <Text style={styles.bigText}>Game Mode</Text>
               <Text style={styles.smallText}>Happy</Text>
               <Button onPress={toggleHappy} title={happy ? "on" : "off"} />
+              <CheckBox />
               <Text style={styles.smallText}>Self-reflection</Text>
               <Button
                 onPress={toggleSelfReflection}
                 title={selfReflection ? "on" : "off"}
               />
+              <CheckBox />
               <Text style={styles.smallText}>Heavy</Text>
               <Button onPress={toggleHeavy} title={heavy ? "on" : "off"} />
+              <CheckBox />
               <Text style={styles.smallText}>To the Speaker</Text>
               <Button
                 onPress={toggleToTheSpeaker}
                 title={toTheSpeaker ? "on" : "off"}
               />
+              <CheckBox />
 
               <TouchableOpacity
                 onPress={() => {
@@ -231,8 +235,9 @@ const styles = StyleSheet.create({
     borderColor: "white",
     padding: 10,
     // justifyContent: "center",
-    height: 300,
+    height: 500,
     width: 300,
     opacity: 0.9,
+    alignItems: "center",
   },
 });
