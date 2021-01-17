@@ -48,6 +48,11 @@ export default function GameScren({ route, navigation }: GameScreenProps) {
   const nextCardHandler = () => {
     socket.emit("next-card", code, updateCurrent);
   };
+  
+  const quitGameHandler = () => {
+    socket.emit("quit-game"), code, updateCurrent);
+    // navigation.navigate("Home", { name });
+  }
 
   const [modalVisible, setModalVisible] = useState(false);
 
