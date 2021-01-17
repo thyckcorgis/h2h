@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const { shuffleArray, randCode, getRandArray } = require("./random");
 
 const port = 5001;
 
@@ -23,21 +24,8 @@ const drawCard = (code) => {
   return questions[idx];
 };
 
-const shuffleArray = (array) => {
-  const arr = [...array];
-  for (let i = arr.length - 1; i > 0; --i) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
-  }
-  return arr;
-};
-
-const getRandArray = () => shuffleArray([...Array(questions.length).keys()]);
-
 // unnecessary edge case for the presentation
 // const userExistsInRoom = (name, code) => rooms[code].users.includes(name);
-
-const randCode = () => (Math.floor(Math.random() * 90000) + 10000).toString();
 
 const createRoom = (name) => {
   let code = randCode();
