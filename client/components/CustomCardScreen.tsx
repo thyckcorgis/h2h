@@ -29,7 +29,7 @@ export default function CustomCardScreen({
   const [question, setQuestion] = useState("");
   return (
     <KeyboardAvoidingView style={styles.screen} behavior="padding">
-      <Text style={styles.bigText}>Add custom card</Text>
+      <Text style={styles.bigText}>Add custom card to be read anonymously</Text>
       <TextInput
         multiline={true}
         style={styles.inputField}
@@ -80,5 +80,6 @@ const styles = StyleSheet.create({
     fontFamily: "Avenir-Light",
     fontSize: 30,
     color: "white",
+    textAlign: 'center'
   },
 });
