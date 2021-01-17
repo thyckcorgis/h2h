@@ -14,6 +14,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import UserButton from "../assets/images/users_button.svg";
 import NextButton from "../assets/images/next_button.svg";
 import QuitButton from "../assets/images/quit_button.svg";
+import CardBack from "../assets/images/card_back.svg";
 
 import socket from "../socket";
 interface GameScreenProps {
