@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import { StackNavigationHelpers } from "@react-navigation/stack/lib/typescript/src/types";
 import {
   View,
+  SafeAreaView,
   Text,
   StyleSheet,
   Modal,
   Alert,
-  Image,
   FlatList,
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -90,77 +90,79 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
 
   const nextButton = isTurn(name, current) ? (
     <TouchableOpacity onPress={nextCardHandler}>
-      <NextButton />
+      <NextButton height={85} />
     </TouchableOpacity>
   ) : (
-    <NextButton opacity={0.5} />
+    <NextButton opacity={0.5} height={85} />
   );
 
   return (
-    <View style={styles.screen}>
-      <Text style={{ ...styles.smallText, color: "red" }}>{message}</Text>
-      <Text style={styles.codeText}>Room code: {code}</Text>
-      <Text style={styles.bigText}>{name}</Text>
-      <Text style={styles.smallText}>
-        {card != null
-          ? isTurn(name, current)
-            ? "It is your turn. Ask the group the question below."
-            : `It is ${current}'s turn.`
-          : "You ran out of cards. Try different categories to access new cards."}
-      </Text>
-      <View style={styles.cardContainer}>
-        {isTurn(name, current) ? (
-          <Text style={styles.bigText}>{card}</Text>
-        ) : (
-          <CardBack width={250} />
-        )}
-      </View>
-
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
-        }}
-      >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalView}>
-            <Text style={styles.bigText}>Who's in the room?</Text>
-            <FlatList
-              data={users}
-              renderItem={renderItem}
-              keyExtractor={(item) => item}
-              extraData={users}
-            />
-
-            <View style={styles.closeContainer}>
-              <TouchableOpacity
-                onPress={() => {
-                  setModalVisible(!modalVisible);
-                }}
-              >
-                <Text style={styles.smallText}>Close</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
+    <SafeAreaView style={styles.screen}>
+      <View style={styles.screen}>
+        <Text style={{ ...styles.smallText, color: "red" }}>{message}</Text>
+        <Text style={styles.codeText}>Room code: {code}</Text>
+        <Text style={styles.bigText}>{name}</Text>
+        <Text style={styles.smallText}>
+          {card != null
+            ? isTurn(name, current)
+              ? "It is your turn. Ask the group the question below."
+              : `It is ${current}'s turn.`
+            : "You ran out of cards. Try different categories to access new cards."}
+        </Text>
+        <View style={styles.cardContainer}>
+          {isTurn(name, current) ? (
+            <Text style={styles.bigText}>{card}</Text>
+          ) : (
+            <CardBack width={250} />
+          )}
         </View>
-      </Modal>
 
-      <View style={styles.navBar}>
-        <TouchableOpacity
-          onPress={() => {
-            setModalVisible(true);
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            Alert.alert("Modal has been closed.");
           }}
         >
-          <UserButton />
-        </TouchableOpacity>
-        {nextButton}
-        <TouchableOpacity onPress={quitGameHandler}>
-          <QuitButton />
-        </TouchableOpacity>
+          <View style={styles.modalContainer}>
+            <View style={styles.modalView}>
+              <Text style={styles.bigText}>Who's in the room?</Text>
+              <FlatList
+                data={users}
+                renderItem={renderItem}
+                keyExtractor={(item) => item}
+                extraData={users}
+              />
+
+              <View style={styles.closeContainer}>
+                <TouchableOpacity
+                  onPress={() => {
+                    setModalVisible(!modalVisible);
+                  }}
+                >
+                  <Text style={styles.smallText}>Close</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        </Modal>
+
+        <View style={styles.navBar}>
+          <TouchableOpacity
+            onPress={() => {
+              setModalVisible(true);
+            }}
+          >
+            <UserButton height={95} />
+          </TouchableOpacity>
+          {nextButton}
+          <TouchableOpacity onPress={quitGameHandler}>
+            <QuitButton height={95} />
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -176,9 +178,9 @@ const styles = StyleSheet.create({
   modalContainer: {
     flex: 1,
     justifyContent: "center",
-    alignContent: "center",
     alignSelf: "center",
     margin: 10,
+    padding: 20,
   },
   closeContainer: {
     marginTop: 50,
@@ -200,6 +202,10 @@ const styles = StyleSheet.create({
   navBar: {
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "space-between",
+    width: 300,
+    // borderColor: "white",
+    // borderWidth: 1,
   },
   codeText: {
     fontSize: 30,
@@ -220,6 +226,7 @@ const styles = StyleSheet.create({
     fontFamily: "Avenir-Light",
     color: "white",
     textAlign: "center",
+    // padding: 5,
   },
   modalView: {
     margin: 20,
@@ -232,5 +239,6 @@ const styles = StyleSheet.create({
     height: 300,
     width: 300,
     opacity: 0.9,
+    alignItems: "center",
   },
 });

@@ -155,6 +155,7 @@ const styles = StyleSheet.create({
     color: "white",
     textAlign: "center",
     padding: 5,
+    fontFamily: "Avenir-Light",
   },
   modalContainer: {
     flex: 1,
