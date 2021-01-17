@@ -16,6 +16,7 @@ import CheckBox from "./Checkbox";
 
 import socket from "../socket";
 
+import SettingsButton from "../assets/images/settings_button.svg";
 import StartButton from "../assets/images/start_button.svg";
 import QuitButton from "../assets/images/quit_button.svg";
 
@@ -100,7 +101,7 @@ export default function WaitingScreen({
       <View style={{ flex: 1 }}>
         <Text style={styles.codeText}>Room Code: {code}</Text>
       </View>
-      <View style={{ flex: 3 }}>
+      <View style={{ flex: 4, alignItems: "center" }}>
         <Text style={styles.bigText}>Who's in the room?</Text>
         <View style={styles.listContainer}>
           <FlatList
@@ -146,19 +147,19 @@ export default function WaitingScreen({
             </View>
           </View>
         </Modal>
-        <View style={styles.navBar}>
-          <TouchableOpacity
-            onPress={() => {
-              setModalVisible(true);
-            }}
-          >
-            <Image source={require("../assets/images/settings_button.png")} />
-          </TouchableOpacity>
-          {start}
-        </View>
+        {/* <View style={styles.navBar}> */}
+        <TouchableOpacity
+          onPress={() => {
+            setModalVisible(true);
+          }}
+        >
+          <SettingsButton width={250} />
+        </TouchableOpacity>
+        {start}
+        {/* </View> */}
         <View style={styles.quit}>
           <TouchableOpacity onPress={quitLobbyHandler}>
-            <Image source={require("../assets/images/quit_button.png")} />
+            <QuitButton />
           </TouchableOpacity>
         </View>
       </View>
@@ -210,7 +211,6 @@ const styles = StyleSheet.create({
   quit: {
     flexDirection: "row",
     alignSelf: "flex-start",
-    margin: 40,
   },
   modalContainer: {
     flex: 1,
