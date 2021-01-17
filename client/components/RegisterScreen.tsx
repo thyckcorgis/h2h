@@ -4,7 +4,6 @@ import {
   View,
   Text,
   StyleSheet,
-  Image,
   TextInput,
   TouchableOpacity,
   KeyboardAvoidingView,
@@ -12,9 +11,9 @@ import {
 } from "react-native";
 import { useState } from "react";
 import FAQ from "./FAQ";
-import Features from './Features';
+import Features from "./Features";
 
-import { RegisterButton, HelpButton } from "../assets/images/";
+import { RegisterButton, HelpButton, MissionButton } from "../assets/images/";
 
 interface RegisterScreenProps {
   navigation: StackNavigationHelpers;
@@ -24,9 +23,8 @@ export default function RegisterScreen({ navigation }: RegisterScreenProps) {
   const [name, setName] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
-  const [modalVisible1, setModalVisible1] = useState(false);
-  const [modalVisible2, setModalVisible2] = useState(false);
-
+  const [featuresVisible, setFeaturesVisible] = useState(false);
+  const [missionVisible, setMissionVisible] = useState(false);
 
   const registerHandler = () => {
     if (name === "") {
@@ -38,8 +36,13 @@ export default function RegisterScreen({ navigation }: RegisterScreenProps) {
 
   return (
     <KeyboardAvoidingView style={styles.screen} behavior="padding">
-      <View style={styles.featuresContainer}>
-        <Modal animationType="slide" transparent={true} visible={modalVisible1}>
+      {/* This is the view containing the modals */}
+      <View style={styles.topContainer}>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={featuresVisible}
+        >
           <View style={styles.modalContainer}>
             <View style={styles.modalView}>
               <View style={{ flex: 9 }}>
@@ -48,7 +51,7 @@ export default function RegisterScreen({ navigation }: RegisterScreenProps) {
               <View style={styles.closeContainer}>
                 <TouchableOpacity
                   onPress={() => {
-                    setModalVisible1(!modalVisible1);
+                    setFeaturesVisible(!featuresVisible);
                   }}
                 >
                   <Text style={styles.smallText}>Close</Text>
@@ -59,14 +62,16 @@ export default function RegisterScreen({ navigation }: RegisterScreenProps) {
         </Modal>
         <TouchableOpacity
           onPress={() => {
-            setModalVisible1(!modalVisible1);
+            setFeaturesVisible(!missionVisible);
           }}
         >
-          <HelpButton />
+          <MissionButton />
         </TouchableOpacity>
-      </View>
-      <View style={styles.helpContainer}>
-        <Modal animationType="slide" transparent={true} visible={modalVisible2}>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={missionVisible}
+        >
           <View style={styles.modalContainer}>
             <View style={styles.modalView}>
               <View style={{ flex: 9 }}>
@@ -75,7 +80,7 @@ export default function RegisterScreen({ navigation }: RegisterScreenProps) {
               <View style={styles.closeContainer}>
                 <TouchableOpacity
                   onPress={() => {
-                    setModalVisible2(!modalVisible2);
+                    setMissionVisible(!missionVisible);
                   }}
                 >
                   <Text style={styles.smallText}>Close</Text>
@@ -86,12 +91,14 @@ export default function RegisterScreen({ navigation }: RegisterScreenProps) {
         </Modal>
         <TouchableOpacity
           onPress={() => {
-            setModalVisible2(!modalVisible2);
+            setFeaturesVisible(!featuresVisible);
           }}
         >
           <HelpButton />
         </TouchableOpacity>
       </View>
+
+      {/* This is where the register name part starts */}
       <View style={styles.container}>
         <Text style={styles.bigText}>Ready to Talk?</Text>
         <TextInput
@@ -183,16 +190,10 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     paddingHorizontal: 10,
   },
-  helpContainer: {
+  topContainer: {
     flexDirection: "row",
     flex: 1,
     alignSelf: "flex-end",
-    marginTop: 30,
-  },
-  featuresContainer: {
-    flexDirection: "row",
-    flex: 1,
-    alignSelf: "flex-start",
     marginTop: 30,
   },
 });
