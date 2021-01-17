@@ -40,6 +40,7 @@ const styles = StyleSheet.create({
     color: "white",
     paddingBottom: 10,
     fontFamily: "Avenir-Light",
+    textAlign: "center",
   },
   smallText: {
     fontSize: 14,
