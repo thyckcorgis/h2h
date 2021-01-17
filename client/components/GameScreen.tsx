@@ -30,7 +30,7 @@ const Item = ({ title }: { title: any }) => (
   </View>
 );
 
-export default function GameScren({ route, navigation }: GameScreenProps) {
+export default function GameScreen({ route, navigation }: GameScreenProps) {
   const {
     code,
     name,

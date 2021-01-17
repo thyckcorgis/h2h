@@ -59,7 +59,7 @@ export default function WaitingScreen({
     socket.on("start-game", (data: any) => {
       const { ok, current, card, users } = data;
       if (ok)
-        navigation.navigate("Game", {
+        navigation.navigate("Custom", {
           code,
           current,
           card,
@@ -102,7 +102,7 @@ export default function WaitingScreen({
     socket.emit("start-game", code, (data: any) => {
       const { current, card, users } = data;
 
-      navigation.navigate("Game", { code, current, card, name, users, isHost });
+      navigation.navigate("Custom", { code, current, card, name, users, isHost });
     });
   };
 

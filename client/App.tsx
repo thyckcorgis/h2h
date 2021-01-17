@@ -12,6 +12,8 @@ import {
   GameScreen,
 } from "./components";
 
+import CustomCardScreen from "./components/CustomCardScreen";
+
 const Stack = createStackNavigator();
 
 const forFade = ({ current }: { current: any }) => ({
@@ -48,6 +50,11 @@ export default function App() {
         <Stack.Screen
           name="Waiting"
           component={WaitingScreen}
+          options={{ ...hideHeader, ...disableSwipeBack }}
+        />
+        <Stack.Screen
+          name="Custom"
+          component={CustomCardScreen}
           options={{ ...hideHeader, ...disableSwipeBack }}
         />
         <Stack.Screen
