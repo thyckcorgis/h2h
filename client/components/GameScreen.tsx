@@ -97,7 +97,7 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
   return (
     <View style={styles.screen}>
       <Text style={{ ...styles.smallText, color: "red" }}>{message}</Text>
-      <Text style={styles.bigText}>Rooom code: {code}</Text>
+      <Text style={styles.codeText}>Room code: {code}</Text>
       <Text style={styles.bigText}>{name}</Text>
       <Text style={styles.smallText}>
         {isTurn(name, current)
@@ -185,6 +185,12 @@ const styles = StyleSheet.create({
   navBar: {
     flexDirection: "row",
     alignItems: "center",
+  },
+  codeText: {
+    fontSize: 30,
+    color: "#892cdc",
+    paddingTop: 30,
+    fontFamily: "Avenir-Light",
   },
   bigText: {
     fontSize: 30,
