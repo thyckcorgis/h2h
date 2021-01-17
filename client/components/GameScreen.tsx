@@ -27,10 +27,11 @@ const Item = ({ title }: { title: any }) => (
 );
 
 export default function GameScren({ route, navigation }: GameScreenProps) {
-  const { code, current, card, name, users, isHost } = route.params;
+  const { code, current, card, name, users, isHost: defIsHost } = route.params;
   const [currentCard, setCurrentCard] = useState(card);
   const [currentPlayer, setCurrentPlayer] = useState(current);
   const [currentUsers, setCurrentUsers] = useState(users);
+  const [isHost, setHost] = useState(defIsHost);
 
   const renderItem = ({ item }: { item: any }) => <Item title={item} />;
 
@@ -43,9 +44,10 @@ export default function GameScren({ route, navigation }: GameScreenProps) {
   useEffect(() => {
     socket.on("next-card", updateCurrent);
     socket.on("quit-game", (data: any) => {
-      const { current, card, newHost } = data;
-      setCurrentCard(card);
-      setCurrentPlayer(current);
+      const { newHost, users } = data;
+      setCurrentUsers(users);
+      setHost(newHost === "" ? isHost : name === newHost);
+      updateCurrent(data);
     });
   });
 

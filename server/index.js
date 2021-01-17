@@ -24,6 +24,16 @@ const drawCard = (code) => {
   rooms[code].currentCard = questions[idx];
 };
 const getCurrentCard = (code) => rooms[code].currentCard;
+const removeUser = (code, name) => {
+  rooms[code].users = rooms[code].users.filter((arrName) => arrName !== name);
+  rooms[code].current = rooms[code].users % rooms[code].users.length;
+};
+const getNewHost = (code, isHost) => {
+  if (!isHost) {
+    return "";
+  }
+  return rooms[code].users[0];
+};
 
 // unnecessary edge case for the presentation
 // const userExistsInRoom = (name, code) => rooms[code].users.includes(name);
@@ -79,7 +89,17 @@ io.on("connection", (socket) => {
   });
 
   socket.on("quit-game", (code, name, isHost) => {
-    socket.to(code).emit("quit-game", { current, card, newHost });
+    removeUser(code, name);
+    const newHost = getNewHost(code, isHost);
+    socket.leave(code);
+    socket
+      .to(code)
+      .emit("quit-game", {
+        current: getCurrentPlayer(code),
+        card: getCurrentCard(code),
+        newHost,
+        users: rooms[code].users,
+      });
   });
 
   socket.on("start-game", (code, fn) => {
