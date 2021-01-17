@@ -19,6 +19,7 @@ interface HomeScreenProps {
   route: any;
 }
 
+
 export default function HomeScreen({ navigation, route }: HomeScreenProps) {
   const [code, setCode] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
