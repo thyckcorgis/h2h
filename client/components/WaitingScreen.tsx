@@ -82,8 +82,8 @@ export default function WaitingScreen({
         setToTheSpeaker(toTheSpeaker);
       });
     }
-    socket.on("player-joined", ({ user }: { user: string }) => {
-      setUsers((users: string[]) => [...users, user]);
+    socket.on("player-joined", (name) => {
+      setUsers((users: string[]) => [...users, name]);
     });
   }, [isHost]);
 

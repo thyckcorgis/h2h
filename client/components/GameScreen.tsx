@@ -30,7 +30,7 @@ const Item = ({ title }: { title: any }) => (
   </View>
 );
 
-export default function GameScren({ route, navigation }: GameScreenProps) {
+export default function GameScreen({ route, navigation }: GameScreenProps) {
   const {
     code,
     name,
@@ -54,6 +54,14 @@ export default function GameScren({ route, navigation }: GameScreenProps) {
   };
 
   useEffect(() => {
+    socket.on("player-joined", (name) => {
+      setMessage(`${name} has joined the game.`);
+      setTimeout(() => {
+        setMessage("");
+      }, 3000);
+      setUsers((users) => [...users, name]);
+    });
+
     socket.on("next-card", updateCurrent);
     socket.on("quit-game", (data: any) => {
       const { newHost, users, playerQuit } = data;
@@ -65,7 +73,7 @@ export default function GameScren({ route, navigation }: GameScreenProps) {
         setMessage("");
       }, 3000);
     });
-  });
+  }, []);
 
   const nextCardHandler = () => {
     socket.emit("next-card", code, updateCurrent);
