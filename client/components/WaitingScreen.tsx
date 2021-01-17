@@ -56,9 +56,6 @@ export default function WaitingScreen({
 
   const renderItem = ({ item }: { item: any }) => <Item title={item} />;
   useEffect(() => {
-    socket.on("player-joined", ({ user }: { user: string }) => {
-      setUsers((users: string[]) => [...users, user]);
-    });
     socket.on("start-game", (data: any) => {
       const { ok, current, card, users } = data;
       if (ok)
@@ -83,16 +80,20 @@ export default function WaitingScreen({
       setSelfReflection(selfReflection);
       setToTheSpeaker(toTheSpeaker);
     });
+    socket.on("player-joined", ({ user }: { user: string }) => {
+      setUsers((users: string[]) => [...users, user]);
+    });
   }, []);
 
   useEffect(() => {
-    setMessage("changed");
-    socket.emit("setting", code, {
-      happy,
-      heavy,
-      selfReflection,
-      toTheSpeaker,
-    });
+    if (isHost) {
+      socket.emit("setting", code, {
+        happy,
+        heavy,
+        selfReflection,
+        toTheSpeaker,
+      });
+    }
   }, [happy, heavy, selfReflection, toTheSpeaker]);
 
   const startGameHandler = () => {
