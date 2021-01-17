@@ -13,7 +13,6 @@ import {
 import { useState } from "react";
 import FAQ from "./FAQ";
 
-
 import { RegisterButton, HelpButton } from "../assets/images/";
 
 interface RegisterScreenProps {
@@ -36,7 +35,7 @@ export default function RegisterScreen({ navigation }: RegisterScreenProps) {
 
   return (
     <KeyboardAvoidingView style={styles.screen} behavior="padding">
-       <View style={styles.helpContainer}>
+      <View style={styles.helpContainer}>
         <Modal animationType="slide" transparent={true} visible={modalVisible}>
           <View style={styles.modalContainer}>
             <View style={styles.modalView}>
@@ -63,20 +62,29 @@ export default function RegisterScreen({ navigation }: RegisterScreenProps) {
           <HelpButton />
         </TouchableOpacity>
       </View>
-      <Text style={styles.bigText}>Ready to Talk?</Text>
-      <TextInput
-        style={styles.inputField}
-        placeholder="Your name"
-        placeholderTextColor="white"
-        onChangeText={(text) => setName(text)}
-        value={name}
-      />
-      <Text style={{ ...styles.smallText, color: "red", padding: 10 }}>
-        {errorMessage}
-      </Text>
-      <TouchableOpacity onPress={registerHandler}>
-        <RegisterButton />
-      </TouchableOpacity>
+      <View style={styles.container}>
+        <Text style={styles.bigText}>Ready to Talk?</Text>
+        <TextInput
+          style={styles.inputField}
+          placeholder="Your name"
+          placeholderTextColor="white"
+          onChangeText={(text) => setName(text)}
+          value={name}
+        />
+        <Text
+          style={{
+            ...styles.smallText,
+            color: "red",
+            padding: 10,
+            marginBottom: 30,
+          }}
+        >
+          {errorMessage}
+        </Text>
+        <TouchableOpacity onPress={registerHandler}>
+          <RegisterButton />
+        </TouchableOpacity>
+      </View>
     </KeyboardAvoidingView>
   );
 }
@@ -88,6 +96,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flex: 1,
     backgroundColor: "black",
+  },
+  container: {
+    flex: 3,
+    alignItems: "center",
   },
   bigText: {
     fontFamily: "Avenir-Light",
@@ -112,7 +124,6 @@ const styles = StyleSheet.create({
     color: "white",
     textAlign: "center",
     padding: 5,
-    marginBottom: 30,
   },
   modalContainer: {
     flex: 1,

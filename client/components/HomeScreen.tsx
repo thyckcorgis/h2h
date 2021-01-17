@@ -106,24 +106,19 @@ const styles = StyleSheet.create({
   screen: {
     padding: 50,
     alignItems: "center",
+    alignContent: "center",
     justifyContent: "center",
     flex: 1,
     backgroundColor: "black",
-  },
-  helpContainer: {
-    flexDirection: "row",
-    flex: 1,
-    alignSelf: "flex-end",
-    marginTop: 30,
   },
   container: {
     padding: 10,
     marginVertical: 20,
     alignItems: "center",
   },
-  itemContainer: {
-    flex: 4,
-  },
+  // itemContainer: {
+  //   flex: 0,
+  // },
   modalContainer: {
     flex: 1,
     justifyContent: "center",
@@ -175,11 +170,5 @@ const styles = StyleSheet.create({
     color: "white",
     textAlign: "center",
     padding: 5,
-  },
-  continueText: {
-    fontFamily: "Avenir-Light",
-    fontSize: 14,
-    color: "#892cdc",
-    paddingVertical: 30,
   },
 });
