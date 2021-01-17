@@ -221,7 +221,6 @@ export default function WaitingScreen({
 const styles = StyleSheet.create({
   screen: {
     padding: 50,
-    paddingTop: 100,
     alignItems: "center",
     justifyContent: "center",
     flex: 1,
