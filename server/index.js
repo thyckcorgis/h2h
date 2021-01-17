@@ -36,7 +36,7 @@ const getNewHost = (code, isHost) => {
 };
 
 // unnecessary edge case for the presentation
-// const userExistsInRoom = (name, code) => rooms[code].users.includes(name);
+const userExistsInRoom = (name, code) => rooms[code].users.includes(name);
 
 const createRoom = (name) => {
   let code = randCode();
@@ -72,6 +72,11 @@ io.on("connection", (socket) => {
   socket.on("join", (name, code, fn) => {
     if (!roomExists(code))
       return fn({ ok: false, message: "room does not exist" });
+
+    if (!userExistsInRoom(name, code)) {
+      return fn({ ok: false, message: "name is already taken" });
+    }
+
 
     addUserToRoom(name, code);
     socket.join(code);
