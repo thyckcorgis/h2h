@@ -27,13 +27,14 @@ export default function WaitingScreen({
   navigation,
   route,
 }: WaitingScreenProps) {
-  const { name, code, users, isHost } = route.params;
+  const { name, code, users: _users, isHost: _isHost } = route.params;
+  const [users, setUsers] = useState(_users);
+  const [isHost, setHost] = useState(_isHost);
 
-  const [roomUsers, setRoomUsers] = useState(users);
   const renderItem = ({ item }: { item: any }) => <Item title={item} />;
   useEffect(() => {
     socket.on("player-joined", ({ user }: { user: string }) => {
-      setRoomUsers((roomUsers: string[]) => [...roomUsers, user]);
+      setUsers((users: string[]) => [...users, user]);
     });
     socket.on("start-game", (data: any) => {
       const { ok, current, card, users } = data;
@@ -47,6 +48,11 @@ export default function WaitingScreen({
           isHost,
         });
     });
+    socket.on("quit-lobby", (data: any) => {
+      const { newHost, users } = data;
+      setUsers(users);
+      setHost(newHost === "" ? isHost : name === newHost);
+    });
   }, []);
 
   const startGameHandler = () => {
@@ -55,6 +61,11 @@ export default function WaitingScreen({
 
       navigation.navigate("Game", { code, current, card, name, users, isHost });
     });
+  };
+
+  const quitLobbyHandler = () => {
+    socket.emit("quit-lobby", code, name, isHost);
+    navigation.navigate("Home", { name });
   };
 
   const settingsHandler = () => {};
@@ -74,16 +85,16 @@ export default function WaitingScreen({
         <Text style={styles.bigText}>Who's in the room?</Text>
         <View style={styles.listContainer}>
           <FlatList
-            data={roomUsers}
+            data={users}
             renderItem={renderItem}
             keyExtractor={(item) => item}
-            extraData={roomUsers}
+            extraData={users}
           />
         </View>
         {start}
       </View>
       <View style={styles.quit}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={quitLobbyHandler}>
           <Image source={require("../assets/images/quit_button.png")} />
         </TouchableOpacity>
       </View>

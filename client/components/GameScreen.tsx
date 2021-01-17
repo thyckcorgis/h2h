@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
-  Button,
   StyleSheet,
   Modal,
   Alert,
@@ -27,25 +26,32 @@ const Item = ({ title }: { title: any }) => (
 );
 
 export default function GameScren({ route, navigation }: GameScreenProps) {
-  const { code, current, card, name, users, isHost: defIsHost } = route.params;
-  const [currentCard, setCurrentCard] = useState(card);
-  const [currentPlayer, setCurrentPlayer] = useState(current);
-  const [currentUsers, setCurrentUsers] = useState(users);
-  const [isHost, setHost] = useState(defIsHost);
+  const {
+    code,
+    name,
+    current: _current,
+    card: _card,
+    users: _users,
+    isHost: _isHost,
+  } = route.params;
+  const [card, setCard] = useState(_card);
+  const [current, setCurrent] = useState(_current);
+  const [users, setUsers] = useState(_users);
+  const [isHost, setHost] = useState(_isHost);
 
   const renderItem = ({ item }: { item: any }) => <Item title={item} />;
 
   const updateCurrent = (data: any) => {
     const { current, card } = data;
-    setCurrentCard(card);
-    setCurrentPlayer(current);
+    setCard(card);
+    setCurrent(current);
   };
 
   useEffect(() => {
     socket.on("next-card", updateCurrent);
     socket.on("quit-game", (data: any) => {
       const { newHost, users } = data;
-      setCurrentUsers(users);
+      setUsers(users);
       setHost(newHost === "" ? isHost : name === newHost);
       updateCurrent(data);
     });
@@ -62,7 +68,7 @@ export default function GameScren({ route, navigation }: GameScreenProps) {
 
   const [modalVisible, setModalVisible] = useState(false);
 
-  const button = isTurn(name, currentPlayer) ? (
+  const button = isTurn(name, current) ? (
     <TouchableOpacity onPress={nextCardHandler}>
       <Image source={require("../assets/images/next_button.png")} />
     </TouchableOpacity>
@@ -77,14 +83,12 @@ export default function GameScren({ route, navigation }: GameScreenProps) {
     <View style={styles.screen}>
       <Text style={styles.bigText}>{name}</Text>
       <Text style={styles.smallText}>
-        {isTurn(name, currentPlayer)
+        {isTurn(name, current)
           ? `It is your turn. Ask the group the question below.`
-          : `It is ${currentPlayer}'s turn.`}
+          : `It is ${current}'s turn.`}
       </Text>
       <View style={styles.cardContainer}>
-        <Text style={styles.bigText}>
-          {isTurn(name, currentPlayer) ? currentCard : ""}
-        </Text>
+        <Text style={styles.bigText}>{isTurn(name, current) ? card : ""}</Text>
       </View>
 
       <Modal
