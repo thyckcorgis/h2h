@@ -37,6 +37,7 @@ const createRoom = (name) => {
     users: [name],
     current: 0,
     cards: getRandArray(questions.length),
+    gameStarted: false,
   };
 
   return code;
@@ -51,12 +52,6 @@ const io = require("socket.io")(server, {
 });
 
 io.on("connection", (socket) => {
-  // socket.on("create", (name, fn) => {
-  //   const code = createRoom(name);
-  //   console.log({ name, code });
-  //   fn(code);
-  // });
-  // socket.emit("message", "hello");
   socket.on("create", (name, fn) => {
     const code = createRoom(name);
     socket.join(code);
@@ -68,10 +63,17 @@ io.on("connection", (socket) => {
 
     addUserToRoom(name, code);
     socket.join(code);
-    fn({ ok: true, message: `joined room ${code}`, users: rooms[code].users });
+    fn({
+      ok: true,
+      message: `joined room ${code}`,
+      users: rooms[code].users,
+      gameStarted,
+    });
     socket.to(code).emit("player-joined", { ok: true, user: name });
   });
+
   socket.on("start-game", (code, fn) => {
+    rooms[code].gameStarted = true;
     const card = drawCard(code);
     const current = getCurrentPlayer(code);
     fn({ current, card });
