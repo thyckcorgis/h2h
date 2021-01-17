@@ -26,7 +26,7 @@ const isTurn = (name: string, current: string) => name === current;
 
 const Item = ({ title }: { title: any }) => (
   <View>
-    <Text style={styles.bigText}>{title}</Text>
+    <Text style={styles.smallText}>{title}</Text>
   </View>
 );
 
@@ -130,13 +130,15 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
               extraData={users}
             />
 
-            <TouchableOpacity
-              onPress={() => {
-                setModalVisible(!modalVisible);
-              }}
-            >
-              <Text style={styles.smallText}>Close</Text>
-            </TouchableOpacity>
+            <View style={styles.closeContainer}>
+              <TouchableOpacity
+                onPress={() => {
+                  setModalVisible(!modalVisible);
+                }}
+              >
+                <Text style={styles.smallText}>Close</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </Modal>
@@ -171,7 +173,16 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignContent: "center",
+    alignSelf: "center",
     margin: 10,
+  },
+  closeContainer: {
+    marginTop: 50,
+    justifyContent: "flex-end",
+    borderWidth: 1,
+    borderColor: "white",
+    borderRadius: 20,
+    paddingHorizontal: 10,
   },
   cardContainer: {
     width: 250,
