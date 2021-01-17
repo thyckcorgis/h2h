@@ -48,35 +48,13 @@ export default function GameScren({ route, navigation }: GameScreenProps) {
           {isTurn(name, currentPlayer) ? currentCard : ""}
         </Text>
       </View>
-      <View style={styles.modalView}>
-        <Modal
-            animationType="slide"
-            transparent={true}
-            visible={modalVisible}
-            onRequestClose={() => {
-            Alert.alert("Modal has been closed.");
-            }}
-        >
-            <View>
-            <Text style={styles.smallText}>Hello World!</Text>
-
-                <TouchableHighlight
-                onPress={() => {
-                    setModalVisible(!modalVisible);
-                }}
-                >
-                <Text style={styles.smallText}>Close</Text>
-                </TouchableHighlight>
-            </View>
-        </Modal>
-        </View>
       <TouchableHighlight
         onPress={() => {
           setModalVisible(true);
         }}
       >
         <Text style={styles.smallText}>Participants</Text>
-      </TouchableHighlight>      
+      </TouchableHighlight>
       <Button title="next" onPress={nextCardHandler} />
     </View>
   );
@@ -114,14 +92,14 @@ const styles = StyleSheet.create({
   },
   modalView: {
     margin: 20,
-    backgroundColor: "white",
+    color: "white",
     borderRadius: 20,
     padding: 35,
     alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 2
+      height: 2,
     },
-},
+  },
 });
