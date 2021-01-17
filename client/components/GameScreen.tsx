@@ -1,6 +1,14 @@
 import { StackNavigationHelpers } from "@react-navigation/stack/lib/typescript/src/types";
-import React, { useState, useEffect } from "react";
-import { View, Text, Button, StyleSheet } from "react-native";
+import React, { useEffect, useState } from "react";
+import {
+  View,
+  Text,
+  Button,
+  StyleSheet,
+  Modal,
+  Alert,
+  TouchableHighlight,
+} from "react-native";
 
 import socket from "../socket";
 interface GameScreenProps {
@@ -25,6 +33,8 @@ export default function GameScren({ route, navigation }: GameScreenProps) {
     });
   };
 
+  const [modalVisible, setModalVisible] = useState(false);
+
   return (
     <View style={styles.screen}>
       <Text style={styles.bigText}>{name}</Text>
@@ -38,6 +48,33 @@ export default function GameScren({ route, navigation }: GameScreenProps) {
           {isTurn(name, currentPlayer) ? currentCard : ""}
         </Text>
       </View>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert("Modal has been closed.");
+        }}
+      >
+        <View>
+          <Text style={styles.smallText}>Hello World!</Text>
+
+          <TouchableHighlight
+            onPress={() => {
+              setModalVisible(!modalVisible);
+            }}
+          >
+            <Text style={styles.smallText}>Hide Modal</Text>
+          </TouchableHighlight>
+        </View>
+      </Modal>
+      <TouchableHighlight
+        onPress={() => {
+          setModalVisible(true);
+        }}
+      >
+        <Text style={styles.smallText}>Show Modal</Text>
+      </TouchableHighlight>
       <Button title="next" onPress={nextCardHandler} />
     </View>
   );
@@ -65,6 +102,8 @@ const styles = StyleSheet.create({
     fontSize: 30,
     color: "white",
     paddingVertical: 20,
+    padding: 10,
+    textAlign: "center",
   },
   smallText: {
     fontSize: 18,
