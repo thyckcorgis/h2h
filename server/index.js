@@ -94,9 +94,8 @@ io.on("connection", (socket) => {
     if (!roomExists(code))
       return fn({ ok: false, message: "Room does not exist" });
 
-    if (userExistsInRoom(name, code)) {
+    if (userExistsInRoom(name, code))
       return fn({ ok: false, message: "Name is already taken" });
-    }
 
     addUserToRoom(name, code);
     socket.join(code);
@@ -133,6 +132,10 @@ io.on("connection", (socket) => {
       newHost: getNewHost(code, isHost),
       users: rooms[code].users,
     });
+  });
+
+  socket.on("add-custom", (code) => {
+    socket.to(code).emit("add-custom");
   });
 
   socket.on("start-game", (code, fn) => {
