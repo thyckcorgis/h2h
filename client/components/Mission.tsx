@@ -29,7 +29,7 @@ export default function Mission() {
       </Text>
       <Text style={styles.smallText}>
         5. Answer honestly and let everyone have a chance to speak and listen. 
-        Remember: The goal is to spark discussion.
+        Remember: The goal is to spark conversation.
       </Text>
     </View>
   );
