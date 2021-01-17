@@ -39,8 +39,9 @@ export default function GameScren({ route, navigation }: GameScreenProps) {
 
   const [modalVisible, setModalVisible] = useState(false);
 
-  let button = isTurn(name, currentPlayer) ? <Button title="next" onPress={nextCardHandler} /> : '';
-
+  const button = isTurn(name, currentPlayer) ? (
+    <Button title="next" onPress={nextCardHandler} />
+  ) : null;
 
   return (
     <View style={styles.screen}>
@@ -62,7 +63,7 @@ export default function GameScren({ route, navigation }: GameScreenProps) {
       >
         <Text style={styles.smallText}>Participants</Text>
       </TouchableHighlight>
-      <View>{button}</View>
+      {button}
     </View>
   );
 }
