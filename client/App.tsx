@@ -2,12 +2,14 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
-import LoadingScreen from "./components/LoadingScreen";
-import StartScreen from "./components/StartScreen";
-import RegisterScreen from "./components/RegisterScreen";
-import HomeScreen from "./components/HomeScreen";
-import WaitingScreen from "./components/WaitingScreen";
-import GameScreen from "./components/GameScreen";
+import {
+  LoadingScreen,
+  StartScreen,
+  RegisterScreen,
+  HomeScreen,
+  WaitingScreen,
+  GameScreen,
+} from "./components";
 
 const Stack = createStackNavigator();
 

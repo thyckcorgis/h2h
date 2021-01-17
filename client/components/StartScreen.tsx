@@ -1,7 +1,7 @@
-import { StackNavigationHelpers } from "@react-navigation/stack/lib/typescript/src/types";
 import React from "react";
 import { View, Text, Image, StyleSheet } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { StackNavigationHelpers } from "@react-navigation/stack/lib/typescript/src/types";
 
 interface StartScreenProps {
   navigation: StackNavigationHelpers;

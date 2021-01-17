@@ -1,5 +1,5 @@
-import { StackNavigationHelpers } from "@react-navigation/stack/lib/typescript/src/types";
 import React from "react";
+import { StackNavigationHelpers } from "@react-navigation/stack/lib/typescript/src/types";
 import {
   View,
   Text,
@@ -17,7 +17,6 @@ interface HomeScreenProps {
   navigation: StackNavigationHelpers;
   route: any;
 }
-
 
 export default function HomeScreen({ navigation, route }: HomeScreenProps) {
   const [code, setCode] = useState("");
