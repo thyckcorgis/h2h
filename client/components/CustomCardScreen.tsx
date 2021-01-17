@@ -24,21 +24,17 @@ export default function CustomCardScreen({
 
   const submitCardHandler = () => {
     socket.emit("custom", code, question, (data: any) => {
-      console.log(data);
       setQuestion("");
     });
   };
 
   const startGameHandler = () => {
     socket.emit("start-game", code, (data) => {
-      const { current, card, users } = data;
       navigation.navigate("Game", {
         code,
-        current,
-        card,
         name,
-        users,
         isHost,
+        ...data,
       });
     });
   };
@@ -49,7 +45,9 @@ export default function CustomCardScreen({
 
   return (
     <KeyboardAvoidingView style={styles.screen} behavior="padding">
-      <Text style={styles.bigText}>Add custom card(s) to be read anonymously</Text>
+      <Text style={styles.bigText}>
+        Add custom card(s) to be read anonymously
+      </Text>
       <TextInput
         multiline={true}
         style={styles.inputField}
