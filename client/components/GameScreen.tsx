@@ -102,9 +102,11 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
       <Text style={styles.codeText}>Room code: {code}</Text>
       <Text style={styles.bigText}>{name}</Text>
       <Text style={styles.smallText}>
-        {isTurn(name, current)
-          ? `It is your turn. Ask the group the question below.`
-          : `It is ${current}'s turn.`}
+        {card != null
+          ? isTurn(name, current)
+            ? "It is your turn. Ask the group the question below."
+            : `It is ${current}'s turn.`
+          : "You ran out of cards. Try different categories to access new cards"}
       </Text>
       <View style={styles.cardContainer}>
         {isTurn(name, current) ? (
