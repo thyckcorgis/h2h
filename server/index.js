@@ -73,7 +73,7 @@ io.on("connection", (socket) => {
     if (!roomExists(code))
       return fn({ ok: false, message: "room does not exist" });
 
-    if (!userExistsInRoom(name, code)) {
+    if (userExistsInRoom(name, code)) {
       return fn({ ok: false, message: "name is already taken" });
     }
 
