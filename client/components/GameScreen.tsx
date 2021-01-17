@@ -42,6 +42,7 @@ export default function GameScren({ route, navigation }: GameScreenProps) {
   const [current, setCurrent] = useState(_current);
   const [users, setUsers] = useState(_users);
   const [isHost, setHost] = useState(_isHost);
+  const [message, setMessage] = useState("");
 
   const renderItem = ({ item }: { item: any }) => <Item title={item} />;
 
@@ -54,10 +55,14 @@ export default function GameScren({ route, navigation }: GameScreenProps) {
   useEffect(() => {
     socket.on("next-card", updateCurrent);
     socket.on("quit-game", (data: any) => {
-      const { newHost, users } = data;
+      const { newHost, users, playerQuit } = data;
       setUsers(users);
       setHost(newHost === "" ? isHost : name === newHost);
       updateCurrent(data);
+      setMessage(`${playerQuit} has quit the game.`);
+      setTimeout(() => {
+        setMessage("");
+      }, 3000);
     });
   });
 
@@ -82,6 +87,7 @@ export default function GameScren({ route, navigation }: GameScreenProps) {
 
   return (
     <View style={styles.screen}>
+      <Text style={{ ...styles.smallText, color: "red" }}>{message}</Text>
       <Text style={styles.bigText}>{name}</Text>
       <Text style={styles.smallText}>
         {isTurn(name, current)

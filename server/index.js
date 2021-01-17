@@ -111,6 +111,7 @@ io.on("connection", (socket) => {
     const newHost = getNewHost(code, isHost);
     socket.leave(code);
     socket.to(code).emit("quit-game", {
+      playerQuit: name,
       current: getCurrentPlayer(code),
       card: getCurrentCard(code),
       newHost,
