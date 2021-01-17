@@ -13,6 +13,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import socket from "../socket";
 
 import { HostButton, JoinButton, HelpButton } from "../assets/images/";
+import FAQ from "./FAQ";
 
 interface HomeScreenProps {
   navigation: StackNavigationHelpers;
@@ -80,34 +81,7 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
           <View style={styles.modalContainer}>
             <View style={styles.modalView}>
               <View style={{ flex: 9 }}>
-                <Text style={styles.bigText}>Our Mission:</Text>
-                <Text style={styles.smallText}>
-                  Heart 2 Heart Confessations was built with the intention of
-                  fostering meaningful connections with your peers. It allows
-                  users to deepen existing relationships as well as form new
-                  ones.
-                </Text>
-                <Text style={styles.smallText}>
-                  Here’s our suggestion on how to use this app:
-                </Text>
-                <Text style={styles.smallText}>
-                  1. Find people you’d like to know better; whether it be your
-                  friends, family, or significant other.
-                </Text>
-                <Text style={styles.smallText}>
-                  2. Arrange a group call on another device.
-                </Text>
-                <Text style={styles.smallText}>
-                  3. Host a confessation room and send the code to your peers.
-                </Text>
-                <Text style={styles.smallText}>
-                  4. The person who’s turn it is can pose the question on the
-                  screen to the rest of the group.
-                </Text>
-                <Text style={styles.smallText}>
-                  5. Answer honestly and let everyone have a chance to speak and
-                  listen.
-                </Text>
+                <FAQ />
               </View>
               <View style={styles.closeContainer}>
                 <TouchableOpacity
