@@ -63,12 +63,12 @@ export default function WaitingScreen({
             extraData={roomUsers}
           />
         </View>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={styles.buttonContainer}
           onPress={settingsHandler}
         >
           <Image source={require("../assets/images/settings_button.png")} />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <TouchableOpacity
           style={styles.buttonContainer}
           onPress={startGameHandler}

@@ -13,7 +13,7 @@ export default function LoadingScreen({ navigation }: StartScreenProps) {
       <TouchableOpacity onPress={() => navigation.navigate("Register")}>
         <View style={styles.screen}>
           <Image source={require("../assets/images/h2h_logo.png")} />
-          <Text>This is the start screen....</Text>
+          <Text style={styles.continueText}>Tap to start.</Text>
         </View>
       </TouchableOpacity>
 
@@ -47,7 +47,6 @@ const styles = StyleSheet.create({
     fontFamily: "Comfortaa",
     fontSize: 14,
     color: "#892cdc",
-    paddingVertical: 30,
   },
   corgiBox: {
     alignItems: "center",
