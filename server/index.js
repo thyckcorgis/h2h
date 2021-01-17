@@ -27,7 +27,8 @@ const drawCard = (code) => {
   rooms[code].currentCard = card;
   return card;
 };
-const getCardCategories = (settings) => {
+const getCardCategories = (code) => {
+  const { settings, customCards } = rooms[code];
   let arr = [];
   Object.entries(settings).forEach(([key, val]) => {
     if (val && key !== "customCards") {
@@ -35,6 +36,7 @@ const getCardCategories = (settings) => {
     }
   });
 
+  if (settings.customCards) arr = [...arr, ...customCards];
   arr = shuffleArray(arr);
   return arr;
 };
@@ -135,7 +137,7 @@ io.on("connection", (socket) => {
 
   socket.on("start-game", (code, fn) => {
     rooms[code].gameStarted = true;
-    rooms[code].cards = [...getCardCategories(rooms[code].settings)];
+    rooms[code].cards = [...getCardCategories(code)];
     drawCard(code);
     const card = getCurrentCard(code);
     const current = getCurrentPlayer(code);
