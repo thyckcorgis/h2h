@@ -166,6 +166,7 @@ const styles = StyleSheet.create({
   },
   smallText: {
     fontSize: 18,
+    fontFamily: "Comfortaa-Regular",
     color: "white",
     textAlign: "center",
   },
