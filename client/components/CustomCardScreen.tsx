@@ -25,6 +25,7 @@ export default function CustomCardScreen({
   const submitCardHandler = () => {
     socket.emit("custom", code, question, (data: any) => {
       console.log(data);
+      setQuestion("");
     });
   };
 
