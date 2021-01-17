@@ -69,7 +69,7 @@ export default function WaitingScreen({
         });
     });
     socket.on("add-custom", () => {
-      navigation.navigate("Game", {
+      navigation.navigate("Custom", {
         code,
         name,
         isHost,
