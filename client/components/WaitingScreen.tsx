@@ -34,15 +34,23 @@ export default function WaitingScreen({
   navigation,
   route,
 }: WaitingScreenProps) {
-  // const [toggleCheckBox, setToggleCheckBox] = useState(false);
+  const {
+    name,
+    code,
+    users: _users,
+    isHost: _isHost,
+    happy: _happy,
+    heavy: _heavy,
+    toTheSpeaker: _toTheSpeaker,
+    selfReflection: _selfReflection,
+  } = route.params;
   const [modalVisible, setModalVisible] = useState(false);
-  const [happy, setHappy] = useState(true);
-  const [heavy, setHeavy] = useState(true);
-  const [toTheSpeaker, setToTheSpeaker] = useState(true);
-  const [selfReflection, setSelfReflection] = useState(true);
+  const [happy, setHappy] = useState(_happy);
+  const [heavy, setHeavy] = useState(_heavy);
+  const [toTheSpeaker, setToTheSpeaker] = useState(_toTheSpeaker);
+  const [selfReflection, setSelfReflection] = useState(_selfReflection);
   const [message, setMessage] = useState("");
 
-  const { name, code, users: _users, isHost: _isHost } = route.params;
   const [users, setUsers] = useState(_users);
   const [isHost, setHost] = useState(_isHost);
 

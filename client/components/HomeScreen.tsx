@@ -32,6 +32,10 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
         code,
         users: [name],
         isHost: true,
+        happy: true,
+        heavy: true,
+        toTheSpeaker: true,
+        selfReflection: true,
       });
     });
   };
@@ -43,7 +47,7 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
     }
 
     socket.emit("join", name, code, (data: any) => {
-      const { ok, users, gameStarted, message } = data;
+      const { ok, users, gameStarted, message, settings } = data;
       if (ok) {
         if (gameStarted) {
           navigation.navigate("Game", {
@@ -51,6 +55,7 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
             code,
             users,
             isHost: false,
+            ...settings,
           });
         } else {
           navigation.navigate("Waiting", {
@@ -58,6 +63,7 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
             code,
             users,
             isHost: false,
+            ...settings,
           });
         }
       } else {
