@@ -42,25 +42,25 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
     }
 
     socket.emit("join", name, code, (data: any) => {
-      const { ok, users, gameStarted } = data;
+      const { ok, users, gameStarted, message } = data;
       if (ok) {
         if (gameStarted) {
-        navigation.navigate("Game", {
+          navigation.navigate("Game", {
             name,
             code,
             users,
             isHost: false,
-        });
+          });
         } else {
-        navigation.navigate("Waiting", {
+          navigation.navigate("Waiting", {
             name,
             code,
             users,
             isHost: false,
-        });
+          });
         }
       } else {
-        setErrorMessage("Room does not exist");
+        setErrorMessage(message);
       }
     });
   };
