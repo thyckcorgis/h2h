@@ -22,10 +22,10 @@ interface GameScreenProps {
 const isTurn = (name: string, current: string) => name === current;
 
 const Item = ({ title }: { title: any }) => (
-    <View>
-      <Text style={styles.bigText}>{title}</Text>
-    </View>
-  );
+  <View>
+    <Text style={styles.bigText}>{title}</Text>
+  </View>
+);
 
 export default function GameScren({ route, navigation }: GameScreenProps) {
   const { code, current, card, name, users } = route.params;
@@ -33,7 +33,6 @@ export default function GameScren({ route, navigation }: GameScreenProps) {
   const [currentPlayer, setCurrentPlayer] = useState(current);
 
   const renderItem = ({ item }: { item: any }) => <Item title={item} />;
-
 
   const updateCurrent = (data: any) => {
     const { current, card } = data;
@@ -48,11 +47,11 @@ export default function GameScren({ route, navigation }: GameScreenProps) {
   const nextCardHandler = () => {
     socket.emit("next-card", code, updateCurrent);
   };
-  
+
   const quitGameHandler = () => {
-    socket.emit("quit-game"), code, updateCurrent);
+    socket.emit("quit-game", code, updateCurrent);
     // navigation.navigate("Home", { name });
-  }
+  };
 
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -88,10 +87,10 @@ export default function GameScren({ route, navigation }: GameScreenProps) {
           <View style={styles.modalView}>
             <Text style={styles.bigText}>Who's in the room?</Text>
             <FlatList
-                data={users}
-                renderItem={renderItem}
-                keyExtractor={(item) => item}
-                extraData={users}
+              data={users}
+              renderItem={renderItem}
+              keyExtractor={(item) => item}
+              extraData={users}
             />
 
             <TouchableOpacity
