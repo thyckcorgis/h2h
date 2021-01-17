@@ -23,14 +23,18 @@ export default function GameScren({ route, navigation }: GameScreenProps) {
   const [currentCard, setCurrentCard] = useState(card);
   const [currentPlayer, setCurrentPlayer] = useState(current);
 
-  useEffect(() => {});
+  const updateCurrent = (data: any) => {
+    const { current, card } = data;
+    setCurrentCard(card);
+    setCurrentPlayer(current);
+  };
+
+  useEffect(() => {
+    socket.on("next-card", updateCurrent);
+  });
 
   const nextCardHandler = () => {
-    socket.emit("next-card", code, (data: any) => {
-      const { current, card } = data;
-      setCurrentCard(card);
-      setCurrentPlayer(current);
-    });
+    socket.emit("next-card", code, updateCurrent);
   };
 
   const [modalVisible, setModalVisible] = useState(false);
@@ -59,23 +63,13 @@ export default function GameScren({ route, navigation }: GameScreenProps) {
         <View>
           <Text style={styles.smallText}>Hello World!</Text>
 
-<<<<<<< HEAD
-            <TouchableHighlight
-              onPress={() => {
-                setModalVisible(!modalVisible);
-              }}
-            >
-              <Text style={styles.smallText}>Close</Text>
-            </TouchableHighlight>
-=======
           <TouchableHighlight
             onPress={() => {
               setModalVisible(!modalVisible);
             }}
           >
-            <Text style={styles.smallText}>Hide Modal</Text>
+            <Text style={styles.smallText}>Close</Text>
           </TouchableHighlight>
->>>>>>> 918e3d3d4aedaa34d94d1d8b9998231e6a76916e
         </View>
       </Modal>
       <TouchableHighlight
@@ -83,13 +77,8 @@ export default function GameScren({ route, navigation }: GameScreenProps) {
           setModalVisible(true);
         }}
       >
-<<<<<<< HEAD
         <Text style={styles.smallText}>Participants</Text>
-      </TouchableHighlight>      
-=======
-        <Text style={styles.smallText}>Show Modal</Text>
       </TouchableHighlight>
->>>>>>> 918e3d3d4aedaa34d94d1d8b9998231e6a76916e
       <Button title="next" onPress={nextCardHandler} />
     </View>
   );
@@ -134,7 +123,7 @@ const styles = StyleSheet.create({
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 2
+      height: 2,
     },
-},
+  },
 });
