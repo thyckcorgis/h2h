@@ -118,25 +118,25 @@ export default function WaitingScreen({
               <Text style={styles.bigText}>Game Mode</Text>
               <Text style={styles.smallText}>Happy</Text>
               <CheckBox
-                disabled={false}
+                disabled={!isHost}
                 value={happy}
                 onValueChange={toggle(setHappy)}
               />
               <Text style={styles.smallText}>Self-reflection</Text>
               <CheckBox
-                disabled={false}
+                disabled={!isHost}
                 value={selfReflection}
                 onValueChange={toggle(setSelfReflection)}
               />
               <Text style={styles.smallText}>Heavy</Text>
               <CheckBox
-                disabled={false}
+                disabled={!isHost}
                 value={heavy}
                 onValueChange={toggle(setHeavy)}
               />
               <Text style={styles.smallText}>To the Speaker</Text>
               <CheckBox
-                disabled={false}
+                disabled={!isHost}
                 value={toTheSpeaker}
                 onValueChange={toggle(setToTheSpeaker)}
               />
