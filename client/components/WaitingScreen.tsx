@@ -36,15 +36,23 @@ export default function WaitingScreen({
       setRoomUsers((roomUsers: string[]) => [...roomUsers, user]);
     });
     socket.on("start-game", (data: any) => {
-      const { ok, current, card } = data;
-      if (ok) navigation.navigate("Game", { code, current, card, name, users });
+      const { ok, current, card, users } = data;
+      if (ok)
+        navigation.navigate("Game", {
+          code,
+          current,
+          card,
+          name,
+          users,
+          isHost,
+        });
     });
   }, []);
 
   const startGameHandler = () => {
     socket.emit("start-game", code, (data: any) => {
-      const { current, card } = data;
-      navigation.navigate("Game", { code, current, card, name, users });
+      const { current, card, users } = data;
+      navigation.navigate("Game", { code, current, card, name, users, isHost });
     });
   };
 

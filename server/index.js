@@ -78,17 +78,23 @@ io.on("connection", (socket) => {
     socket.to(code).emit("player-joined", { ok: true, user: name });
   });
 
+  socket.on("quit-game", (code, name, isHost) => {
+    socket.to(code).emit("quit-game", { current, card, newHost });
+  });
+
   socket.on("start-game", (code, fn) => {
     rooms[code].gameStarted = true;
     drawCard(code);
     const card = getCurrentCard(code);
     const current = getCurrentPlayer(code);
-    fn({ current, card });
+    const users = rooms[code].users;
+    fn({ current, card, users });
     socket.to(code).emit("start-game", {
       ok: true,
       message: "game has been started by host",
       current,
       card,
+      users,
     });
   });
   socket.on("next-card", (code, fn) => {

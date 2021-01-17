@@ -8,7 +8,6 @@ import {
   Modal,
   Alert,
   Image,
-  TouchableHighlight,
   FlatList,
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -22,18 +21,18 @@ interface GameScreenProps {
 const isTurn = (name: string, current: string) => name === current;
 
 const Item = ({ title }: { title: any }) => (
-    <View>
-      <Text style={styles.bigText}>{title}</Text>
-    </View>
-  );
+  <View>
+    <Text style={styles.bigText}>{title}</Text>
+  </View>
+);
 
 export default function GameScren({ route, navigation }: GameScreenProps) {
-  const { code, current, card, name, users } = route.params;
+  const { code, current, card, name, users, isHost } = route.params;
   const [currentCard, setCurrentCard] = useState(card);
   const [currentPlayer, setCurrentPlayer] = useState(current);
+  const [currentUsers, setCurrentUsers] = useState(users);
 
   const renderItem = ({ item }: { item: any }) => <Item title={item} />;
-
 
   const updateCurrent = (data: any) => {
     const { current, card } = data;
@@ -43,16 +42,21 @@ export default function GameScren({ route, navigation }: GameScreenProps) {
 
   useEffect(() => {
     socket.on("next-card", updateCurrent);
+    socket.on("quit-game", (data: any) => {
+      const { current, card, newHost } = data;
+      setCurrentCard(card);
+      setCurrentPlayer(current);
+    });
   });
 
   const nextCardHandler = () => {
     socket.emit("next-card", code, updateCurrent);
   };
-  
+
   const quitGameHandler = () => {
-    socket.emit("quit-game"), code, updateCurrent);
-    // navigation.navigate("Home", { name });
-  }
+    socket.emit("quit-game", code, name, isHost);
+    navigation.navigate("Home", { name });
+  };
 
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -88,10 +92,10 @@ export default function GameScren({ route, navigation }: GameScreenProps) {
           <View style={styles.modalView}>
             <Text style={styles.bigText}>Who's in the room?</Text>
             <FlatList
-                data={users}
-                renderItem={renderItem}
-                keyExtractor={(item) => item}
-                extraData={users}
+              data={users}
+              renderItem={renderItem}
+              keyExtractor={(item) => item}
+              extraData={users}
             />
 
             <TouchableOpacity
@@ -114,7 +118,7 @@ export default function GameScren({ route, navigation }: GameScreenProps) {
           <Image source={require("../assets/images/users_button.png")} />
         </TouchableOpacity>
         {button}
-        <TouchableOpacity>
+        <TouchableOpacity onPress={quitGameHandler}>
           <Image source={require("../assets/images/quit_button.png")} />
         </TouchableOpacity>
       </View>
