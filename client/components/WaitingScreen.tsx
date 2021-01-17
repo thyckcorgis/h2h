@@ -50,14 +50,11 @@ export default function WaitingScreen({
 
   const settingsHandler = () => {};
 
-  const start = isHost ?         
-    <TouchableOpacity
-        style={styles.buttonContainer}
-        onPress={startGameHandler}
-    >
-        <Image source={require("../assets/images/start_button.png")} />
-    </TouchableOpacity> 
-    : null;
+  const start = isHost ? (
+    <TouchableOpacity style={styles.buttonContainer} onPress={startGameHandler}>
+      <Image source={require("../assets/images/start_button.png")} />
+    </TouchableOpacity>
+  ) : null;
 
   return (
     <SafeAreaView style={styles.screen}>
