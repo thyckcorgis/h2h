@@ -26,7 +26,12 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
 
   const hostGameHandler = () => {
     socket.emit("create", name, (code: number) => {
-      navigation.navigate("Waiting", { name, code, users: [name] });
+      navigation.navigate("Waiting", {
+        name,
+        code,
+        users: [name],
+        isHost: true,
+      });
     });
   };
 
@@ -38,7 +43,12 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
 
     socket.emit("join", name, code, (data: any) => {
       if (data.ok) {
-        navigation.navigate("Waiting", { name, code, users: data.users });
+        navigation.navigate("Waiting", {
+          name,
+          code,
+          users: data.users,
+          isHost: false,
+        });
       } else {
         setErroMessage("Room does not exist");
       }

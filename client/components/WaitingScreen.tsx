@@ -27,7 +27,8 @@ export default function WaitingScreen({
   navigation,
   route,
 }: WaitingScreenProps) {
-  const { name, code, users } = route.params;
+  const { name, code, users, isHost } = route.params;
+
   const [roomUsers, setRoomUsers] = useState(users);
   const renderItem = ({ item }: { item: any }) => <Item title={item} />;
   useEffect(() => {
