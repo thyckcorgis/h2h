@@ -44,20 +44,24 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
     socket.emit("join", name, code, (data: any) => {
       const { ok, users, gameStarted } = data;
       if (ok) {
-        if (gameStarted) {
-          navigation.navigate("Game", {
-            name,
-            code,
-            users,
-            isHost: false,
-          });
-        } else {
-          navigation.navigate("Waiting", {
-            name,
-            code,
-            users,
-            isHost: false,
-          });
+        if (!users.hasOwnProperty(name)) {
+            if (gameStarted) {
+            navigation.navigate("Game", {
+                name,
+                code,
+                users,
+                isHost: false,
+            });
+            } else {
+            navigation.navigate("Waiting", {
+                name,
+                code,
+                users,
+                isHost: false,
+            });
+            }
+        } else{
+            setErrorMessage("That name is already taken");
         }
       } else {
         setErrorMessage("Room does not exist");
