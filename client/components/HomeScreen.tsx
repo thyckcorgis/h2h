@@ -42,7 +42,7 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
 
   const joinGameHandler = () => {
     if (code.length !== 5) {
-      setErrorMessage("Please enter a valid room code (5 digits)");
+      setErrorMessage("Please enter a valid 5-digit code.");
       return;
     }
 
@@ -124,8 +124,8 @@ const styles = StyleSheet.create({
   },
   inputField: {
     padding: 5,
-    margin: 10,
-    marginBottom: 20,
+    marginTop: 10,
+    // marginBottom: 20,
     width: 250,
     textAlign: "left",
     alignSelf: "center",
@@ -133,12 +133,14 @@ const styles = StyleSheet.create({
     borderColor: "white",
     fontSize: 18,
     color: "white",
+    fontFamily: "Avenir-Light",
   },
   smallText: {
-    fontSize: 18,
+    fontSize: 14,
     color: "white",
     textAlign: "center",
     padding: 5,
+    marginBottom: 30,
   },
   continueText: {
     fontFamily: "Avenir-Light",
