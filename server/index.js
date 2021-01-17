@@ -41,8 +41,12 @@ const getCardCategories = (settings) => {
 
 const getCurrentCard = (code) => rooms[code].currentCard;
 const removeUser = (code, name) => {
-  rooms[code].users = rooms[code]?.users.filter((arrName) => arrName !== name);
-  rooms[code].current = rooms[code]?.current % rooms[code]?.users.length;
+  if (rooms[code]) {
+    rooms[code].users = rooms[code]?.users.filter(
+      (arrName) => arrName !== name
+    );
+    rooms[code].current = rooms[code]?.current % rooms[code]?.users.length;
+  }
 };
 const getNewHost = (code, isHost) => (isHost ? rooms[code]?.users[0] : "");
 const userExistsInRoom = (name, code) => rooms[code]?.users.includes(name);
