@@ -26,7 +26,7 @@ const drawCard = (code) => {
 const getCurrentCard = (code) => rooms[code].currentCard;
 const removeUser = (code, name) => {
   rooms[code].users = rooms[code].users.filter((arrName) => arrName !== name);
-  rooms[code].current = rooms[code].users % rooms[code].users.length;
+  rooms[code].current = rooms[code].current % rooms[code].users.length;
 };
 const getNewHost = (code, isHost) => {
   if (!isHost) {
@@ -92,14 +92,12 @@ io.on("connection", (socket) => {
     removeUser(code, name);
     const newHost = getNewHost(code, isHost);
     socket.leave(code);
-    socket
-      .to(code)
-      .emit("quit-game", {
-        current: getCurrentPlayer(code),
-        card: getCurrentCard(code),
-        newHost,
-        users: rooms[code].users,
-      });
+    socket.to(code).emit("quit-game", {
+      current: getCurrentPlayer(code),
+      card: getCurrentCard(code),
+      newHost,
+      users: rooms[code].users,
+    });
   });
 
   socket.on("start-game", (code, fn) => {
