@@ -9,6 +9,7 @@ import {
   Alert,
   TouchableHighlight,
 } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 import socket from "../socket";
 interface GameScreenProps {
@@ -65,28 +66,28 @@ export default function GameScren({ route, navigation }: GameScreenProps) {
           Alert.alert("Modal has been closed.");
         }}
       >
-        <View>
+        <View style={styles.modalContainer}>
           <View style={styles.modalView}>
-            <Text style={styles.smallText}>Hello World!</Text>
+            <Text style={styles.bigText}>Who's in the room?</Text>
 
-            <TouchableHighlight
+            <TouchableOpacity
               onPress={() => {
                 setModalVisible(!modalVisible);
               }}
             >
-              <Text style={styles.smallText}>Hide Modal</Text>
-            </TouchableHighlight>
+              <Text style={styles.smallText}>Close</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </Modal>
 
-      <TouchableHighlight
+      <TouchableOpacity
         onPress={() => {
           setModalVisible(true);
         }}
       >
         <Text style={styles.smallText}>Participants</Text>
-      </TouchableHighlight>
+      </TouchableOpacity>
       {button}
     </View>
   );
@@ -100,6 +101,12 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "black",
     textAlign: "center",
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    margin: 10,
   },
   cardContainer: {
     width: 250,
@@ -124,10 +131,14 @@ const styles = StyleSheet.create({
   },
   modalView: {
     margin: 20,
-    backgroundColor: "#250039",
+    backgroundColor: "black",
     borderRadius: 20,
-    padding: 35,
-    alignItems: "center",
-    justifyContent: "center",
+    borderWidth: 1,
+    borderColor: "white",
+    padding: 10,
+    // justifyContent: "center",
+    height: 300,
+    width: 300,
+    opacity: 0.9,
   },
 });
