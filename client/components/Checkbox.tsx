@@ -22,25 +22,3 @@ export default function Checkbox({ disabled, value, onValueChange }) {
     <TouchableOpacity onPress={touchHandler}>{showSVG()}</TouchableOpacity>
   );
 }
-
-// const styles = StyleSheet.create({
-//   checkbox: {
-//     borderWidth: 1,
-//     width: 10,
-//     height: 10,
-//     margin: 10,
-//   },
-//   disabled: {
-//     borderColor: "grey",
-//   },
-//   enabled: {
-//     borderColor: "white",
-//   },
-//   on: {
-//     borderColor: "white",
-//     backgroundColor: "white",
-//   },
-//   off: {
-//     borderColor: "white",
-//   },
-// });
