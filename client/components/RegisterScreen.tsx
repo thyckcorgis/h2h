@@ -187,7 +187,10 @@ const styles = StyleSheet.create({
   topContainer: {
     flexDirection: "row",
     flex: 1,
-    alignSelf: "flex-end",
-    marginTop: 30,
+    // borderWidth: 1,
+    // borderColor: "white",
+    justifyContent: "space-between",
+    marginTop: 50,
+    width: 350,
   },
 });
