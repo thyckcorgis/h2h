@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     backgroundColor: "black",
   },
   bigText: {
-    fontFamily: "Arial Rounded MT Bold",
+    fontFamily: "Comfortaa-Regular",
     fontSize: 30,
     color: "white",
   },
