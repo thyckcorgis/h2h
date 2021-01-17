@@ -73,7 +73,7 @@ io.on("connection", (socket) => {
       users: rooms[code].users,
       current,
       card,
-      gameStarted,
+      gameStarted: rooms[code].gameStarted,
     });
     socket.to(code).emit("player-joined", { ok: true, user: name });
   });
