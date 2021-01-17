@@ -27,7 +27,8 @@ export default function WaitingScreen({
   navigation,
   route,
 }: WaitingScreenProps) {
-  const { name, code, users } = route.params;
+  const { name, code, users, isHost } = route.params;
+
   const [roomUsers, setRoomUsers] = useState(users);
   const renderItem = ({ item }: { item: any }) => <Item title={item} />;
   useEffect(() => {
@@ -49,6 +50,12 @@ export default function WaitingScreen({
 
   const settingsHandler = () => {};
 
+  const start = isHost ? (
+    <TouchableOpacity style={styles.buttonContainer} onPress={startGameHandler}>
+      <Image source={require("../assets/images/start_button.png")} />
+    </TouchableOpacity>
+  ) : null;
+
   return (
     <SafeAreaView style={styles.screen}>
       <View style={{ flex: 1 }}>
@@ -64,18 +71,7 @@ export default function WaitingScreen({
             extraData={roomUsers}
           />
         </View>
-        {/* <TouchableOpacity
-          style={styles.buttonContainer}
-          onPress={settingsHandler}
-        >
-          <Image source={require("../assets/images/settings_button.png")} />
-        </TouchableOpacity> */}
-        <TouchableOpacity
-          style={styles.buttonContainer}
-          onPress={startGameHandler}
-        >
-          <Image source={require("../assets/images/start_button.png")} />
-        </TouchableOpacity>
+        {start}
       </View>
     </SafeAreaView>
   );
