@@ -1,6 +1,6 @@
 import { StackNavigationHelpers } from "@react-navigation/stack/lib/typescript/src/types";
 import * as React from "react";
-import { View, Text, Button, TextInput, StyleSheet } from "react-native";
+import { KeyboardAvoidingView, Text, Button, TextInput, StyleSheet } from "react-native";
 import {useState} from 'react';
 
 interface CustomCardScreenProps {
@@ -19,9 +19,10 @@ export default function CustomCardScreen({ navigation, route }: CustomCardScreen
   } = route.params;
   const [question, setQuestion] = useState('');
   return (
-    <View style={styles.screen}>
+    <KeyboardAvoidingView style={styles.screen} behavior='padding'>
       <Text style={styles.bigText}>Add custom card</Text>
       <TextInput
+        multiline={true}
         style={styles.inputField}
         placeholder="Input question"
         placeholderTextColor="black"
@@ -31,7 +32,7 @@ export default function CustomCardScreen({ navigation, route }: CustomCardScreen
       <Button title="Submit" onPress={() => 
             navigation.navigate("Game", { code, current, card, name, users, isHost })
           } />
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 
