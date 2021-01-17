@@ -8,4 +8,4 @@ const shuffleArray = (array) => {
 };
 const getRandArray = (length) => shuffleArray([...Array(length).keys()]);
 const randCode = () => (Math.floor(Math.random() * 90000) + 10000).toString();
-module.exports = { shuffleArray, getRandArray, randCode };
+module.exports = { getRandArray, randCode };
