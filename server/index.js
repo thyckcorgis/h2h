@@ -63,6 +63,7 @@ const createRoom = (name) => {
       heavy: true,
       toTheSpeaker: true,
       selfReflection: true,
+      customCards: false,
     },
   };
 
@@ -160,4 +161,6 @@ io.on("connection", (socket) => {
     changeRoomSettings(code, settings);
     socket.to(code).emit("setting", settings);
   });
+
+  socket.on("custom", (code, question, fn) => {});
 });

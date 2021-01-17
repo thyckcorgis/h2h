@@ -41,12 +41,14 @@ export default function WaitingScreen({
     heavy: _heavy,
     toTheSpeaker: _toTheSpeaker,
     selfReflection: _selfReflection,
+    customCards: _customCards,
   } = route.params;
   const [modalVisible, setModalVisible] = useState(false);
   const [happy, setHappy] = useState(_happy);
   const [heavy, setHeavy] = useState(_heavy);
   const [toTheSpeaker, setToTheSpeaker] = useState(_toTheSpeaker);
   const [selfReflection, setSelfReflection] = useState(_selfReflection);
+  const [customCards, setCustomCards] = useState(_customCards);
   const [message, setMessage] = useState("");
 
   const [users, setUsers] = useState(_users);
@@ -73,11 +75,18 @@ export default function WaitingScreen({
     });
     if (!isHost) {
       socket.on("setting", (settings) => {
-        const { happy, heavy, selfReflection, toTheSpeaker } = settings;
+        const {
+          happy,
+          heavy,
+          selfReflection,
+          toTheSpeaker,
+          customCards,
+        } = settings;
         setHappy(happy);
         setHeavy(heavy);
         setSelfReflection(selfReflection);
         setToTheSpeaker(toTheSpeaker);
+        setCustomCards(customCards);
       });
     }
     socket.on("player-joined", (name) => {
@@ -92,9 +101,10 @@ export default function WaitingScreen({
         heavy,
         selfReflection,
         toTheSpeaker,
+        customCards,
       });
     }
-  }, [happy, heavy, selfReflection, toTheSpeaker, isHost]);
+  }, [happy, heavy, selfReflection, toTheSpeaker, isHost, customCards]);
 
   const startGameHandler = () => {
     socket.emit("start-game", code, (data: any) => {
@@ -187,6 +197,14 @@ export default function WaitingScreen({
                 />
               </View>
 
+              <View style={styles.filterContainer}>
+                <Text style={styles.smallText}>Custom Cards</Text>
+                <CheckBox
+                  disabled={!isHost}
+                  value={customCards}
+                  onValueChange={toggle(setCustomCards)}
+                />
+              </View>
               <View style={styles.closeContainer}>
                 <TouchableOpacity
                   onPress={() => {
