@@ -21,6 +21,7 @@ interface HomeScreenProps {
 
 export default function HomeScreen({ navigation, route }: HomeScreenProps) {
   const [code, setCode] = useState("");
+  const [errorMessage, setErroMessage] = useState("");
   const { name } = route.params;
 
   const hostGameHandler = () => {
@@ -30,9 +31,16 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
   };
 
   const joinGameHandler = () => {
+    if (code.length !== 5) {
+      setErroMessage("Please enter a valid room code (5 digits)");
+      return;
+    }
+
     socket.emit("join", name, code, (data: any) => {
       if (data.ok) {
         navigation.navigate("Waiting", { name, code, users: data.users });
+      } else {
+        setErroMessage("Room does not exist");
       }
     });
   };
@@ -56,6 +64,9 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
           keyboardType="number-pad"
           style={styles.inputField}
         />
+        <Text style={{ ...styles.smallText, color: "red" }}>
+          {errorMessage}
+        </Text>
         <TouchableOpacity onPress={joinGameHandler}>
           <Image source={require("../assets/images/join_button.png")} />
         </TouchableOpacity>
