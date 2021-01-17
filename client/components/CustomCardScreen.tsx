@@ -19,8 +19,8 @@ export default function CustomCardScreen({ navigation, route }: CustomCardScreen
   } = route.params;
   const [question, setQuestion] = useState('');
   return (
-    <View>
-      <Text>Add custom card</Text>
+    <View style={styles.screen}>
+      <Text style={styles.bigText}>Add custom card</Text>
       <TextInput
         style={styles.inputField}
         placeholder="Input question"
@@ -37,6 +37,13 @@ export default function CustomCardScreen({ navigation, route }: CustomCardScreen
 
 
 const styles = StyleSheet.create({
+  screen: {
+    padding: 50,
+    alignItems: "center",
+    justifyContent: "center",
+    flex: 1,
+    backgroundColor: "black",
+  },
   inputField: {
     padding: 5,
     marginTop: 10,
@@ -47,7 +54,12 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: "white",
     fontSize: 18,
-    color: 'black', //"white",
+    color: "white",
     fontFamily: "Avenir-Light",
+  },
+  bigText: {
+    fontFamily: "Avenir-Light",
+    fontSize: 30,
+    color: "white",
   },
 })
