@@ -155,6 +155,7 @@ const styles = StyleSheet.create({
   navBar: {
     flexDirection: "row",
     alignItems: "baseline",
+    justifyContent: "center",
   },
   bigText: {
     fontSize: 30,
