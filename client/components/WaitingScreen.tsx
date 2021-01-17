@@ -9,8 +9,10 @@ import {
   Image,
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-
 import socket from "../socket";
+
+import StartButton from "../assets/images/start_button.svg";
+import QuitButton from "../assets/images/quit_button.svg";
 
 interface WaitingScreenProps {
   navigation: StackNavigationHelpers;
@@ -72,7 +74,7 @@ export default function WaitingScreen({
 
   const start = isHost ? (
     <TouchableOpacity style={styles.buttonContainer} onPress={startGameHandler}>
-      <Image source={require("../assets/images/start_button.png")} />
+      <StartButton width={250} />
     </TouchableOpacity>
   ) : null;
 
@@ -95,7 +97,7 @@ export default function WaitingScreen({
       </View>
       <View style={styles.quit}>
         <TouchableOpacity onPress={quitLobbyHandler}>
-          <Image source={require("../assets/images/quit_button.png")} />
+          <QuitButton />
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -136,6 +138,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     margin: 5,
+    alignItems: "center",
   },
   smallText: {
     fontSize: 18,

@@ -10,8 +10,10 @@ import {
 } from "react-native";
 import { useState } from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
-
 import socket from "../socket";
+
+import HostButton from "../assets/images/host_button.svg";
+import JoinButton from "../assets/images/join_button.svg";
 
 interface HomeScreenProps {
   navigation: StackNavigationHelpers;
@@ -70,7 +72,7 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
       <View style={styles.container}>
         <Text style={styles.bigText}>Host Confessation</Text>
         <TouchableOpacity onPress={hostGameHandler}>
-          <Image source={require("../assets/images/host_button.png")} />
+          <HostButton width={250} />
         </TouchableOpacity>
       </View>
       <View style={styles.container}>
@@ -87,7 +89,7 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
           {errorMessage}
         </Text>
         <TouchableOpacity onPress={joinGameHandler}>
-          <Image source={require("../assets/images/join_button.png")} />
+          <JoinButton width={250} />
         </TouchableOpacity>
       </View>
       {/* <View style={{ flex: 2 }} /> */}
