@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const { shuffleArray, randCode, getRandArray } = require("./random");
+const { randCode, getRandArray } = require("./random");
 
 const port = 5001;
 
@@ -17,8 +17,12 @@ const endTurn = (code) => {
   const room = rooms[code];
   rooms[code].current = (room.current + 1) % room.users.length;
 };
+const changeRoomSettings = (code, settings) => {
+  rooms[code].settings = settings;
+};
 const getCurrentPlayer = (code) => rooms[code].users[rooms[code].current];
 const questions = require("./questions.json");
+const categories = require("./categories.json");
 const drawCard = (code) => {
   const idx = rooms[code].cards.pop();
   rooms[code].currentCard = questions[idx];
@@ -50,6 +54,12 @@ const createRoom = (name) => {
     cards: getRandArray(questions.length),
     gameStarted: false,
     currentCard: "",
+    categories: {
+      light: true,
+      heavy: true,
+      toTheSpeaker: true,
+      selfReflection: true,
+    },
   };
 
   return code;
@@ -138,5 +148,9 @@ io.on("connection", (socket) => {
       current,
       card,
     });
+  });
+  socket.on("setting", (code, settings) => {
+    changeRoomSettings(code, settings);
+    socket.to(code).emit("setting", { settings });
   });
 });
