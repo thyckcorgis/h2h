@@ -67,8 +67,23 @@ export default function WaitingScreen({
       setUsers(users);
       setHost(newHost === "" ? isHost : name === newHost);
     });
+    socket.on("setting", (settings) => {
+      const { happy, heavy, selfReflection, toTheSpeaker } = settings;
+      setHappy(happy);
+      setHeavy(heavy);
+      setSelfReflection(selfReflection);
+      setToTheSpeaker(toTheSpeaker);
+    });
   }, []);
 
+  useEffect(() => {
+    socket.emit("setting", code, {
+      happy,
+      heavy,
+      selfReflection,
+      toTheSpeaker,
+    });
+  }, [happy, heavy, selfReflection, toTheSpeaker]);
   const startGameHandler = () => {
     socket.emit("start-game", code, (data: any) => {
       const { current, card, users } = data;
