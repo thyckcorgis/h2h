@@ -50,9 +50,7 @@ export default function RegisterScreen({ navigation }: RegisterScreenProps) {
               </View>
               <View style={styles.closeContainer}>
                 <TouchableOpacity
-                  onPress={() => {
-                    setFeaturesVisible(!featuresVisible);
-                  }}
+                  onPress={() => setFeaturesVisible(!featuresVisible)}
                 >
                   <Text style={styles.smallText}>Close</Text>
                 </TouchableOpacity>
@@ -60,11 +58,7 @@ export default function RegisterScreen({ navigation }: RegisterScreenProps) {
             </View>
           </View>
         </Modal>
-        <TouchableOpacity
-          onPress={() => {
-            setFeaturesVisible(!missionVisible);
-          }}
-        >
+        <TouchableOpacity onPress={() => setMissionVisible(!missionVisible)}>
           <MissionButton />
         </TouchableOpacity>
         <Modal
@@ -79,9 +73,7 @@ export default function RegisterScreen({ navigation }: RegisterScreenProps) {
               </View>
               <View style={styles.closeContainer}>
                 <TouchableOpacity
-                  onPress={() => {
-                    setMissionVisible(!missionVisible);
-                  }}
+                  onPress={() => setMissionVisible(!missionVisible)}
                 >
                   <Text style={styles.smallText}>Close</Text>
                 </TouchableOpacity>
