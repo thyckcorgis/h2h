@@ -155,6 +155,6 @@ io.on("connection", (socket) => {
   });
   socket.on("setting", (code, settings) => {
     changeRoomSettings(code, settings);
-    socket.to(code).emit("setting", { settings });
+    socket.to(code).emit("setting", settings);
   });
 });
