@@ -172,10 +172,11 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     padding: 10,
     textAlign: "center",
+    fontFamily: "Arial Rounded MT Bold",
   },
   smallText: {
     fontSize: 18,
-    fontFamily: "Futura",
+    fontFamily: "Arial Rounded MT Bold",
     color: "white",
     textAlign: "center",
   },
