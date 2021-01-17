@@ -20,17 +20,13 @@ const forFade = ({ current }: { current: any }) => ({
 });
 
 export default function App() {
-  const hideHeader = () => ({
-    headerShown: false,
-  });
-  const disableSwipeBack = () => ({
-    gestureEnabled: false,
-  });
+  const hideHeader = { headerShown: false };
+  const disableSwipeBack = { gestureEnabled: false };
 
   return (
     <NavigationContainer>
       <Stack.Navigator
-        screenOptions={{ ...hideHeader(), cardStyleInterpolator: forFade }}
+        screenOptions={{ ...hideHeader, cardStyleInterpolator: forFade }}
       >
         <Stack.Screen
           name="Loading"
@@ -51,12 +47,12 @@ export default function App() {
         <Stack.Screen
           name="Waiting"
           component={WaitingScreen}
-          options={{ ...hideHeader(), ...disableSwipeBack() }}
+          options={{ ...hideHeader, ...disableSwipeBack }}
         />
         <Stack.Screen
           name="Game"
           component={GameScreen}
-          options={{ ...hideHeader(), ...disableSwipeBack() }}
+          options={{ ...hideHeader, ...disableSwipeBack }}
         />
       </Stack.Navigator>
     </NavigationContainer>
