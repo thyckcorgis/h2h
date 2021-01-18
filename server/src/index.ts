@@ -1,5 +1,5 @@
 import Express from "express";
-import { randCode, shuffleArray } from "./random";
+import { randCode, shuffleArray, joinArray } from "./helpers";
 
 import categories from "./categories.json";
 
@@ -12,7 +12,6 @@ router.get("/", (_, res) => {
 });
 
 const rooms = {};
-const join = (arr1, arr2) => [...arr1, ...arr2];
 const roomExists = (code) => rooms[code] != null;
 const addUserToRoom = (name, code) => rooms[code]?.users.push(name);
 const endTurn = (code) => {
@@ -33,11 +32,11 @@ const getCardCategories = (code) => {
   let arr = [];
   Object.entries(settings).forEach(([key, val]) => {
     if (val && key !== "customCards") {
-      arr = join(arr, categories[key]);
+      arr = joinArray(arr, categories[key]);
     }
   });
 
-  if (settings.customCards) arr = join(arr, customs);
+  if (settings.customCards) arr = joinArray(arr, customs);
   arr = shuffleArray(arr);
   return arr;
 };

@@ -6,9 +6,15 @@ export function shuffleArray<T>(array: T[]) {
   }
   return arr;
 }
-export function getRandArray(length: number) {
-  return shuffleArray([...Array(length).keys()]);
-}
+
+// export function getRandArray(length: number) {
+//   return shuffleArray([...Array(length).keys()]);
+// }
+
 export function randCode() {
   return (Math.floor(Math.random() * 90000) + 10000).toString();
+}
+
+export function joinArray<T>(arr1: T[], arr2: T[]) {
+  return [...arr1, ...arr2];
 }
