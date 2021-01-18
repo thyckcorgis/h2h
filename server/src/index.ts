@@ -1,7 +1,8 @@
 import Express from "express";
-import { randCode, shuffleArray, joinArray } from "./helpers";
+import { randCode, errorMessage } from "./helpers";
+import Room from "./Room";
 
-import categories from "./categories.json";
+import { Socket } from "socket.io";
 
 const app = Express();
 const port = 5001;
@@ -11,68 +12,14 @@ router.get("/", (_, res) => {
   res.send("Hello, thyck bois and gorls of the world!");
 });
 
-const rooms = {};
-const roomExists = (code) => rooms[code] != null;
-const addUserToRoom = (name, code) => rooms[code]?.users.push(name);
-const endTurn = (code) => {
-  const room = rooms[code];
-  rooms[code].current = (room?.current + 1) % room?.users.length;
-};
-const changeRoomSettings = (code, settings) => {
-  rooms[code].settings = settings;
-};
-const getCurrentPlayer = (code) => rooms[code]?.users[rooms[code].current];
-const drawCard = (code) => {
-  const card = rooms[code]?.cards.pop();
-  rooms[code].currentCard = card;
-  return card;
-};
-const getCardCategories = (code) => {
-  const { settings, customs } = rooms[code];
-  let arr = [];
-  Object.entries(settings).forEach(([key, val]) => {
-    if (val && key !== "customCards") {
-      arr = joinArray(arr, categories[key]);
-    }
-  });
+const rooms: { [T: string]: Room } = {};
+const roomExists = (code: string) => rooms[code] != null;
 
-  if (settings.customCards) arr = joinArray(arr, customs);
-  arr = shuffleArray(arr);
-  return arr;
-};
-
-const getCurrentCard = (code) => rooms[code].currentCard;
-const removeUser = (code, name) => {
-  if (rooms[code]) {
-    rooms[code].users = rooms[code]?.users.filter(
-      (arrName) => arrName !== name
-    );
-    rooms[code].current = rooms[code]?.current % rooms[code]?.users.length;
-  }
-};
-const getNewHost = (code, isHost) => (isHost ? rooms[code]?.users[0] : "");
-const userExistsInRoom = (name, code) => rooms[code]?.users.includes(name);
-
-const createRoom = (name) => {
+const createRoom = (name: string) => {
   let code = randCode();
   while (roomExists(code)) code = randCode();
 
-  rooms[code] = {
-    users: [name],
-    current: 0,
-    cards: [],
-    gameStarted: false,
-    currentCard: "",
-    settings: {
-      happy: true,
-      heavy: true,
-      toTheSpeaker: true,
-      selfReflection: true,
-      customCards: false,
-    },
-    customs: [],
-  };
-
+  rooms[code] = new Room(name);
   return code;
 };
 
@@ -84,23 +31,23 @@ const io = require("socket.io")(server, {
   path: "/h2h",
 });
 
-io.on("connection", (socket) => {
+io.on("connection", (socket: Socket) => {
   socket.on("create", (name, fn) => {
     const code = createRoom(name);
     socket.join(code);
     fn(code);
   });
   socket.on("join", (name, code, fn) => {
-    if (!roomExists(code))
-      return fn({ ok: false, message: "Room does not exist" });
+    if (!roomExists(code)) return fn(errorMessage("Room does not exist"));
 
-    if (userExistsInRoom(name, code))
-      return fn({ ok: false, message: "Name is already taken" });
+    const room = rooms[code];
 
-    addUserToRoom(name, code);
+    if (room.userExists(name)) return fn(errorMessage("Name is already taken"));
+
+    room.addUser(name);
     socket.join(code);
-    const current = getCurrentPlayer(code);
-    const card = getCurrentCard(code);
+    const current = room.getCurrentPlayer();
+    const card = room.getCurrentCard();
     fn({
       ok: true,
       message: `joined room ${code}`,
@@ -114,22 +61,24 @@ io.on("connection", (socket) => {
   });
 
   socket.on("quit-game", (code, name, isHost) => {
-    removeUser(code, name);
-    const newHost = getNewHost(code, isHost);
+    const room = rooms[code];
+    room.removeUser(name);
+    const newHost = room.getNewHost(isHost);
     socket.leave(code);
     socket.to(code).emit("quit-game", {
       playerQuit: name,
-      current: getCurrentPlayer(code),
-      card: getCurrentCard(code),
+      current: room.getCurrentPlayer(),
+      card: room.getCurrentCard(),
       newHost,
       users: rooms[code].users,
     });
   });
   socket.on("quit-lobby", (code, name, isHost) => {
-    removeUser(code, name);
+    const room = rooms[code];
+    room.removeUser(name);
     socket.leave(code);
     socket.to(code).emit("quit-lobby", {
-      newHost: getNewHost(code, isHost),
+      newHost: room.getNewHost(isHost),
       users: rooms[code].users,
     });
   });
@@ -139,46 +88,50 @@ io.on("connection", (socket) => {
   });
 
   socket.on("start-game", (code, fn) => {
-    rooms[code].gameStarted = true;
-    rooms[code].cards = [...getCardCategories(code)];
-    drawCard(code);
-    const card = getCurrentCard(code);
-    const current = getCurrentPlayer(code);
-    const users = rooms[code].users;
-    fn({ current, card, users });
+    const room = rooms[code];
+    room.startGame();
+    room.createCardDeck();
+    room.drawCard();
+
+    const data = {
+      card: room.getCurrentCard(),
+      current: room.getCurrentPlayer(),
+      users: room.getUsers(),
+    };
+    fn(data);
     socket.to(code).emit("start-game", {
       ok: true,
       message: "game has been started by host",
-      current,
-      card,
-      users,
+      ...data,
     });
   });
+
   socket.on("next-card", (code, fn) => {
-    endTurn(code);
-    const current = getCurrentPlayer(code);
-    drawCard(code);
-    const card = getCurrentCard(code);
-    fn({ current, card });
+    const room = rooms[code];
+    room.endTurn();
+    room.drawCard();
+    const data = {
+      current: room.getCurrentPlayer(),
+      card: room.getCurrentCard(),
+    };
+    fn(data);
     socket.to(code).emit("next-card", {
       ok: true,
-      current,
-      card,
+      ...data,
     });
   });
+
   socket.on("setting", (code, settings) => {
-    changeRoomSettings(code, settings);
+    rooms[code].setSettings(settings);
     socket.to(code).emit("setting", settings);
   });
 
   socket.on("custom", (code, question, fn) => {
-    if (!rooms[code].settings.customCards) {
-      return fn({
-        ok: false,
-        message: "Custom cards are not allowed in this room",
-      });
+    const room = rooms[code];
+    if (!room.customCardsEnabled()) {
+      return fn(errorMessage("Custom cards are not allowed in this room"));
     }
-    rooms[code].customs.push(question);
+    room.addCustomCard(question);
     fn({ ok: true, message: "Added anonymous custom card" });
   });
 });
