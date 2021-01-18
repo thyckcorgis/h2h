@@ -1,12 +1,13 @@
-const express = require("express");
-const app = express();
-const { randCode, shuffleArray } = require("./random");
-const categories = require("./categories.json");
+import Express from "express";
+import { randCode, shuffleArray } from "./random";
 
+import categories from "./categories.json";
+
+const app = Express();
 const port = 5001;
 
-const router = express.Router();
-router.get("/", (req, res) => {
+const router = Express.Router();
+router.get("/", (_, res) => {
   res.send("Hello, thyck bois and gorls of the world!");
 });
 
