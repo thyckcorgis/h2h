@@ -32,7 +32,7 @@ export default function CustomCardScreen({
   };
 
   const startGameHandler = () => {
-    socket.emit("start-game", code, (data) => {
+    socket.emit("start-game", code, (data: any) => {
       navigation.navigate("Game", {
         code,
         name,
