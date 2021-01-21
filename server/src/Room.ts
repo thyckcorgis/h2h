@@ -33,7 +33,7 @@ export default class Room {
     };
   }
 
-  endTurn() {
+  nextTurn() {
     this.currentPlayerIdx = (this.currentPlayerIdx + 1) % this.users.length;
   }
 
@@ -66,6 +66,10 @@ export default class Room {
   removeUser(name: string) {
     this.users = this.users.filter((user) => user !== name);
     this.currentPlayerIdx = this.currentPlayerIdx % this.users.length;
+  }
+
+  isEmpty() {
+    return this.users.length === 0;
   }
 
   userExists(name: string) {
