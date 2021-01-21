@@ -1,14 +1,8 @@
 import React from "react";
-// import * as Font from "expo-font";
-// import { Ionicons } from "@expo/vector-icons";
-import { StackNavigationHelpers } from "@react-navigation/stack/lib/typescript/src/types";
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import ScreenProps from "./ScreenProps";
 
-interface LoadingScreenProps {
-  navigation: StackNavigationHelpers;
-}
-
-export default function LoadingScreen({ navigation }: LoadingScreenProps) {
+export default function LoadingScreen({ navigation }: ScreenProps) {
   return (
     <View style={styles.screen}>
       <TouchableOpacity

@@ -1,9 +1,7 @@
-import { StackNavigationHelpers } from "@react-navigation/stack/lib/typescript/src/types";
-import * as React from "react";
+import React from "react";
 import {
   KeyboardAvoidingView,
   Text,
-  Button,
   TextInput,
   StyleSheet,
   TouchableOpacity,
@@ -11,9 +9,9 @@ import {
 import { useState } from "react";
 import socket from "../socket";
 import { StartButton, SubmitCardButton } from "../assets/images";
+import ScreenProps from "./ScreenProps";
 
-interface CustomCardScreenProps {
-  navigation: StackNavigationHelpers;
+interface CustomCardScreenProps extends ScreenProps {
   route: any;
 }
 

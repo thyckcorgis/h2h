@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { StackNavigationHelpers } from "@react-navigation/stack/lib/typescript/src/types";
 import {
   View,
   SafeAreaView,
@@ -19,8 +18,8 @@ import {
 } from "../assets/images/";
 
 import socket from "../socket";
-interface GameScreenProps {
-  navigation: StackNavigationHelpers;
+import ScreenProps from "./ScreenProps";
+interface GameScreenProps extends ScreenProps {
   route: any;
 }
 

@@ -1,5 +1,4 @@
 import React from "react";
-import { StackNavigationHelpers } from "@react-navigation/stack/lib/typescript/src/types";
 import {
   View,
   Text,
@@ -12,9 +11,9 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import socket from "../socket";
 
 import { HostButton, JoinButton } from "../assets/images/";
+import ScreenProps from "./ScreenProps";
 
-interface HomeScreenProps {
-  navigation: StackNavigationHelpers;
+interface HomeScreenProps extends ScreenProps {
   route: any;
 }
 
