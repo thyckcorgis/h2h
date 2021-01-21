@@ -1,3 +1,4 @@
+import { Route } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import {
   View,
@@ -19,8 +20,18 @@ import {
 
 import socket from "../socket";
 import ScreenProps from "./ScreenProps";
+
+interface GameParams {
+  code: string;
+  name: string;
+  current: string;
+  card: string;
+  users: string[];
+  isHost: boolean;
+}
+
 interface GameScreenProps extends ScreenProps {
-  route: any;
+  route: Route<"Game", GameParams>;
 }
 
 const isTurn = (name: string, current: string) => name === current;
