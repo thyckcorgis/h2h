@@ -12,9 +12,14 @@ import socket from "../socket";
 
 import { HostButton, JoinButton } from "../assets/images/";
 import ScreenProps from "./ScreenProps";
+import { Route } from "@react-navigation/native";
+
+interface HomeParams {
+  name: string;
+}
 
 interface HomeScreenProps extends ScreenProps {
-  route: any;
+  route: Route<"Home", HomeParams>;
 }
 
 export default function HomeScreen({ navigation, route }: HomeScreenProps) {
