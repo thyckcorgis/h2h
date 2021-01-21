@@ -54,7 +54,7 @@ export default function WaitingScreen({
   const [users, setUsers] = useState(_users);
   const [isHost, setHost] = useState(_isHost);
 
-  const renderItem = ({ item }: { item: any }) => <Item title={item} />;
+  const renderItem = ({ item }: { item: string }) => <Item title={item} />;
   useEffect(() => {
     socket.on("start-game", (data: any) => {
       const { ok, current, card, users } = data;
@@ -143,7 +143,6 @@ export default function WaitingScreen({
   };
 
   const toggle = (fn) => {
-    console.log("oopo");
     return (newVal) => fn(newVal);
   };
 
