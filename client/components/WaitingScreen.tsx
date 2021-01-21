@@ -15,9 +15,25 @@ import socket from "../socket";
 
 import { SettingsButton, StartButton, QuitButton } from "../assets/images/";
 import ScreenProps from "./ScreenProps";
+import { Route } from "@react-navigation/native";
 
+import { Settings } from "../../types";
+
+interface WaitingParams {
+  name: string;
+  code: string;
+  users: string[];
+  isHost: boolean;
+  // fix later lmfaooo
+  settings?: Settings;
+  happy: boolean;
+  heavy: boolean;
+  toTheSpeaker: boolean;
+  selfReflection: boolean;
+  customCards: boolean;
+}
 interface WaitingScreenProps extends ScreenProps {
-  route: any;
+  route: Route<"Waiting", WaitingParams>;
 }
 
 const Item = ({ title }: { title: any }) => (
