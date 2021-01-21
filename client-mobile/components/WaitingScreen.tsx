@@ -1,4 +1,3 @@
-import { StackNavigationHelpers } from "@react-navigation/stack/lib/typescript/src/types";
 import React, { useState, useEffect } from "react";
 import {
   SafeAreaView,
@@ -8,7 +7,6 @@ import {
   StyleSheet,
   Modal,
   Alert,
-  Button,
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import CheckBox from "./Checkbox";
@@ -16,9 +14,9 @@ import CheckBox from "./Checkbox";
 import socket from "../socket";
 
 import { SettingsButton, StartButton, QuitButton } from "../assets/images/";
+import ScreenProps from "./ScreenProps";
 
-interface WaitingScreenProps {
-  navigation: StackNavigationHelpers;
+interface WaitingScreenProps extends ScreenProps {
   route: any;
 }
 
