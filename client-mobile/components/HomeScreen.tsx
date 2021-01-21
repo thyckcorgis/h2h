@@ -13,6 +13,7 @@ import socket from "../socket";
 import { HostButton, JoinButton } from "../assets/images/";
 import ScreenProps from "./ScreenProps";
 import { Route } from "@react-navigation/native";
+import { Settings } from "../../types";
 
 interface HomeParams {
   name: string;
@@ -27,6 +28,14 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
   const [joinErrorMessage, setJoinErrorMessage] = useState("");
   const [hostErrorMessage, setHostErrorMessage] = useState("");
   const { name } = route.params;
+
+  const settings: Settings = {
+    happy: true,
+    heavy: true,
+    toTheSpeaker: true,
+    selfReflection: true,
+    customCards: false,
+  };
 
   const hostGameHandler = () => {
     setJoinErrorMessage("");
@@ -44,11 +53,7 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
         code,
         users: [name],
         isHost: true,
-        happy: true,
-        heavy: true,
-        toTheSpeaker: true,
-        selfReflection: true,
-        customCards: false,
+        settings,
       });
     });
   };
@@ -76,7 +81,7 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
             code,
             users,
             isHost: false,
-            ...settings,
+            settings,
           });
         } else {
           navigation.navigate("Waiting", {
@@ -84,7 +89,7 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
             code,
             users,
             isHost: false,
-            ...settings,
+            settings,
           });
         }
       } else {

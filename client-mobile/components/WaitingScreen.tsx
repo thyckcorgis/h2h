@@ -25,12 +25,7 @@ interface WaitingParams {
   users: string[];
   isHost: boolean;
   // fix later lmfaooo
-  settings?: Settings;
-  happy: boolean;
-  heavy: boolean;
-  toTheSpeaker: boolean;
-  selfReflection: boolean;
-  customCards: boolean;
+  settings: Settings;
 }
 interface WaitingScreenProps extends ScreenProps {
   route: Route<"Waiting", WaitingParams>;
@@ -46,23 +41,13 @@ export default function WaitingScreen({
   navigation,
   route,
 }: WaitingScreenProps) {
-  const {
-    name,
-    code,
-    users: _users,
-    isHost: _isHost,
-    happy: _happy,
-    heavy: _heavy,
-    toTheSpeaker: _toTheSpeaker,
-    selfReflection: _selfReflection,
-    customCards: _customCards,
-  } = route.params;
+  const { name, code, users: _users, isHost: _isHost, settings } = route.params;
   const [modalVisible, setModalVisible] = useState(false);
-  const [happy, setHappy] = useState(_happy);
-  const [heavy, setHeavy] = useState(_heavy);
-  const [toTheSpeaker, setToTheSpeaker] = useState(_toTheSpeaker);
-  const [selfReflection, setSelfReflection] = useState(_selfReflection);
-  const [customCards, setCustomCards] = useState(_customCards);
+  const [happy, setHappy] = useState(settings.happy);
+  const [heavy, setHeavy] = useState(settings.heavy);
+  const [toTheSpeaker, setToTheSpeaker] = useState(settings.toTheSpeaker);
+  const [selfReflection, setSelfReflection] = useState(settings.selfReflection);
+  const [customCards, setCustomCards] = useState(settings.customCards);
   const [message, setMessage] = useState("");
 
   const [users, setUsers] = useState(_users);
@@ -95,22 +80,15 @@ export default function WaitingScreen({
       setHost(newHost === "" ? isHost : name === newHost);
     });
     if (!isHost) {
-      socket.on("setting", (settings) => {
-        const {
-          happy,
-          heavy,
-          selfReflection,
-          toTheSpeaker,
-          customCards,
-        } = settings;
-        setHappy(happy);
-        setHeavy(heavy);
-        setSelfReflection(selfReflection);
-        setToTheSpeaker(toTheSpeaker);
-        setCustomCards(customCards);
+      socket.on("setting", (settings: Settings) => {
+        setHappy(settings.happy);
+        setHeavy(settings.heavy);
+        setSelfReflection(settings.selfReflection);
+        setToTheSpeaker(settings.toTheSpeaker);
+        setCustomCards(settings.customCards);
       });
     }
-    socket.on("player-joined", (name) => {
+    socket.on("player-joined", (name: string) => {
       setUsers((users: string[]) => [...users, name]);
     });
   }, [isHost]);
@@ -156,9 +134,9 @@ export default function WaitingScreen({
     navigation.navigate("Home", { name });
   };
 
-  const toggle = (fn) => {
-    return (newVal) => fn(newVal);
-  };
+  function toggle<T>(fn: React.Dispatch<T>) {
+    return (newVal: T) => fn(newVal);
+  }
 
   const start = isHost ? (
     <TouchableOpacity style={styles.buttonContainer} onPress={startGameHandler}>
