@@ -10,9 +10,16 @@ import { useState } from "react";
 import socket from "../socket";
 import { StartButton, SubmitCardButton } from "../assets/images";
 import ScreenProps from "./ScreenProps";
+import { Route } from "@react-navigation/native";
+
+interface CustomCardParams {
+  code: string;
+  name: string;
+  isHost: boolean;
+}
 
 interface CustomCardScreenProps extends ScreenProps {
-  route: any;
+  route: Route<"Custom", CustomCardParams>;
 }
 
 export default function CustomCardScreen({
