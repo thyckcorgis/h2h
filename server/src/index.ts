@@ -14,14 +14,15 @@ router.get("/", (_, res) => {
 
 const rooms: { [T: string]: Room } = {};
 const roomExists = (code: string) => rooms[code] != null;
+const removeRoom = (code: string) => delete rooms[code];
 
-const createRoom = (name: string) => {
+function createRoom(name: string) {
   let code = randCode();
   while (roomExists(code)) code = randCode();
 
   rooms[code] = new Room(name);
   return code;
-};
+}
 
 app.use("/h2h", router);
 
@@ -62,20 +63,27 @@ io.on("connection", (socket: Socket) => {
 
   socket.on("quit-game", (code, name, isHost) => {
     const room = rooms[code];
-    room.removeUser(name);
-    const newHost = room.getNewHost(isHost);
     socket.leave(code);
+    room.removeUser(name);
+    if (room.isEmpty()) {
+      removeRoom(code);
+      return;
+    }
     socket.to(code).emit("quit-game", {
       playerQuit: name,
       current: room.getCurrentPlayer(),
       card: room.getCurrentCard(),
-      newHost,
+      newHost: room.getNewHost(isHost),
       users: rooms[code].users,
     });
   });
   socket.on("quit-lobby", (code, name, isHost) => {
     const room = rooms[code];
     room.removeUser(name);
+    if (room.isEmpty()) {
+      removeRoom(code);
+      return;
+    }
     socket.leave(code);
     socket.to(code).emit("quit-lobby", {
       newHost: room.getNewHost(isHost),
@@ -108,7 +116,7 @@ io.on("connection", (socket: Socket) => {
 
   socket.on("next-card", (code, fn) => {
     const room = rooms[code];
-    room.endTurn();
+    room.nextTurn();
     room.drawCard();
     const data = {
       current: room.getCurrentPlayer(),
