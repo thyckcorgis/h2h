@@ -78,6 +78,9 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
         <TouchableOpacity onPress={hostGameHandler}>
           <HostButton width={250} />
         </TouchableOpacity>
+        <Text style={{ ...styles.smallText, color: "red" }}>
+          The server is down. Change this text lmao :c
+        </Text>
       </View>
       <View style={styles.container}>
         <Text style={styles.bigText}>Join Confessation</Text>
