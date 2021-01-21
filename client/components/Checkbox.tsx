@@ -3,7 +3,17 @@ import { TouchableOpacity } from "react-native";
 
 import { EnOn, EnOff } from "../assets/images/";
 
-export default function Checkbox({ disabled, value, onValueChange }) {
+interface CheckboxProps {
+  disabled: boolean;
+  value: boolean;
+  onValueChange: React.Dispatch<boolean>;
+}
+
+export default function Checkbox({
+  disabled,
+  value,
+  onValueChange,
+}: CheckboxProps) {
   const touchHandler = () => {
     if (disabled) {
       return;
