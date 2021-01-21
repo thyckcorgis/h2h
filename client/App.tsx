@@ -1,7 +1,6 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { useFonts } from "expo-font";
 
 import {
   LoadingScreen,
@@ -10,9 +9,8 @@ import {
   HomeScreen,
   WaitingScreen,
   GameScreen,
+  CustomCardScreen,
 } from "./components";
-
-import CustomCardScreen from "./components/CustomCardScreen";
 
 const Stack = createStackNavigator();
 
