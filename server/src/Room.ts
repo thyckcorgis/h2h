@@ -1,17 +1,17 @@
 import categories from "./categories.json";
 import { shuffleArray } from "./helpers";
-import { Settings } from "../../types/";
+import { User, Settings } from "../../types/";
 
 export default class Room {
-  users: string[];
+  users: User[];
   currentPlayerIdx: number;
   cards: string[];
   customCards: string[];
   gameStarted: boolean;
   currentCard: string;
   settings: Settings;
-  constructor(hostName: string) {
-    this.users = [hostName];
+  constructor(name: string, socketID: string) {
+    this.users = [{ name, socketID }];
     this.currentPlayerIdx = 0;
     this.cards = [];
     this.customCards = [];
@@ -52,12 +52,12 @@ export default class Room {
     return [...this.users];
   }
 
-  addUser(userName: string) {
-    this.users.push(userName);
+  addUser(name: string, socketID: string) {
+    this.users.push({ name, socketID });
   }
 
-  removeUser(name: string) {
-    this.users = this.users.filter((user) => user !== name);
+  removeUser(socketID: string) {
+    this.users = this.users.filter((user) => user.socketID !== socketID);
     this.currentPlayerIdx = this.currentPlayerIdx % this.users.length;
   }
 
@@ -66,7 +66,7 @@ export default class Room {
   }
 
   userExists(name: string) {
-    return this.users.includes(name);
+    return this.users.some((user) => user.name === name);
   }
 
   getNewHost(isHost: boolean) {
