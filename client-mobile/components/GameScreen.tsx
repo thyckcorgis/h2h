@@ -113,7 +113,7 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
               : `It is ${currentPlayer}'s turn.`
             : "You ran out of cards. Try different categories to access new cards."}
         </Text>
-        <View style={styles.cardContainer}>
+        <View style={isTurn(name, currentPlayer) ? styles.cardContainer : styles.transparentCardContainer}>
           {isTurn(name, currentPlayer) ? (
             <Text style={styles.bigText}>{currentCard}</Text>
           ) : (
@@ -203,6 +203,15 @@ const styles = StyleSheet.create({
     width: "70%",
     height: "50%",
     backgroundColor: "#892cdc",
+    borderRadius: 20,
+    alignItems: "center",
+    justifyContent: "center",
+    margin: "5%",
+  },
+  transparentCardContainer: {
+    width: "70%",
+    height: "50%",
+    backgroundColor: "transparent",
     borderRadius: 20,
     alignItems: "center",
     justifyContent: "center",
