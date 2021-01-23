@@ -65,8 +65,11 @@ export const quitGameEvent: SocketEvent<QuitHandler> = (socket) => (
   name,
   isHost
 ) => {
-  const room = rooms[code];
   socket.leave(code);
+  if (!roomExists(code)) return;
+
+  const room = rooms[code];
+
   room.removeUser(name);
   if (room.isEmpty()) return removeRoom(code);
 
@@ -77,7 +80,6 @@ export const quitGameEvent: SocketEvent<QuitHandler> = (socket) => (
     newHost: room.getNewHost(isHost),
     users: rooms[code].users,
   };
-
   socket.to(code).emit("quit-game", broadcast);
 };
 
@@ -86,11 +88,12 @@ export const quitLobbyEvent: SocketEvent<QuitHandler> = (socket) => (
   name,
   isHost
 ) => {
+  socket.leave(code);
+
+  if (!roomExists(code)) return;
   const room = rooms[code];
   room.removeUser(name);
   if (room.isEmpty()) return removeRoom(code);
-
-  socket.leave(code);
 
   const broadcast: QuitLobbyResponse = {
     newHost: room.getNewHost(isHost),
@@ -101,6 +104,8 @@ export const quitLobbyEvent: SocketEvent<QuitHandler> = (socket) => (
 };
 
 export const customCardEvent: EventHandler = (code, question, fn) => {
+  if (!roomExists(code)) return;
+
   const room = rooms[code];
   if (!room.customCardsEnabled())
     return fn(errorMessage("Custom cards are not allowed in this room"));
@@ -113,6 +118,8 @@ export const nextCardEvent: SocketEvent<AnonEventHandler> = (socket) => (
   code,
   fn
 ) => {
+  if (!roomExists(code)) return;
+
   const room = rooms[code];
   room.nextTurn();
   room.drawCard();
@@ -128,6 +135,8 @@ export const settingEvent: SocketEvent<SettingHandler> = (socket) => (
   code,
   settings
 ) => {
+  if (!roomExists(code)) return;
+
   rooms[code].setSettings(settings);
   socket.to(code).emit("setting", settings);
 };
@@ -136,6 +145,8 @@ export const startGameEvent: SocketEvent<AnonEventHandler> = (socket) => (
   code,
   fn
 ) => {
+  if (!roomExists(code)) return;
+
   const room = rooms[code];
   room.startGame();
   room.createCardDeck();
