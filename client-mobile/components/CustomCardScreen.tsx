@@ -14,6 +14,7 @@ import { Route } from "@react-navigation/native";
 
 import { CustomCardParams } from "./params";
 import startGameEventCallback from "./startGame";
+import { ServerMessageResponse } from "../../types";
 
 interface CustomCardScreenProps extends ScreenProps {
   route: Route<"Custom", CustomCardParams>;
@@ -28,8 +29,8 @@ export default function CustomCardScreen({
 
   const submitCardHandler = () => {
     if (question === "") return;
-    socket.emit("custom", code, question, (data: any) => {
-      setQuestion("");
+    socket.emit("custom", code, question, ({ ok }: ServerMessageResponse) => {
+      if (ok) setQuestion("");
     });
   };
 

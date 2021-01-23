@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Modal,
   FlatList,
+  ListRenderItem,
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
@@ -20,7 +21,7 @@ import {
 import socket from "../socket";
 import ScreenProps from "./ScreenProps";
 
-import { NextCardResponse } from "../../types";
+import { NextCardResponse, QuitGameResponse } from "../../types";
 import { GameParams } from "./params";
 
 interface GameScreenProps extends ScreenProps {
@@ -28,8 +29,6 @@ interface GameScreenProps extends ScreenProps {
 }
 
 const isTurn = (name: string, current: string) => name === current;
-
-
 
 export default function GameScreen({ route, navigation }: GameScreenProps) {
   const {
@@ -47,17 +46,27 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
   const [message, setMessage] = useState("");
   const [ripe, setRipe] = useState(true);
 
-  const renderItem = ({ item }: { item: any }) => <Item title={item} />;
-  const Item = ({ title }: { title: any }) => (
-    <View>
-      <Text style={{ ...styles.smallText, color: currentPlayer == title ? "#892cdc" : "white" }}>{title}</Text>
-    </View>
-  );
-
   const updateCurrent = ({ currentPlayer, currentCard }: NextCardResponse) => {
     setCurrentCard(currentCard);
     setCurrentPlayer(currentPlayer);
   };
+
+  const Item = ({ title }: { title: string }) => (
+    <View>
+      <Text
+        style={{
+          ...styles.smallText,
+          color: currentPlayer == title ? "#892cdc" : "white",
+        }}
+      >
+        {title}
+      </Text>
+    </View>
+  );
+
+  const renderItem: ListRenderItem<string> = ({ item }) => (
+    <Item title={item} />
+  );
 
   useEffect(() => {
     socket.on("player-joined", (name: string) => {
@@ -70,11 +79,11 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
     });
 
     socket.on("next-card", updateCurrent);
-    socket.on("quit-game", (data: any) => {
-      const { newHost, users, playerQuit } = data;
+    socket.on("quit-game", (res: QuitGameResponse) => {
+      const { newHost, users, playerQuit } = res;
       setUsers(users);
       setHost(newHost === "" ? isHost : name === newHost);
-      updateCurrent(data);
+      updateCurrent(res);
       setMessage(`${playerQuit} has quit the game.`);
       setRipe(true);
       setTimeout(() => {
