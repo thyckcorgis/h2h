@@ -1,6 +1,9 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
+import {
+  createStackNavigator,
+  StackCardStyleInterpolator,
+} from "@react-navigation/stack";
 
 import {
   LoadingScreen,
@@ -14,7 +17,7 @@ import {
 
 const Stack = createStackNavigator();
 
-const forFade = ({ current }: { current: any }) => ({
+const forFade: StackCardStyleInterpolator = ({ current }) => ({
   cardStyle: {
     opacity: current.progress,
   },
