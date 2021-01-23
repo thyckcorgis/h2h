@@ -122,7 +122,7 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
         <Text style={{ ...styles.smallText, color: "red" }}>
           {joinErrorMessage}
         </Text>
-        <TouchableOpacity style={{ marginTop: 30 }} onPress={joinGameHandler}>
+        <TouchableOpacity style={{ marginTop: "5%" }} onPress={joinGameHandler}>
           <JoinButton width={250} />
         </TouchableOpacity>
       </View>
@@ -132,59 +132,30 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
 
 const styles = StyleSheet.create({
   screen: {
-    padding: 50,
+    padding: "5%",
     alignItems: "center",
-    alignContent: "center",
     justifyContent: "center",
     flex: 1,
     backgroundColor: "black",
+    height: "100%",
+    width: "100%",
   },
   container: {
-    padding: 10,
-    marginVertical: 20,
+    // padding: "3%",
+    marginVertical: "5%",
     alignItems: "center",
-  },
-  // itemContainer: {
-  //   flex: 0,
-  // },
-  modalContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    margin: 10,
-    padding: 20,
-  },
-  modalView: {
-    margin: 20,
-    backgroundColor: "black",
-    borderRadius: 20,
-    borderWidth: 1,
-    borderColor: "white",
-    padding: 20,
-    // justifyContent: "center",
-    height: 600,
-    width: 350,
-    opacity: 0.9,
-    alignItems: "center",
-  },
-  closeContainer: {
-    marginTop: 50,
-    justifyContent: "flex-end",
-    borderWidth: 1,
-    borderColor: "white",
-    borderRadius: 20,
-    paddingHorizontal: 10,
+    width: "100%",
   },
   bigText: {
     fontSize: 30,
     color: "white",
-    paddingBottom: 10,
+    paddingBottom: "5%",
     fontFamily: "Avenir-Light",
   },
   inputField: {
-    padding: 5,
-    marginTop: 10,
-    width: 250,
+    padding: "2%",
+    paddingTop: "5%",
+    width: "70%",
     textAlign: "left",
     alignSelf: "center",
     borderBottomWidth: 1,
@@ -197,6 +168,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "white",
     textAlign: "center",
-    padding: 5,
+    marginVertical: "3%",
   },
 });

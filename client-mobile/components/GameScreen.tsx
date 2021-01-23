@@ -89,15 +89,16 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
     navigation.navigate("Home", { name });
   };
 
-  const [modalVisible, setModalVisible] = useState(false);
+  const [usersVisible, setUsersVisible] = useState(false);
 
-  const nextButton = isTurn(name, currentPlayer) ? (
-    <TouchableOpacity onPress={nextCardHandler}>
-      <NextButton height={85} />
-    </TouchableOpacity>
-  ) : (
-    <NextButton opacity={0.5} height={85} />
-  );
+  const nextButton =
+    isTurn(name, currentPlayer) && currentCard != null ? (
+      <TouchableOpacity onPress={nextCardHandler}>
+        <NextButton height={85} />
+      </TouchableOpacity>
+    ) : (
+      <NextButton opacity={0.5} height={85} />
+    );
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -116,18 +117,11 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
           {isTurn(name, currentPlayer) ? (
             <Text style={styles.bigText}>{currentCard}</Text>
           ) : (
-            <CardBack width={250} />
+            <CardBack width={"80%"} />
           )}
         </View>
 
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => {
-            Alert.alert("Modal has been closed.");
-          }}
-        >
+        <Modal animationType="slide" transparent={true} visible={usersVisible}>
           <View style={styles.modalContainer}>
             <View style={styles.modalView}>
               <Text style={styles.bigText}>Who's in the room?</Text>
@@ -138,15 +132,17 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
                 extraData={users}
               />
 
-              <View style={styles.closeContainer}>
-                <TouchableOpacity
-                  onPress={() => {
-                    setModalVisible(!modalVisible);
-                  }}
-                >
-                  <Text style={styles.smallText}>Close</Text>
-                </TouchableOpacity>
-              </View>
+              <TouchableOpacity
+                onPress={() => {
+                  setUsersVisible(!usersVisible);
+                }}
+              >
+                <View style={styles.closeContainer}>
+                  <Text style={{ ...styles.smallText, padding: "5%" }}>
+                    Close
+                  </Text>
+                </View>
+              </TouchableOpacity>
             </View>
           </View>
         </Modal>
@@ -154,7 +150,7 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
         <View style={styles.navBar}>
           <TouchableOpacity
             onPress={() => {
-              setModalVisible(true);
+              setUsersVisible(true);
             }}
           >
             <UserButton height={95} />
@@ -171,56 +167,63 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
 
 const styles = StyleSheet.create({
   screen: {
-    padding: 50,
+    padding: "5%",
     alignItems: "center",
     justifyContent: "center",
     flex: 1,
+    height: "100%",
+    width: "100%",
     backgroundColor: "black",
     textAlign: "center",
   },
   modalContainer: {
     flex: 1,
     justifyContent: "center",
-    alignSelf: "center",
-    margin: 10,
-    padding: 20,
+    alignItems: "center",
+    width: "100%",
+  },
+  modalView: {
+    backgroundColor: "black",
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: "white",
+    padding: "5%",
+    height: "40%",
+    width: "80%",
+    opacity: 0.9,
+    alignItems: "center",
   },
   closeContainer: {
-    marginTop: 50,
-    justifyContent: "flex-end",
+    marginTop: "5%",
     borderWidth: 1,
     borderColor: "white",
     borderRadius: 20,
-    paddingHorizontal: 10,
   },
   cardContainer: {
-    width: 250,
-    height: 400,
+    width: "70%",
+    height: "50%",
     backgroundColor: "#892cdc",
     borderRadius: 20,
     alignItems: "center",
     justifyContent: "center",
-    margin: 20,
+    margin: "5%",
   },
   navBar: {
     flexDirection: "row",
-    alignItems: "center",
+    alignItems: "flex-end",
     justifyContent: "space-between",
-    width: 300,
-    // borderColor: "white",
-    // borderWidth: 1,
+    width: "100%",
   },
   codeText: {
     fontSize: 30,
     color: "#892cdc",
-    paddingTop: 30,
+    paddingTop: "5%",
     fontFamily: "Avenir-Light",
   },
   bigText: {
     fontSize: 30,
     color: "white",
-    paddingVertical: 20,
-    padding: 10,
+    padding: "5%",
     textAlign: "center",
     fontFamily: "Avenir-Light",
   },
@@ -229,19 +232,5 @@ const styles = StyleSheet.create({
     fontFamily: "Avenir-Light",
     color: "white",
     textAlign: "center",
-    // padding: 5,
-  },
-  modalView: {
-    margin: 20,
-    backgroundColor: "black",
-    borderRadius: 20,
-    borderWidth: 1,
-    borderColor: "white",
-    padding: 10,
-    // justifyContent: "center",
-    height: 300,
-    width: 300,
-    opacity: 0.9,
-    alignItems: "center",
   },
 });

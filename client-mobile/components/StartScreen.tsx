@@ -27,11 +27,13 @@ export default function LoadingScreen({ navigation }: ScreenProps) {
 
 const styles = StyleSheet.create({
   screen: {
-    padding: 50,
+    padding: "5%",
     alignItems: "center",
     justifyContent: "center",
     flex: 1,
     backgroundColor: "black",
+    height: "100%",
+    width: "100%",
   },
   bigText: {
     fontFamily: "Georgia",
@@ -51,5 +53,6 @@ const styles = StyleSheet.create({
   },
   corgiBox: {
     alignItems: "center",
+    marginBottom: "15%",
   },
 });
