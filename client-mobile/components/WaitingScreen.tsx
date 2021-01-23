@@ -27,7 +27,7 @@ interface WaitingScreenProps extends ScreenProps {
 
 const Item = ({ title }: { title: string }) => (
   <View>
-    <Text style={styles.bigText}>{title}</Text>
+    <Text style={{ ...styles.bigText, paddingVertical: "1%" }}>{title}</Text>
   </View>
 );
 
