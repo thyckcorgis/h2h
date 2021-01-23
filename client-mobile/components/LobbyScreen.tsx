@@ -12,17 +12,17 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 
 import socket from "../socket";
 
-import { SettingsButton, StartButton, QuitButton } from "../assets/images/";
+import { SettingsButton, StartButton, QuitButton } from "../assets/images";
 import ScreenProps from "./ScreenProps";
 import { Route } from "@react-navigation/native";
 
 import { QuitLobbyResponse, Settings } from "../../types";
 import SettingsModal from "./SettingsModal";
-import { WaitingParams } from "./params";
+import { LobbyParams } from "./params";
 import startGameEventCallback from "./startGame";
 
-interface WaitingScreenProps extends ScreenProps {
-  route: Route<"Waiting", WaitingParams>;
+interface LobbyScreenProps extends ScreenProps {
+  route: Route<"Lobby", LobbyParams>;
 }
 
 const Item = ({ title }: { title: string }) => (
@@ -39,10 +39,7 @@ function randCode() {
   return (Math.floor(Math.random() * 90000) + 10000).toString();
 }
 
-export default function WaitingScreen({
-  navigation,
-  route,
-}: WaitingScreenProps) {
+export default function LobbyScreen({ navigation, route }: LobbyScreenProps) {
   const {
     name,
     code,
