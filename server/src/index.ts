@@ -1,16 +1,8 @@
 import Express from "express";
 
 import { Socket } from "socket.io";
-import {
-  createEvent,
-  customCardEvent,
-  joinEvent,
-  nextCardEvent,
-  quitGameEvent,
-  quitLobbyEvent,
-  settingEvent,
-  startGameEvent,
-} from "./socketEvents";
+import * as Events from "./socketEvents";
+import { Server } from "socket.io";
 
 const app = Express();
 const port = 5001;
@@ -23,26 +15,28 @@ router.get("/", (_, res) => {
 app.use("/h2h", router);
 
 const server = app.listen(port, () => console.log("Listening on port " + port));
-const io = require("socket.io")(server, {
+const io = new Server(server, {
   cors: { origin: "*", methods: ["GET", "POST"] },
   path: "/h2h",
 });
 
 io.on("connection", (socket: Socket) => {
-  socket.on("create", createEvent(socket));
-  socket.on("join", joinEvent(socket));
+  socket.on("create", Events.create(socket));
+  socket.on("join", Events.join(socket));
 
-  socket.on("quit-game", quitGameEvent(socket));
-  socket.on("quit-lobby", quitLobbyEvent(socket));
+  socket.on("quit-game", Events.quitGame(socket));
+  socket.on("quit-lobby", Events.quitLobby(socket));
 
-  socket.on("setting", settingEvent(socket));
+  socket.on("setting", Events.setting(socket));
 
   socket.on("add-custom", (code: string) => {
     socket.to(code).emit("add-custom");
   });
-  socket.on("custom", customCardEvent);
+  socket.on("custom", Events.customCard);
 
-  socket.on("start-game", startGameEvent(socket));
+  socket.on("start-game", Events.startGame(socket));
 
-  socket.on("next-card", nextCardEvent(socket));
+  socket.on("next-card", Events.nextCard(socket));
+
+  socket.on("disconnecting", Events.disconnecting);
 });
