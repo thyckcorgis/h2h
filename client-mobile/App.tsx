@@ -10,22 +10,23 @@ import {
   StartScreen,
   RegisterScreen,
   HomeScreen,
-  WaitingScreen,
+  LobbyScreen,
   GameScreen,
   CustomCardScreen,
 } from "./components";
 
 const Stack = createStackNavigator();
 
-const forFade: StackCardStyleInterpolator = ({ current }) => ({
+const forFade: StackCardStyleInterpolator = ({ current: progress }) => ({
   cardStyle: {
-    opacity: current.progress,
+    opacity: progress,
   },
 });
 
 export default function App() {
   const hideHeader = { headerShown: false };
   const disableSwipeBack = { gestureEnabled: false };
+  const hideAndDisable = { ...hideHeader, ...disableSwipeBack };
 
   return (
     <NavigationContainer>
@@ -49,19 +50,19 @@ export default function App() {
         />
         <Stack.Screen name="Home" component={HomeScreen} options={hideHeader} />
         <Stack.Screen
-          name="Waiting"
-          component={WaitingScreen}
-          options={{ ...hideHeader, ...disableSwipeBack }}
+          name="Lobby"
+          component={LobbyScreen}
+          options={hideAndDisable}
         />
         <Stack.Screen
           name="Custom"
           component={CustomCardScreen}
-          options={{ ...hideHeader, ...disableSwipeBack }}
+          options={hideAndDisable}
         />
         <Stack.Screen
           name="Game"
           component={GameScreen}
-          options={{ ...hideHeader, ...disableSwipeBack }}
+          options={hideAndDisable}
         />
       </Stack.Navigator>
     </NavigationContainer>

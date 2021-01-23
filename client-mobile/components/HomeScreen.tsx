@@ -14,7 +14,7 @@ import { HostButton, JoinButton } from "../assets/images/";
 import ScreenProps from "./ScreenProps";
 import { Route } from "@react-navigation/native";
 import { JoinServerResponse, Settings } from "../../types";
-import { GameParams, WaitingParams } from "./params";
+import { GameParams, LobbyParams } from "./params";
 
 interface HomeParams {
   name: string;
@@ -48,14 +48,15 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
     }
 
     setHostErrorMessage("");
-    socket.emit("create", name, (code: number) => {
-      navigation.navigate("Waiting", {
+    socket.emit("create", name, (code: string) => {
+      const params: LobbyParams = {
         name,
         code,
         users: [name],
         isHost: true,
         settings,
-      });
+      };
+      navigation.navigate("Lobby", params);
     });
   };
 
@@ -73,11 +74,8 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
 
     setJoinErrorMessage("");
 
-    socket.emit(
-      "join",
-      name,
-      code,
-      ({
+    socket.emit("join", name, code, (res: JoinServerResponse) => {
+      const {
         ok,
         users,
         message,
@@ -85,33 +83,32 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
         gameStarted,
         currentCard,
         currentPlayer,
-      }: JoinServerResponse) => {
-        if (ok) {
-          if (gameStarted) {
-            const params: GameParams = {
-              name,
-              code,
-              users,
-              isHost: false,
-              currentPlayer,
-              currentCard,
-            };
-            navigation.navigate("Game", params);
-          } else {
-            const params: WaitingParams = {
-              name,
-              code,
-              users,
-              isHost: false,
-              settings,
-            };
-            navigation.navigate("Waiting", params);
-          }
+      } = res;
+      if (ok) {
+        if (gameStarted) {
+          const params: GameParams = {
+            name,
+            code,
+            users,
+            isHost: false,
+            currentPlayer,
+            currentCard,
+          };
+          navigation.navigate("Game", params);
         } else {
-          setJoinErrorMessage(message);
+          const params: LobbyParams = {
+            name,
+            code,
+            users,
+            isHost: false,
+            settings,
+          };
+          navigation.navigate("Lobby", params);
         }
+      } else {
+        setJoinErrorMessage(message);
       }
-    );
+    });
   };
 
   return (

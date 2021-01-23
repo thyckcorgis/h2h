@@ -12,7 +12,7 @@ export interface GameParams extends CustomCardParams {
   users: string[];
 }
 
-export interface WaitingParams extends CustomCardParams {
+export interface LobbyParams extends CustomCardParams {
   users: string[];
   settings: Settings;
 }
