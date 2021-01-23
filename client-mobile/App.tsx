@@ -10,9 +10,9 @@ import {
   HomeScreen,
   WaitingScreen,
   GameScreen,
+  CustomCardScreen
 } from "./components";
 
-import CustomCardScreen from "./components/CustomCardScreen";
 
 const Stack = createStackNavigator();
 

@@ -78,6 +78,9 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
         <TouchableOpacity onPress={hostGameHandler}>
           <HostButton width={250} />
         </TouchableOpacity>
+        <Text style={{ ...styles.smallText, color: "red" }}>
+          Oh noes!! The sewvew is down :( We are so sooo sowwy. Pwetty pwease cum back later 
+        </Text>
       </View>
       <View style={styles.container}>
         <Text style={styles.bigText}>Join Confessation</Text>
