@@ -26,20 +26,13 @@ function createRoom(name: string) {
   return code;
 }
 
-export const createEvent: SocketEvent<AnonEventHandler> = (socket) => (
-  name,
-  fn
-) => {
+export const create: SocketEvent<AnonEventHandler> = (socket) => (name, fn) => {
   const code = createRoom(name);
   socket.join(code);
   fn(code);
 };
 
-export const joinEvent: SocketEvent<EventHandler> = (socket) => (
-  name,
-  code,
-  fn
-) => {
+export const join: SocketEvent<EventHandler> = (socket) => (name, code, fn) => {
   if (!roomExists(code)) return fn(errorMessage("Room does not exist"));
 
   const room = rooms[code];
@@ -60,7 +53,7 @@ export const joinEvent: SocketEvent<EventHandler> = (socket) => (
   fn(res);
   socket.to(code).emit("player-joined", name);
 };
-export const quitGameEvent: SocketEvent<QuitHandler> = (socket) => (
+export const quitGame: SocketEvent<QuitHandler> = (socket) => (
   code,
   name,
   isHost
@@ -83,7 +76,7 @@ export const quitGameEvent: SocketEvent<QuitHandler> = (socket) => (
   socket.to(code).emit("quit-game", broadcast);
 };
 
-export const quitLobbyEvent: SocketEvent<QuitHandler> = (socket) => (
+export const quitLobby: SocketEvent<QuitHandler> = (socket) => (
   code,
   name,
   isHost
@@ -103,7 +96,7 @@ export const quitLobbyEvent: SocketEvent<QuitHandler> = (socket) => (
   socket.to(code).emit("quit-lobby", broadcast);
 };
 
-export const customCardEvent: EventHandler = (code, question, fn) => {
+export const customCard: EventHandler = (code, question, fn) => {
   if (!roomExists(code)) return;
 
   const room = rooms[code];
@@ -114,7 +107,7 @@ export const customCardEvent: EventHandler = (code, question, fn) => {
   fn({ ok: true, message: "Added anonymous custom card" });
 };
 
-export const nextCardEvent: SocketEvent<AnonEventHandler> = (socket) => (
+export const nextCard: SocketEvent<AnonEventHandler> = (socket) => (
   code,
   fn
 ) => {
@@ -131,7 +124,7 @@ export const nextCardEvent: SocketEvent<AnonEventHandler> = (socket) => (
   socket.to(code).emit("next-card", res);
 };
 
-export const settingEvent: SocketEvent<SettingHandler> = (socket) => (
+export const setting: SocketEvent<SettingHandler> = (socket) => (
   code,
   settings
 ) => {
@@ -141,7 +134,7 @@ export const settingEvent: SocketEvent<SettingHandler> = (socket) => (
   socket.to(code).emit("setting", settings);
 };
 
-export const startGameEvent: SocketEvent<AnonEventHandler> = (socket) => (
+export const startGame: SocketEvent<AnonEventHandler> = (socket) => (
   code,
   fn
 ) => {
