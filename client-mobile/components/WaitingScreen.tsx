@@ -6,6 +6,7 @@ import {
   FlatList,
   StyleSheet,
   Modal,
+  ListRenderItem,
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
@@ -24,13 +25,17 @@ interface WaitingScreenProps extends ScreenProps {
   route: Route<"Waiting", WaitingParams>;
 }
 
-const Item = ({ title }: { title: any }) => (
+const Item = ({ title }: { title: string }) => (
   <View>
     <Text style={styles.bigText}>{title}</Text>
   </View>
 );
 
-export function randCode() {
+const renderItem: ListRenderItem<string> = (child) => (
+  <Item title={child.item} />
+);
+
+function randCode() {
   return (Math.floor(Math.random() * 90000) + 10000).toString();
 }
 
@@ -56,7 +61,6 @@ export default function WaitingScreen({
 
   const startGameEvent = () => startGameEventCallback(navigation, getParams());
 
-  const renderItem = ({ item }: { item: string }) => <Item title={item} />;
   useEffect(() => {
     socket.on("start-game", startGameEvent());
     socket.on("add-custom", () => {
@@ -109,7 +113,7 @@ export default function WaitingScreen({
           <FlatList
             data={users}
             renderItem={renderItem}
-            keyExtractor={(item) => randCode()}
+            keyExtractor={(_) => randCode()}
             extraData={users}
           />
         </View>
