@@ -10,6 +10,7 @@ import {
   SocketEvent,
   StartGameResponse,
 } from "../../types";
+import { Socket } from "socket.io";
 import Room from "./Room";
 
 const rooms: { [T: string]: Room } = {};
@@ -53,19 +54,28 @@ export const join: SocketEvent<EventHandler> = (socket) => (name, code, fn) => {
   fn(res);
   socket.to(code).emit("player-joined", name);
 };
-export const quitGame: SocketEvent<QuitHandler> = (socket) => (
-  code,
-  name,
-  isHost
-) => {
+
+const quitRoom = (socket: Socket, code: string): Room | undefined => {
   socket.leave(code);
   if (!roomExists(code)) return;
 
   const room = rooms[code];
 
-  room.removeUser(name);
-  if (room.isEmpty()) return removeRoom(code);
+  room.removeUser(socket.id);
+  if (room.isEmpty()) {
+    removeRoom(code);
+    return;
+  }
 
+  return room;
+};
+
+export const quitGame: SocketEvent<QuitHandler> = (socket) => (
+  code,
+  isHost
+) => {
+  const room = quitRoom(socket, code);
+  if (!room) return;
   const broadcast: QuitGameResponse = {
     playerQuit: socket.id,
     currentPlayer: room.getCurrentPlayer(),
@@ -78,15 +88,10 @@ export const quitGame: SocketEvent<QuitHandler> = (socket) => (
 
 export const quitLobby: SocketEvent<QuitHandler> = (socket) => (
   code,
-  name,
   isHost
 ) => {
-  socket.leave(code);
-
-  if (!roomExists(code)) return;
-  const room = rooms[code];
-  room.removeUser(name);
-  if (room.isEmpty()) return removeRoom(code);
+  const room = quitRoom(socket, code);
+  if (!room) return;
 
   const broadcast: QuitLobbyResponse = {
     newHost: room.getNewHost(isHost),
@@ -158,11 +163,6 @@ export const startGame: SocketEvent<AnonEventHandler> = (socket) => (
 export const disconnecting: SocketEvent<() => void> = (socket) => () => {
   const code = Array.from(socket.rooms)[1];
   if (!code) return;
-  const room = rooms[code];
-  if (room.gameStarted) {
-    // handle quitgame
-    socket.to(code).emit("quit-game");
-  } else {
-    // handle quitlobby
-  }
+  if (rooms[code].gameStarted) quitGame(socket)(code, true);
+  else quitLobby(socket)(code, true);
 };
