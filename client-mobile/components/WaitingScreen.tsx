@@ -55,7 +55,7 @@ export default function WaitingScreen({
 
   const renderItem = ({ item }: { item: string }) => <Item title={item} />;
   useEffect(() => {
-    socket.on("start-game", () => startGameEvent());
+    socket.on("start-game", startGameEvent());
     socket.on("add-custom", () => {
       navigation.navigate("Custom", getParams());
     });
