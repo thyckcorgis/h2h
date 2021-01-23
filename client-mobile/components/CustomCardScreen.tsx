@@ -1,9 +1,7 @@
-import { StackNavigationHelpers } from "@react-navigation/stack/lib/typescript/src/types";
-import * as React from "react";
+import React from "react";
 import {
   KeyboardAvoidingView,
   Text,
-  Button,
   TextInput,
   StyleSheet,
   TouchableOpacity,
@@ -11,10 +9,17 @@ import {
 import { useState } from "react";
 import socket from "../socket";
 import { StartButton, SubmitCardButton } from "../assets/images";
+import ScreenProps from "./ScreenProps";
+import { Route } from "@react-navigation/native";
 
-interface CustomCardScreenProps {
-  navigation: StackNavigationHelpers;
-  route: any;
+interface CustomCardParams {
+  code: string;
+  name: string;
+  isHost: boolean;
+}
+
+interface CustomCardScreenProps extends ScreenProps {
+  route: Route<"Custom", CustomCardParams>;
 }
 
 export default function CustomCardScreen({
@@ -32,7 +37,7 @@ export default function CustomCardScreen({
   };
 
   const startGameHandler = () => {
-    socket.emit("start-game", code, (data) => {
+    socket.emit("start-game", code, (data: any) => {
       navigation.navigate("Game", {
         code,
         name,

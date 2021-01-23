@@ -1,5 +1,4 @@
 import React from "react";
-import { StackNavigationHelpers } from "@react-navigation/stack/lib/typescript/src/types";
 import {
   View,
   Text,
@@ -12,10 +11,16 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import socket from "../socket";
 
 import { HostButton, JoinButton } from "../assets/images/";
+import ScreenProps from "./ScreenProps";
+import { Route } from "@react-navigation/native";
+import { Settings } from "../../types";
 
-interface HomeScreenProps {
-  navigation: StackNavigationHelpers;
-  route: any;
+interface HomeParams {
+  name: string;
+}
+
+interface HomeScreenProps extends ScreenProps {
+  route: Route<"Home", HomeParams>;
 }
 
 export default function HomeScreen({ navigation, route }: HomeScreenProps) {
@@ -23,6 +28,14 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
   const [joinErrorMessage, setJoinErrorMessage] = useState("");
   const [hostErrorMessage, setHostErrorMessage] = useState("");
   const { name } = route.params;
+
+  const settings: Settings = {
+    happy: true,
+    heavy: true,
+    toTheSpeaker: true,
+    selfReflection: true,
+    customCards: false,
+  };
 
   const hostGameHandler = () => {
     setJoinErrorMessage("");
@@ -40,11 +53,7 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
         code,
         users: [name],
         isHost: true,
-        happy: true,
-        heavy: true,
-        toTheSpeaker: true,
-        selfReflection: true,
-        customCards: false,
+        settings,
       });
     });
   };
@@ -72,7 +81,7 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
             code,
             users,
             isHost: false,
-            ...settings,
+            settings,
           });
         } else {
           navigation.navigate("Waiting", {
@@ -80,7 +89,7 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
             code,
             users,
             isHost: false,
-            ...settings,
+            settings,
           });
         }
       } else {

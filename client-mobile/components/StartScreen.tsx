@@ -1,18 +1,13 @@
 import React from "react";
-import { View, Text, Image, StyleSheet, Dimensions } from "react-native";
+import { View, Text, StyleSheet, Dimensions } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { StackNavigationHelpers } from "@react-navigation/stack/lib/typescript/src/types";
 
 import { H2HLogo, CorgiLogo } from "../assets/images/";
+import ScreenProps from "./ScreenProps";
 
 const screenWidth = Dimensions.get("window").width;
-// const screenHeight = Dimensions.get("window").height;
 
-interface StartScreenProps {
-  navigation: StackNavigationHelpers;
-}
-
-export default function LoadingScreen({ navigation }: StartScreenProps) {
+export default function LoadingScreen({ navigation }: ScreenProps) {
   return (
     <View style={styles.screen}>
       <TouchableOpacity onPress={() => navigation.navigate("Register")}>

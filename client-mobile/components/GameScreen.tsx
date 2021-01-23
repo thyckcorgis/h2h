@@ -1,5 +1,5 @@
+import { Route } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
-import { StackNavigationHelpers } from "@react-navigation/stack/lib/typescript/src/types";
 import {
   View,
   SafeAreaView,
@@ -19,9 +19,13 @@ import {
 } from "../assets/images/";
 
 import socket from "../socket";
-interface GameScreenProps {
-  navigation: StackNavigationHelpers;
-  route: any;
+import ScreenProps from "./ScreenProps";
+
+import { NextCardResponse } from "../../types";
+import { GameParams } from "./params";
+
+interface GameScreenProps extends ScreenProps {
+  route: Route<"Game", GameParams>;
 }
 
 const isTurn = (name: string, current: string) => name === current;
@@ -36,27 +40,26 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
   const {
     code,
     name,
-    current: _current,
-    card: _card,
+    currentPlayer: _current,
+    currentCard: _card,
     users: _users,
     isHost: _isHost,
   } = route.params;
-  const [card, setCard] = useState(_card);
-  const [current, setCurrent] = useState(_current);
+  const [currentCard, setCurrentCard] = useState(_card);
+  const [currentPlayer, setCurrentPlayer] = useState(_current);
   const [users, setUsers] = useState(_users);
   const [isHost, setHost] = useState(_isHost);
   const [message, setMessage] = useState("");
 
   const renderItem = ({ item }: { item: any }) => <Item title={item} />;
 
-  const updateCurrent = (data: any) => {
-    const { current, card } = data;
-    setCard(card);
-    setCurrent(current);
+  const updateCurrent = ({ currentPlayer, currentCard }: NextCardResponse) => {
+    setCurrentCard(currentCard);
+    setCurrentPlayer(currentPlayer);
   };
 
   useEffect(() => {
-    socket.on("player-joined", (name) => {
+    socket.on("player-joined", (name: string) => {
       setMessage(`${name} has joined the game.`);
       setTimeout(() => {
         setMessage("");
@@ -89,7 +92,7 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
   const [usersVisible, setUsersVisible] = useState(false);
 
   const nextButton =
-    isTurn(name, current) && card != null ? (
+    isTurn(name, currentPlayer) && currentCard != null ? (
       <TouchableOpacity onPress={nextCardHandler}>
         <NextButton height={85} />
       </TouchableOpacity>
@@ -104,15 +107,15 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
         <Text style={styles.codeText}>Room code: {code}</Text>
         <Text style={styles.bigText}>{name}</Text>
         <Text style={styles.smallText}>
-          {card != null
-            ? isTurn(name, current)
+          {currentCard != null
+            ? isTurn(name, currentPlayer)
               ? "It is your turn. Ask the group the question below."
-              : `It is ${current}'s turn.`
+              : `It is ${currentPlayer}'s turn.`
             : "You ran out of cards. Try different categories to access new cards."}
         </Text>
         <View style={styles.cardContainer}>
-          {isTurn(name, current) ? (
-            <Text style={styles.bigText}>{card}</Text>
+          {isTurn(name, currentPlayer) ? (
+            <Text style={styles.bigText}>{currentCard}</Text>
           ) : (
             <CardBack height={"95%"} width={"100%"} />
           )}

@@ -1,5 +1,4 @@
 import React from "react";
-import { StackNavigationHelpers } from "@react-navigation/stack/lib/typescript/src/types";
 import {
   View,
   Text,
@@ -11,16 +10,14 @@ import {
   SafeAreaView,
 } from "react-native";
 import { useState } from "react";
+
+import ScreenProps from "./ScreenProps";
 import Mission from "./Mission";
 import Features from "./Features";
 
 import { RegisterButton, HelpButton, MissionButton } from "../assets/images/";
 
-interface RegisterScreenProps {
-  navigation: StackNavigationHelpers;
-}
-
-export default function RegisterScreen({ navigation }: RegisterScreenProps) {
+export default function RegisterScreen({ navigation }: ScreenProps) {
   const [name, setName] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 

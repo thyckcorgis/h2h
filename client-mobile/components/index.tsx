@@ -5,4 +5,3 @@ export { default as RegisterScreen } from "./RegisterScreen";
 export { default as StartScreen } from "./StartScreen";
 export { default as WaitingScreen } from "./WaitingScreen";
 export { default as CustomCardScreen } from "./CustomCardScreen";
-

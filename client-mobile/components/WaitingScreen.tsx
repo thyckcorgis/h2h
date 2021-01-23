@@ -1,4 +1,3 @@
-import { StackNavigationHelpers } from "@react-navigation/stack/lib/typescript/src/types";
 import React, { useState, useEffect } from "react";
 import {
   SafeAreaView,
@@ -8,18 +7,21 @@ import {
   StyleSheet,
   Modal,
   Alert,
-  Button,
 } from "react-native";
-import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
-import CheckBox from "./Checkbox";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 import socket from "../socket";
 
 import { SettingsButton, StartButton, QuitButton } from "../assets/images/";
+import ScreenProps from "./ScreenProps";
+import { Route } from "@react-navigation/native";
 
-interface WaitingScreenProps {
-  navigation: StackNavigationHelpers;
-  route: any;
+import { QuitLobbyResponse, Settings, StartGameResponse } from "../../types";
+import SettingsModal from "./SettingsModal";
+import { GameParams, WaitingParams } from "./params";
+
+interface WaitingScreenProps extends ScreenProps {
+  route: Route<"Waiting", WaitingParams>;
 }
 
 const Item = ({ title }: { title: any }) => (
@@ -37,37 +39,28 @@ export default function WaitingScreen({
     code,
     users: _users,
     isHost: _isHost,
-    happy: _happy,
-    heavy: _heavy,
-    toTheSpeaker: _toTheSpeaker,
-    selfReflection: _selfReflection,
-    customCards: _customCards,
+    settings: _settings,
   } = route.params;
   const [modalVisible, setModalVisible] = useState(false);
-  const [happy, setHappy] = useState(_happy);
-  const [heavy, setHeavy] = useState(_heavy);
-  const [toTheSpeaker, setToTheSpeaker] = useState(_toTheSpeaker);
-  const [selfReflection, setSelfReflection] = useState(_selfReflection);
-  const [customCards, setCustomCards] = useState(_customCards);
-  const [message, setMessage] = useState("");
+
+  const [settings, setSettings] = useState(_settings);
 
   const [users, setUsers] = useState(_users);
   const [isHost, setHost] = useState(_isHost);
 
-  const renderItem = ({ item }: { item: any }) => <Item title={item} />;
+  const startGameEvent = (res: StartGameResponse) => {
+    const params: GameParams = {
+      code,
+      name,
+      isHost,
+      ...res,
+    };
+    navigation.navigate("Game", params);
+  };
+
+  const renderItem = ({ item }: { item: string }) => <Item title={item} />;
   useEffect(() => {
-    socket.on("start-game", (data: any) => {
-      const { ok, current, card, users } = data;
-      if (ok)
-        navigation.navigate("Game", {
-          code,
-          current,
-          card,
-          name,
-          users,
-          isHost,
-        });
-    });
+    socket.on("start-game", startGameEvent);
     socket.on("add-custom", () => {
       navigation.navigate("Custom", {
         code,
@@ -75,58 +68,25 @@ export default function WaitingScreen({
         isHost,
       });
     });
-    socket.on("quit-lobby", (data: any) => {
-      const { newHost, users } = data;
+    socket.on("quit-lobby", ({ newHost, users }: QuitLobbyResponse) => {
       setUsers(users);
       setHost(newHost === "" ? isHost : name === newHost);
     });
-    if (!isHost) {
-      socket.on("setting", (settings) => {
-        const {
-          happy,
-          heavy,
-          selfReflection,
-          toTheSpeaker,
-          customCards,
-        } = settings;
-        setHappy(happy);
-        setHeavy(heavy);
-        setSelfReflection(selfReflection);
-        setToTheSpeaker(toTheSpeaker);
-        setCustomCards(customCards);
-      });
-    }
-    socket.on("player-joined", (name) => {
+
+    socket.on("setting", (settings: Settings) => setSettings(settings));
+
+    socket.on("player-joined", (name: string) => {
       setUsers((users: string[]) => [...users, name]);
     });
   }, [isHost]);
 
   useEffect(() => {
-    if (isHost) {
-      socket.emit("setting", code, {
-        happy,
-        heavy,
-        selfReflection,
-        toTheSpeaker,
-        customCards,
-      });
-    }
-  }, [happy, heavy, selfReflection, toTheSpeaker, isHost, customCards]);
+    if (isHost) socket.emit("setting", code, settings);
+  }, [settings]);
 
   const startGameHandler = () => {
-    if (!customCards) {
-      socket.emit("start-game", code, (data: any) => {
-        const { current, card, users } = data;
-
-        navigation.navigate("Game", {
-          code,
-          current,
-          card,
-          name,
-          users,
-          isHost,
-        });
-      });
+    if (!settings.customCards) {
+      socket.emit("start-game", code, startGameEvent);
     } else {
       socket.emit("add-custom", code);
       navigation.navigate("Custom", {
@@ -140,11 +100,6 @@ export default function WaitingScreen({
   const quitLobbyHandler = () => {
     socket.emit("quit-lobby", code, name, isHost);
     navigation.navigate("Home", { name });
-  };
-
-  const toggle = (fn) => {
-    console.log("oopo");
-    return (newVal) => fn(newVal);
   };
 
   const start = isHost ? (
@@ -179,49 +134,11 @@ export default function WaitingScreen({
           <View style={styles.modalContainer}>
             <View style={styles.modalView}>
               <Text style={styles.bigText}>Game Settings</Text>
-              <ScrollView>
-                <View style={styles.filterContainer}>
-                  <Text style={styles.smallText}>Happy</Text>
-                  <CheckBox
-                    disabled={!isHost}
-                    value={happy}
-                    onValueChange={toggle(setHappy)}
-                  />
-                </View>
-                <View style={styles.filterContainer}>
-                  <Text style={styles.smallText}>Self-reflection</Text>
-                  <CheckBox
-                    disabled={!isHost}
-                    value={selfReflection}
-                    onValueChange={toggle(setSelfReflection)}
-                  />
-                </View>
-                <View style={styles.filterContainer}>
-                  <Text style={styles.smallText}>Heavy</Text>
-                  <CheckBox
-                    disabled={!isHost}
-                    value={heavy}
-                    onValueChange={toggle(setHeavy)}
-                  />
-                </View>
-                <View style={styles.filterContainer}>
-                  <Text style={styles.smallText}>To the Speaker</Text>
-                  <CheckBox
-                    disabled={!isHost}
-                    value={toTheSpeaker}
-                    onValueChange={toggle(setToTheSpeaker)}
-                  />
-                </View>
-
-                <View style={styles.filterContainer}>
-                  <Text style={styles.smallText}>Custom Cards</Text>
-                  <CheckBox
-                    disabled={!isHost}
-                    value={customCards}
-                    onValueChange={toggle(setCustomCards)}
-                  />
-                </View>
-              </ScrollView>
+              <SettingsModal
+                isHost={isHost}
+                settings={settings}
+                onChangeSettings={setSettings}
+              />
               <TouchableOpacity
                 onPress={() => {
                   setModalVisible(!modalVisible);
@@ -233,10 +150,6 @@ export default function WaitingScreen({
                   </Text>
                 </View>
               </TouchableOpacity>
-
-              <Text style={{ ...styles.smallText, color: "white" }}>
-                {message}
-              </Text>
             </View>
           </View>
         </Modal>

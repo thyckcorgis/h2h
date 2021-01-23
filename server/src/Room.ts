@@ -1,13 +1,6 @@
 import categories from "./categories.json";
 import { shuffleArray } from "./helpers";
-
-interface Settings {
-  happy: boolean;
-  heavy: boolean;
-  toTheSpeaker: boolean;
-  selfReflection: boolean;
-  customCards: boolean;
-}
+import { Settings } from "../../types/";
 
 export default class Room {
   users: string[];
