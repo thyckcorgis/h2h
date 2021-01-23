@@ -89,7 +89,7 @@ export default function LobbyScreen({ navigation, route }: LobbyScreenProps) {
   };
 
   const quitLobbyHandler = () => {
-    socket.emit("quit-lobby", code, name, isHost);
+    socket.emit("quit-lobby", code, isHost);
     navigation.navigate("Home", { name });
   };
 

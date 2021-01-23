@@ -97,7 +97,7 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
   };
 
   const quitGameHandler = () => {
-    socket.emit("quit-game", code, name, isHost);
+    socket.emit("quit-game", code, isHost);
     navigation.navigate("Home", { name });
   };
 
