@@ -12,11 +12,7 @@ import { StartButton, SubmitCardButton } from "../assets/images";
 import ScreenProps from "./ScreenProps";
 import { Route } from "@react-navigation/native";
 
-interface CustomCardParams {
-  code: string;
-  name: string;
-  isHost: boolean;
-}
+import { CustomCardParams } from "./params";
 
 interface CustomCardScreenProps extends ScreenProps {
   route: Route<"Custom", CustomCardParams>;
