@@ -39,45 +39,45 @@ export default function SettingsModal({
     <>
       <ScrollView>
         <View style={styles.filterContainer}>
-          <Text style={styles.smallText}>Happy</Text>
           <CheckBox
             disabled={!isHost}
             value={happy}
             onValueChange={toggle(setHappy)}
           />
+          <Text style={styles.smallText}>Happy</Text>
         </View>
         <View style={styles.filterContainer}>
-          <Text style={styles.smallText}>Self-reflection</Text>
           <CheckBox
             disabled={!isHost}
             value={selfReflection}
             onValueChange={toggle(setSelfReflection)}
           />
+          <Text style={styles.smallText}>Self-reflection</Text>
         </View>
         <View style={styles.filterContainer}>
-          <Text style={styles.smallText}>Heavy</Text>
           <CheckBox
             disabled={!isHost}
             value={heavy}
             onValueChange={toggle(setHeavy)}
           />
+          <Text style={styles.smallText}>Heavy</Text>
         </View>
         <View style={styles.filterContainer}>
-          <Text style={styles.smallText}>To the Speaker</Text>
           <CheckBox
             disabled={!isHost}
             value={toTheSpeaker}
             onValueChange={toggle(setToTheSpeaker)}
           />
+          <Text style={styles.smallText}>To the Speaker</Text>
         </View>
 
         <View style={styles.filterContainer}>
-          <Text style={styles.smallText}>Custom Cards</Text>
           <CheckBox
             disabled={!isHost}
             value={customCards}
             onValueChange={toggle(setCustomCards)}
           />
+          <Text style={styles.smallText}>Custom Cards</Text>
         </View>
       </ScrollView>
     </>
