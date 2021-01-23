@@ -26,10 +26,12 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
 
   const hostGameHandler = () => {
     setJoinErrorMessage("");
-    if (!socket.connected)
-      return setHostErrorMessage(
+    if (!socket.connected) {
+      setHostErrorMessage(
         "Oh noes!! The sewvew is down :( We are so sooo sowwy. Pwetty pwease cum back watew"
       );
+      return socket.connect();
+    }
 
     setHostErrorMessage("");
     socket.emit("create", name, (code: number) => {
@@ -49,10 +51,12 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
 
   const joinGameHandler = () => {
     setHostErrorMessage("");
-    if (!socket.connected)
-      return setJoinErrorMessage(
+    if (!socket.connected) {
+      setJoinErrorMessage(
         "Oh noes!! The sewvew is down :( We are so sooo sowwy. Pwetty pwease cum back later"
       );
+      return socket.connect();
+    }
 
     if (code.length !== 5)
       return setJoinErrorMessage("Please enter a valid 5-digit code.");
