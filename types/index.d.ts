@@ -1,3 +1,8 @@
+export interface User {
+  name: string;
+  socketID: string;
+}
+
 export {
   AnonEventHandler,
   EventHandler,
