@@ -50,7 +50,7 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
   const renderItem = ({ item }: { item: any }) => <Item title={item} />;
   const Item = ({ title }: { title: any }) => (
     <View>
-      <Text style={{ ...styles.smallText, color: currentPlayer == name ? "red" : "white" }}>{title}</Text>
+      <Text style={{ ...styles.smallText, color: currentPlayer == title ? "red" : "white" }}>{title}</Text>
     </View>
   );
 
