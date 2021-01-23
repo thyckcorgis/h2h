@@ -30,6 +30,10 @@ const Item = ({ title }: { title: any }) => (
   </View>
 );
 
+export function randCode() {
+  return (Math.floor(Math.random() * 90000) + 10000).toString();
+}
+
 export default function WaitingScreen({
   navigation,
   route,
@@ -105,7 +109,7 @@ export default function WaitingScreen({
           <FlatList
             data={users}
             renderItem={renderItem}
-            keyExtractor={(item) => item}
+            keyExtractor={(item) => randCode()}
             extraData={users}
           />
         </View>
