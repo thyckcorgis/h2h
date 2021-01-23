@@ -18,16 +18,16 @@ const removeRoom = (code: string) => {
   delete rooms[code];
 };
 
-function createRoom(name: string) {
+function createRoom(name: string, socketID: string) {
   let code = randCode();
   while (roomExists(code)) code = randCode();
 
-  rooms[code] = new Room(name);
+  rooms[code] = new Room(name, socketID);
   return code;
 }
 
 export const create: SocketEvent<AnonEventHandler> = (socket) => (name, fn) => {
-  const code = createRoom(name);
+  const code = createRoom(name, socket.id);
   socket.join(code);
   fn(code);
 };
@@ -39,7 +39,7 @@ export const join: SocketEvent<EventHandler> = (socket) => (name, code, fn) => {
 
   if (room.userExists(name)) return fn(errorMessage("Name is already taken"));
 
-  room.addUser(name);
+  room.addUser(name, socket.id);
   socket.join(code);
   const res: JoinServerResponse = {
     ok: true,
@@ -153,4 +153,16 @@ export const startGame: SocketEvent<AnonEventHandler> = (socket) => (
 
   fn(res);
   socket.to(code).emit("start-game", res);
+};
+
+export const disconnecting: SocketEvent<() => void> = (socket) => () => {
+  const code = Array.from(socket.rooms)[1];
+  if (!code) return;
+  const room = rooms[code];
+  if (room.gameStarted) {
+    // handle quitgame
+    socket.to(code).emit("quit-game");
+  } else {
+    // handle quitlobby
+  }
 };
