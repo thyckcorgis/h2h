@@ -49,6 +49,7 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
   const [users, setUsers] = useState(_users);
   const [isHost, setHost] = useState(_isHost);
   const [message, setMessage] = useState("");
+  const [ripe, setRipe] = useState(true);
 
   const renderItem = ({ item }: { item: any }) => <Item title={item} />;
 
@@ -60,6 +61,7 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
   useEffect(() => {
     socket.on("player-joined", (name: string) => {
       setMessage(`${name} has joined the game.`);
+      setRipe(false);
       setTimeout(() => {
         setMessage("");
       }, 3000);
@@ -73,6 +75,7 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
       setHost(newHost === "" ? isHost : name === newHost);
       updateCurrent(data);
       setMessage(`${playerQuit} has quit the game.`);
+      setRipe(true);
       setTimeout(() => {
         setMessage("");
       }, 3000);
@@ -102,7 +105,9 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
   return (
     <SafeAreaView style={styles.screen}>
       <View style={styles.screen}>
-        <Text style={{ ...styles.smallText, color: "red" }}>{message}</Text>
+        <Text style={{ ...styles.smallText, color: ripe ? "red" : "green" }}>
+          {message}
+        </Text>
         <Text style={styles.codeText}>Room code: {code}</Text>
         <Text style={styles.bigText}>{name}</Text>
         <Text style={styles.smallText}>
