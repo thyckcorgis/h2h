@@ -117,7 +117,11 @@ export default function WaitingScreen({
             extraData={users}
           />
         </View>
-        <Modal animationType="slide" transparent={true} visible={modalVisible}>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={settingsVisible}
+        >
           <View style={styles.modalContainer}>
             <View style={styles.modalView}>
               <Text style={styles.bigText}>Game Settings</Text>
@@ -128,7 +132,7 @@ export default function WaitingScreen({
               />
               <TouchableOpacity
                 onPress={() => {
-                  setModalVisible(!modalVisible);
+                  setModalVisible(!settingsVisible);
                 }}
               >
                 <View style={styles.closeContainer}>
