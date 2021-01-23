@@ -141,7 +141,14 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
           )}
         </View>
 
-        <Modal animationType="slide" transparent={true} visible={usersVisible}>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={usersVisible}
+          onRequestClose={() => {
+            setUsersVisible(!usersVisible);
+          }}
+        >
           <View style={styles.modalContainer}>
             <View style={styles.modalView}>
               <Text style={styles.bigText}>Who's in the room?</Text>

@@ -37,7 +37,7 @@ export default function SettingsModal({
 
   return (
     <>
-      <ScrollView>
+      <ScrollView style={styles.container}>
         <View style={styles.filterContainer}>
           <CheckBox
             disabled={!isHost}
@@ -46,6 +46,7 @@ export default function SettingsModal({
           />
           <Text style={styles.smallText}>Happy</Text>
         </View>
+
         <View style={styles.filterContainer}>
           <CheckBox
             disabled={!isHost}
@@ -54,6 +55,7 @@ export default function SettingsModal({
           />
           <Text style={styles.smallText}>Self-reflection</Text>
         </View>
+
         <View style={styles.filterContainer}>
           <CheckBox
             disabled={!isHost}
@@ -62,6 +64,7 @@ export default function SettingsModal({
           />
           <Text style={styles.smallText}>Heavy</Text>
         </View>
+
         <View style={styles.filterContainer}>
           <CheckBox
             disabled={!isHost}
@@ -79,20 +82,46 @@ export default function SettingsModal({
           />
           <Text style={styles.smallText}>Custom Cards</Text>
         </View>
+        {/* Added random placeholders yeet lmao */}
+        <View style={styles.filterContainer}>
+          <Text style={styles.smallText}>Random stuff</Text>
+        </View>
+        <View style={styles.filterContainer}>
+          <Text style={styles.smallText}>Random stuff</Text>
+        </View>
+        <View style={styles.filterContainer}>
+          <Text style={styles.smallText}>Random stuff</Text>
+        </View>
+        <View style={styles.filterContainer}>
+          <Text style={styles.smallText}>Random stuff</Text>
+        </View>
+        <View style={styles.filterContainer}>
+          <Text style={styles.smallText}>Random stuff</Text>
+        </View>
+        <View style={styles.filterContainer}>
+          <Text style={styles.smallText}>Random stuff</Text>
+        </View>
       </ScrollView>
     </>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    width: "70%",
+    height: "90%",
+    margin: "5%",
+  },
   filterContainer: {
     flexDirection: "row",
-    marginVertical: 5,
+    marginVertical: "3%",
+    alignItems: "center",
   },
   smallText: {
     fontSize: 18,
     color: "white",
-    textAlign: "center",
     fontFamily: "Avenir-Light",
+    textAlignVertical: "center",
+    flexShrink: 1,
   },
 });

@@ -50,7 +50,7 @@ export default function WaitingScreen({
     isHost: _isHost,
     settings: _settings,
   } = route.params;
-  const [modalVisible, setModalVisible] = useState(false);
+  const [settingsVisible, setSettingsVisible] = useState(false);
 
   const [settings, setSettings] = useState(_settings);
 
@@ -121,6 +121,9 @@ export default function WaitingScreen({
           animationType="slide"
           transparent={true}
           visible={settingsVisible}
+          onRequestClose={() => {
+            setSettingsVisible(!settingsVisible);
+          }}
         >
           <View style={styles.modalContainer}>
             <View style={styles.modalView}>
@@ -132,7 +135,7 @@ export default function WaitingScreen({
               />
               <TouchableOpacity
                 onPress={() => {
-                  setModalVisible(!settingsVisible);
+                  setSettingsVisible(!settingsVisible);
                 }}
               >
                 <View style={styles.closeContainer}>
@@ -147,7 +150,7 @@ export default function WaitingScreen({
         {/* <View style={styles.navBar}> */}
         <TouchableOpacity
           onPress={() => {
-            setModalVisible(true);
+            setSettingsVisible(true);
           }}
         >
           <SettingsButton width={250} />
