@@ -88,7 +88,7 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
 
   const [modalVisible, setModalVisible] = useState(false);
 
-  const nextButton = isTurn(name, current) ? (
+  const nextButton = ( isTurn(name, current) && card != null ) ? (
     <TouchableOpacity onPress={nextCardHandler}>
       <NextButton height={85} />
     </TouchableOpacity>
