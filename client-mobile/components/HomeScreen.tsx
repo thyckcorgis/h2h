@@ -13,7 +13,8 @@ import socket from "../socket";
 import { HostButton, JoinButton } from "../assets/images/";
 import ScreenProps from "./ScreenProps";
 import { Route } from "@react-navigation/native";
-import { Settings } from "../../types";
+import { JoinServerResponse, Settings } from "../../types";
+import { GameParams, WaitingParams } from "./params";
 
 interface HomeParams {
   name: string;
@@ -72,30 +73,45 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
 
     setJoinErrorMessage("");
 
-    socket.emit("join", name, code, (data: any) => {
-      const { ok, users, gameStarted, message, settings } = data;
-      if (ok) {
-        if (gameStarted) {
-          navigation.navigate("Game", {
-            name,
-            code,
-            users,
-            isHost: false,
-            settings,
-          });
+    socket.emit(
+      "join",
+      name,
+      code,
+      ({
+        ok,
+        users,
+        message,
+        settings,
+        gameStarted,
+        currentCard,
+        currentPlayer,
+      }: JoinServerResponse) => {
+        if (ok) {
+          if (gameStarted) {
+            const params: GameParams = {
+              name,
+              code,
+              users,
+              isHost: false,
+              currentPlayer,
+              currentCard,
+            };
+            navigation.navigate("Game", params);
+          } else {
+            const params: WaitingParams = {
+              name,
+              code,
+              users,
+              isHost: false,
+              settings,
+            };
+            navigation.navigate("Waiting", params);
+          }
         } else {
-          navigation.navigate("Waiting", {
-            name,
-            code,
-            users,
-            isHost: false,
-            settings,
-          });
+          setJoinErrorMessage(message);
         }
-      } else {
-        setJoinErrorMessage(message);
       }
-    });
+    );
   };
 
   return (
