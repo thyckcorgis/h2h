@@ -61,10 +61,7 @@ export default function CustomCardScreen({
         onChangeText={(text) => setQuestion(text)}
         value={question}
       />
-      <TouchableOpacity
-        style={{ margin: 10, marginTop: 20 }}
-        onPress={submitCardHandler}
-      >
+      <TouchableOpacity style={{ margin: "5%" }} onPress={submitCardHandler}>
         <SubmitCardButton width={250} />
       </TouchableOpacity>
       {start}
@@ -74,17 +71,18 @@ export default function CustomCardScreen({
 
 const styles = StyleSheet.create({
   screen: {
-    padding: 50,
+    padding: "5%",
     alignItems: "center",
     justifyContent: "center",
     flex: 1,
     backgroundColor: "black",
+    height: "100%",
+    width: "100%",
   },
   inputField: {
-    padding: 5,
-    marginTop: 10,
-    // marginBottom: 20,
-    width: 250,
+    padding: "2%",
+    paddingTop: "5%",
+    width: "70%",
     textAlign: "left",
     alignSelf: "center",
     borderBottomWidth: 1,

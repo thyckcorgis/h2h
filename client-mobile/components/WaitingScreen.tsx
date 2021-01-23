@@ -10,7 +10,7 @@ import {
   Alert,
   Button,
 } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import CheckBox from "./Checkbox";
 
 import socket from "../socket";
@@ -158,7 +158,7 @@ export default function WaitingScreen({
       <View style={{ flex: 1 }}>
         <Text style={styles.codeText}>Room Code: {code}</Text>
       </View>
-      <View style={{ flex: 4, alignItems: "center" }}>
+      <View style={{ ...styles.screen, flex: 4 }}>
         <Text style={styles.bigText}>Who's in the room?</Text>
         <View style={styles.listContainer}>
           <FlatList
@@ -179,57 +179,60 @@ export default function WaitingScreen({
           <View style={styles.modalContainer}>
             <View style={styles.modalView}>
               <Text style={styles.bigText}>Game Settings</Text>
+              <ScrollView>
+                <View style={styles.filterContainer}>
+                  <Text style={styles.smallText}>Happy</Text>
+                  <CheckBox
+                    disabled={!isHost}
+                    value={happy}
+                    onValueChange={toggle(setHappy)}
+                  />
+                </View>
+                <View style={styles.filterContainer}>
+                  <Text style={styles.smallText}>Self-reflection</Text>
+                  <CheckBox
+                    disabled={!isHost}
+                    value={selfReflection}
+                    onValueChange={toggle(setSelfReflection)}
+                  />
+                </View>
+                <View style={styles.filterContainer}>
+                  <Text style={styles.smallText}>Heavy</Text>
+                  <CheckBox
+                    disabled={!isHost}
+                    value={heavy}
+                    onValueChange={toggle(setHeavy)}
+                  />
+                </View>
+                <View style={styles.filterContainer}>
+                  <Text style={styles.smallText}>To the Speaker</Text>
+                  <CheckBox
+                    disabled={!isHost}
+                    value={toTheSpeaker}
+                    onValueChange={toggle(setToTheSpeaker)}
+                  />
+                </View>
 
-              <View style={styles.filterContainer}>
-                <Text style={styles.smallText}>Happy</Text>
-                <CheckBox
-                  disabled={!isHost}
-                  value={happy}
-                  onValueChange={toggle(setHappy)}
-                />
-              </View>
-              <View style={styles.filterContainer}>
-                <Text style={styles.smallText}>Self-reflection</Text>
-                <CheckBox
-                  disabled={!isHost}
-                  value={selfReflection}
-                  onValueChange={toggle(setSelfReflection)}
-                />
-              </View>
-              <View style={styles.filterContainer}>
-                <Text style={styles.smallText}>Heavy</Text>
-                <CheckBox
-                  disabled={!isHost}
-                  value={heavy}
-                  onValueChange={toggle(setHeavy)}
-                />
-              </View>
-              <View style={styles.filterContainer}>
-                <Text style={styles.smallText}>To the Speaker</Text>
-                <CheckBox
-                  disabled={!isHost}
-                  value={toTheSpeaker}
-                  onValueChange={toggle(setToTheSpeaker)}
-                />
-              </View>
-
-              <View style={styles.filterContainer}>
-                <Text style={styles.smallText}>Custom Cards</Text>
-                <CheckBox
-                  disabled={!isHost}
-                  value={customCards}
-                  onValueChange={toggle(setCustomCards)}
-                />
-              </View>
-              <View style={styles.closeContainer}>
-                <TouchableOpacity
-                  onPress={() => {
-                    setModalVisible(!modalVisible);
-                  }}
-                >
-                  <Text style={styles.smallText}>Close</Text>
-                </TouchableOpacity>
-              </View>
+                <View style={styles.filterContainer}>
+                  <Text style={styles.smallText}>Custom Cards</Text>
+                  <CheckBox
+                    disabled={!isHost}
+                    value={customCards}
+                    onValueChange={toggle(setCustomCards)}
+                  />
+                </View>
+              </ScrollView>
+              <TouchableOpacity
+                onPress={() => {
+                  setModalVisible(!modalVisible);
+                }}
+              >
+                <View style={styles.closeContainer}>
+                  <Text style={{ ...styles.smallText, padding: "5%" }}>
+                    Close
+                  </Text>
+                </View>
+              </TouchableOpacity>
 
               <Text style={{ ...styles.smallText, color: "white" }}>
                 {message}
@@ -259,16 +262,18 @@ export default function WaitingScreen({
 
 const styles = StyleSheet.create({
   screen: {
-    padding: 50,
+    padding: "5%",
     alignItems: "center",
     justifyContent: "center",
     flex: 1,
     backgroundColor: "black",
+    height: "100%",
+    width: "100%",
   },
   codeText: {
     fontSize: 30,
     color: "#892cdc",
-    paddingTop: 30,
+    paddingTop: "10%",
     fontFamily: "Avenir-Light",
   },
   bigText: {
@@ -281,30 +286,22 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "white",
     borderRadius: 20,
-    width: 250,
-    height: 300,
-    margin: 10,
-    padding: 10,
+    width: "70%",
+    height: "50%",
+    margin: "5%",
+    padding: "4%",
     alignItems: "center",
   },
   list: {
     color: "white",
   },
   buttonContainer: {
-    margin: 5,
+    margin: "3%",
     alignItems: "center",
   },
   filterContainer: {
     flexDirection: "row",
-    marginVertical: 5,
-  },
-  closeContainer: {
-    marginTop: 50,
-    justifyContent: "flex-end",
-    borderWidth: 1,
-    borderColor: "white",
-    borderRadius: 20,
-    paddingHorizontal: 10,
+    marginVertical: "5%",
   },
   smallText: {
     fontSize: 18,
@@ -320,25 +317,27 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    margin: 10,
-    padding: 20,
   },
   navBar: {
-    // flexDirection: "row",
     alignItems: "baseline",
     justifyContent: "center",
   },
   modalView: {
-    margin: 20,
     backgroundColor: "black",
     borderRadius: 20,
     borderWidth: 1,
     borderColor: "white",
-    padding: 20,
-    // justifyContent: "center",
-    height: 350,
-    width: 300,
+    paddingTop: "5%",
+    height: "60%",
+    width: "80%",
     opacity: 0.9,
+    alignItems: "center",
+  },
+  closeContainer: {
+    marginTop: "5%",
+    borderWidth: 1,
+    borderColor: "white",
+    borderRadius: 20,
     alignItems: "center",
   },
 });
