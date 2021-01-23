@@ -6,7 +6,6 @@ import {
   Text,
   StyleSheet,
   Modal,
-  Alert,
   FlatList,
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";

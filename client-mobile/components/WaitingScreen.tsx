@@ -6,7 +6,6 @@ import {
   FlatList,
   StyleSheet,
   Modal,
-  Alert,
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
@@ -110,14 +109,7 @@ export default function WaitingScreen({
             extraData={users}
           />
         </View>
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => {
-            Alert.alert("Modal has been closed.");
-          }}
-        >
+        <Modal animationType="slide" transparent={true} visible={modalVisible}>
           <View style={styles.modalContainer}>
             <View style={styles.modalView}>
               <Text style={styles.bigText}>Game Settings</Text>
