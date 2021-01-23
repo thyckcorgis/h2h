@@ -27,7 +27,7 @@ interface LobbyScreenProps extends ScreenProps {
 
 const Item = ({ title }: { title: string }) => (
   <View>
-    <Text style={styles.bigText}>{title}</Text>
+    <Text style={{ ...styles.bigText, paddingVertical: "1%" }}>{title}</Text>
   </View>
 );
 
@@ -47,7 +47,7 @@ export default function LobbyScreen({ navigation, route }: LobbyScreenProps) {
     isHost: _isHost,
     settings: _settings,
   } = route.params;
-  const [modalVisible, setModalVisible] = useState(false);
+  const [settingsVisible, setSettingsVisible] = useState(false);
 
   const [settings, setSettings] = useState(_settings);
 
@@ -114,7 +114,14 @@ export default function LobbyScreen({ navigation, route }: LobbyScreenProps) {
             extraData={users}
           />
         </View>
-        <Modal animationType="slide" transparent={true} visible={modalVisible}>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={settingsVisible}
+          onRequestClose={() => {
+            setSettingsVisible(!settingsVisible);
+          }}
+        >
           <View style={styles.modalContainer}>
             <View style={styles.modalView}>
               <Text style={styles.bigText}>Game Settings</Text>
@@ -125,7 +132,7 @@ export default function LobbyScreen({ navigation, route }: LobbyScreenProps) {
               />
               <TouchableOpacity
                 onPress={() => {
-                  setModalVisible(!modalVisible);
+                  setSettingsVisible(!settingsVisible);
                 }}
               >
                 <View style={styles.closeContainer}>
@@ -140,7 +147,7 @@ export default function LobbyScreen({ navigation, route }: LobbyScreenProps) {
         {/* <View style={styles.navBar}> */}
         <TouchableOpacity
           onPress={() => {
-            setModalVisible(true);
+            setSettingsVisible(true);
           }}
         >
           <SettingsButton width={250} />

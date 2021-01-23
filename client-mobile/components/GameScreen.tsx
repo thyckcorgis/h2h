@@ -56,6 +56,8 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
       <Text
         style={{
           ...styles.smallText,
+          fontSize: 24,
+          paddingVertical: "1%",
           color: currentPlayer == title ? "#892cdc" : "white",
         }}
       >
@@ -120,38 +122,56 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
         </Text>
         <Text style={styles.codeText}>Room code: {code}</Text>
         <Text style={styles.bigText}>{name}</Text>
-        <Text style={styles.smallText}>
-          {currentCard != null
-            ? isTurn(name, currentPlayer)
-              ? "It is your turn. Ask the group the question below."
-              : `It is ${currentPlayer}'s turn.`
-            : "You ran out of cards. Try different categories to access new cards."}
-        </Text>
         <View
-          style={
-            isTurn(name, currentPlayer)
-              ? styles.cardContainer
-              : styles.transparentCardContainer
-          }
+          style={{
+            width: "100%",
+            height: "10%",
+            marginVertical: "1%",
+          }}
         >
-          {isTurn(name, currentPlayer) ? (
-            <Text style={styles.bigText}>{currentCard}</Text>
-          ) : (
-            <CardBack height={"100%"} width={"100%"} />
-          )}
+          <Text style={styles.smallText}>
+            {currentCard != null
+              ? isTurn(name, currentPlayer)
+                ? "It is your turn. Ask the group the question below."
+                : `It is ${currentPlayer}'s turn.`
+              : "You ran out of cards. Try different categories to access new cards."}
+          </Text>
+        </View>
+        <View style={styles.cardScreen}>
+          <View
+            style={
+              isTurn(name, currentPlayer)
+                ? styles.cardContainer
+                : styles.transparentCardContainer
+            }
+          >
+            {isTurn(name, currentPlayer) ? (
+              <Text style={styles.bigText}>{currentCard}</Text>
+            ) : (
+              <CardBack width={"100%"} height={"100%"} />
+            )}
+          </View>
         </View>
 
-        <Modal animationType="slide" transparent={true} visible={usersVisible}>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={usersVisible}
+          onRequestClose={() => {
+            setUsersVisible(!usersVisible);
+          }}
+        >
           <View style={styles.modalContainer}>
             <View style={styles.modalView}>
               <Text style={styles.bigText}>Who's in the room?</Text>
-              <FlatList
-                data={users}
-                renderItem={renderItem}
-                keyExtractor={(item) => item}
-                extraData={users}
-              />
-
+              <View style={styles.listContainer}>
+                <FlatList
+                  data={users}
+                  renderItem={renderItem}
+                  keyExtractor={(item) => item}
+                  extraData={users}
+                />
+              </View>
               <TouchableOpacity
                 onPress={() => {
                   setUsersVisible(!usersVisible);
@@ -219,25 +239,34 @@ const styles = StyleSheet.create({
     borderColor: "white",
     borderRadius: 20,
   },
+  listContainer: {
+    flex: 1,
+    width: "80%",
+    marginVertical: "1%",
+  },
+  cardScreen: {
+    width: "60%",
+    height: "45%",
+  },
   cardContainer: {
-    width: "70%",
-    height: "50%",
+    flex: 1,
+    width: "100%",
+    height: "100%",
     backgroundColor: "#892cdc",
     borderRadius: 20,
     alignItems: "center",
     justifyContent: "center",
-    margin: "5%",
   },
   transparentCardContainer: {
-    width: "70%",
-    height: "50%",
+    width: "100%",
+    height: "100%",
     backgroundColor: "transparent",
     borderRadius: 20,
     alignItems: "center",
     justifyContent: "center",
-    margin: "5%",
   },
   navBar: {
+    marginTop: "10%",
     flexDirection: "row",
     alignItems: "flex-end",
     justifyContent: "space-between",

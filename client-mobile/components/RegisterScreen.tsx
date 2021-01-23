@@ -28,7 +28,7 @@ export default function RegisterScreen({ navigation }: ScreenProps) {
     if (name === "") {
       setErrorMessage("Please enter a name.");
       return;
-    }else {
+    } else {
       setErrorMessage(null);
     }
     navigation.navigate("Home", { name });
@@ -44,6 +44,9 @@ export default function RegisterScreen({ navigation }: ScreenProps) {
             animationType="slide"
             transparent={true}
             visible={featuresVisible}
+            onRequestClose={() => {
+              setFeaturesVisible(!featuresVisible);
+            }}
           >
             <View style={styles.modalContainer}>
               <View style={styles.modalView}>
@@ -70,6 +73,9 @@ export default function RegisterScreen({ navigation }: ScreenProps) {
             animationType="slide"
             transparent={true}
             visible={missionVisible}
+            onRequestClose={() => {
+              setMissionVisible(!missionVisible);
+            }}
           >
             <View style={styles.modalContainer}>
               <View style={styles.modalView}>
