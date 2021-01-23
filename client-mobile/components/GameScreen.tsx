@@ -113,11 +113,17 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
               : `It is ${currentPlayer}'s turn.`
             : "You ran out of cards. Try different categories to access new cards."}
         </Text>
-        <View style={isTurn(name, currentPlayer) ? styles.cardContainer : styles.transparentCardContainer}>
+        <View
+          style={
+            isTurn(name, currentPlayer)
+              ? styles.cardContainer
+              : styles.transparentCardContainer
+          }
+        >
           {isTurn(name, currentPlayer) ? (
             <Text style={styles.bigText}>{currentCard}</Text>
           ) : (
-            <CardBack height={"95%"} width={"100%"} />
+            <CardBack height={"100%"} width={"100%"} />
           )}
         </View>
 
