@@ -29,11 +29,7 @@ interface GameScreenProps extends ScreenProps {
 
 const isTurn = (name: string, current: string) => name === current;
 
-const Item = ({ title }: { title: any }) => (
-  <View>
-    <Text style={styles.smallText}>{title}</Text>
-  </View>
-);
+
 
 export default function GameScreen({ route, navigation }: GameScreenProps) {
   const {
@@ -52,6 +48,11 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
   const [ripe, setRipe] = useState(true);
 
   const renderItem = ({ item }: { item: any }) => <Item title={item} />;
+  const Item = ({ title }: { title: any }) => (
+    <View>
+      <Text style={{ ...styles.smallText, color: currentPlayer ? "red" : "white" }}>{title}</Text>
+    </View>
+  );
 
   const updateCurrent = ({ currentPlayer, currentCard }: NextCardResponse) => {
     setCurrentCard(currentCard);
