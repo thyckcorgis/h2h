@@ -12,11 +12,8 @@ import { StartButton, SubmitCardButton } from "../assets/images";
 import ScreenProps from "./ScreenProps";
 import { Route } from "@react-navigation/native";
 
-interface CustomCardParams {
-  code: string;
-  name: string;
-  isHost: boolean;
-}
+import { CustomCardParams } from "./params";
+import startGameEventCallback from "./startGame";
 
 interface CustomCardScreenProps extends ScreenProps {
   route: Route<"Custom", CustomCardParams>;
@@ -36,15 +33,11 @@ export default function CustomCardScreen({
     });
   };
 
+  const getParams = () => ({ code, name, isHost });
+  const startGameEvent = () => startGameEventCallback(navigation, getParams());
+
   const startGameHandler = () => {
-    socket.emit("start-game", code, (data: any) => {
-      navigation.navigate("Game", {
-        code,
-        name,
-        isHost,
-        ...data,
-      });
-    });
+    socket.emit("start-game", code, startGameEvent());
   };
 
   const start = isHost ? (
