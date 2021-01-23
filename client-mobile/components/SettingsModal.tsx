@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Text, View, StyleSheet } from "react-native";
+import { Text, View, StyleSheet, ScrollView } from "react-native";
 
 import { Settings } from "../../types";
 import CheckBox from "./Checkbox";
@@ -37,47 +37,49 @@ export default function SettingsModal({
 
   return (
     <>
-      <View style={styles.filterContainer}>
-        <Text style={styles.smallText}>Happy</Text>
-        <CheckBox
-          disabled={!isHost}
-          value={happy}
-          onValueChange={toggle(setHappy)}
-        />
-      </View>
-      <View style={styles.filterContainer}>
-        <Text style={styles.smallText}>Self-reflection</Text>
-        <CheckBox
-          disabled={!isHost}
-          value={selfReflection}
-          onValueChange={toggle(setSelfReflection)}
-        />
-      </View>
-      <View style={styles.filterContainer}>
-        <Text style={styles.smallText}>Heavy</Text>
-        <CheckBox
-          disabled={!isHost}
-          value={heavy}
-          onValueChange={toggle(setHeavy)}
-        />
-      </View>
-      <View style={styles.filterContainer}>
-        <Text style={styles.smallText}>To the Speaker</Text>
-        <CheckBox
-          disabled={!isHost}
-          value={toTheSpeaker}
-          onValueChange={toggle(setToTheSpeaker)}
-        />
-      </View>
+      <ScrollView>
+        <View style={styles.filterContainer}>
+          <Text style={styles.smallText}>Happy</Text>
+          <CheckBox
+            disabled={!isHost}
+            value={happy}
+            onValueChange={toggle(setHappy)}
+          />
+        </View>
+        <View style={styles.filterContainer}>
+          <Text style={styles.smallText}>Self-reflection</Text>
+          <CheckBox
+            disabled={!isHost}
+            value={selfReflection}
+            onValueChange={toggle(setSelfReflection)}
+          />
+        </View>
+        <View style={styles.filterContainer}>
+          <Text style={styles.smallText}>Heavy</Text>
+          <CheckBox
+            disabled={!isHost}
+            value={heavy}
+            onValueChange={toggle(setHeavy)}
+          />
+        </View>
+        <View style={styles.filterContainer}>
+          <Text style={styles.smallText}>To the Speaker</Text>
+          <CheckBox
+            disabled={!isHost}
+            value={toTheSpeaker}
+            onValueChange={toggle(setToTheSpeaker)}
+          />
+        </View>
 
-      <View style={styles.filterContainer}>
-        <Text style={styles.smallText}>Custom Cards</Text>
-        <CheckBox
-          disabled={!isHost}
-          value={customCards}
-          onValueChange={toggle(setCustomCards)}
-        />
-      </View>
+        <View style={styles.filterContainer}>
+          <Text style={styles.smallText}>Custom Cards</Text>
+          <CheckBox
+            disabled={!isHost}
+            value={customCards}
+            onValueChange={toggle(setCustomCards)}
+          />
+        </View>
+      </ScrollView>
     </>
   );
 }
