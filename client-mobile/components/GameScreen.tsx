@@ -88,13 +88,14 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
 
   const [usersVisible, setUsersVisible] = useState(false);
 
-  const nextButton =  isTurn(name, current) && (card != null)  ? (
-    <TouchableOpacity onPress={nextCardHandler}>
-      <NextButton height={85} />
-    </TouchableOpacity>
-  ) : (
-    <NextButton opacity={0.5} height={85} />
-  );
+  const nextButton =
+    isTurn(name, current) && card != null ? (
+      <TouchableOpacity onPress={nextCardHandler}>
+        <NextButton height={85} />
+      </TouchableOpacity>
+    ) : (
+      <NextButton opacity={0.5} height={85} />
+    );
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -113,7 +114,7 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
           {isTurn(name, current) ? (
             <Text style={styles.bigText}>{card}</Text>
           ) : (
-            <CardBack width={"80%"} />
+            <CardBack height={"100%"} width={"100%"} />
           )}
         </View>
 
