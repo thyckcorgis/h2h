@@ -1,17 +1,18 @@
 import { Settings } from "../../types";
-export interface GameParams {
+
+export interface CustomCardParams {
   code: string;
   name: string;
-  currentPlayer: string;
-  currentCard: string;
-  users: string[];
   isHost: boolean;
 }
 
-export interface WaitingParams {
-  name: string;
-  code: string;
+export interface GameParams extends CustomCardParams {
+  currentPlayer: string;
+  currentCard: string;
   users: string[];
-  isHost: boolean;
+}
+
+export interface WaitingParams extends CustomCardParams {
+  users: string[];
   settings: Settings;
 }

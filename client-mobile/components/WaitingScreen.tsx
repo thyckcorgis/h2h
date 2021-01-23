@@ -16,9 +16,10 @@ import { SettingsButton, StartButton, QuitButton } from "../assets/images/";
 import ScreenProps from "./ScreenProps";
 import { Route } from "@react-navigation/native";
 
-import { QuitLobbyResponse, Settings, StartGameResponse } from "../../types";
+import { QuitLobbyResponse, Settings } from "../../types";
 import SettingsModal from "./SettingsModal";
-import { GameParams, WaitingParams } from "./params";
+import { WaitingParams } from "./params";
+import startGameEventCallback from "./startGame";
 
 interface WaitingScreenProps extends ScreenProps {
   route: Route<"Waiting", WaitingParams>;
@@ -48,25 +49,15 @@ export default function WaitingScreen({
   const [users, setUsers] = useState(_users);
   const [isHost, setHost] = useState(_isHost);
 
-  const startGameEvent = (res: StartGameResponse) => {
-    const params: GameParams = {
-      code,
-      name,
-      isHost,
-      ...res,
-    };
-    navigation.navigate("Game", params);
-  };
+  const getParams = () => ({ code, name, isHost });
+
+  const startGameEvent = () => startGameEventCallback(navigation, getParams());
 
   const renderItem = ({ item }: { item: string }) => <Item title={item} />;
   useEffect(() => {
-    socket.on("start-game", startGameEvent);
+    socket.on("start-game", () => startGameEvent());
     socket.on("add-custom", () => {
-      navigation.navigate("Custom", {
-        code,
-        name,
-        isHost,
-      });
+      navigation.navigate("Custom", getParams());
     });
     socket.on("quit-lobby", ({ newHost, users }: QuitLobbyResponse) => {
       setUsers(users);
@@ -86,14 +77,10 @@ export default function WaitingScreen({
 
   const startGameHandler = () => {
     if (!settings.customCards) {
-      socket.emit("start-game", code, startGameEvent);
+      socket.emit("start-game", code, () => startGameEvent());
     } else {
       socket.emit("add-custom", code);
-      navigation.navigate("Custom", {
-        code,
-        name,
-        isHost,
-      });
+      navigation.navigate("Custom", getParams());
     }
   };
 
