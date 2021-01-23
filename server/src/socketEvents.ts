@@ -67,7 +67,7 @@ export const quitGame: SocketEvent<QuitHandler> = (socket) => (
   if (room.isEmpty()) return removeRoom(code);
 
   const broadcast: QuitGameResponse = {
-    playerQuit: name,
+    playerQuit: socket.id,
     currentPlayer: room.getCurrentPlayer(),
     currentCard: room.getCurrentCard(),
     newHost: room.getNewHost(isHost),

@@ -27,5 +27,5 @@ export interface QuitLobbyResponse {
   users: User[];
 }
 export interface QuitGameResponse extends QuitLobbyResponse, NextCardResponse {
-  playerQuit: User;
+  playerQuit: string; // socket id
 }
