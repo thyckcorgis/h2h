@@ -1,6 +1,6 @@
 import categories from "./categories.json";
 import { shuffleArray } from "./helpers";
-import { Settings } from "../../types";
+import { Settings } from "../../types/";
 
 export default class Room {
   users: string[];

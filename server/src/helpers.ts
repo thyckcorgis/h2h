@@ -1,4 +1,4 @@
-import { ServerMessageResponse } from "../../types";
+import { ServerMessageResponse } from "../../types/responses";
 
 export function shuffleArray<T>(array: T[]) {
   const arr = [...array];
