@@ -28,6 +28,8 @@ export default function RegisterScreen({ navigation }: ScreenProps) {
     if (name === "") {
       setErrorMessage("Please enter a name.");
       return;
+    }else {
+      setErrorMessage(null);
     }
     navigation.navigate("Home", { name });
   };
