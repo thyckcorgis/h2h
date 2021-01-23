@@ -36,11 +36,13 @@ export default function LoadingScreen({ navigation }: LoadingScreenProps) {
 
 const styles = StyleSheet.create({
   screen: {
-    padding: 40,
+    padding: "10%",
     alignItems: "center",
     justifyContent: "center",
     flex: 1,
     backgroundColor: "black",
+    height: "100%",
+    width: "100%",
   },
   bigText: {
     fontFamily: "Georgia",
@@ -57,6 +59,6 @@ const styles = StyleSheet.create({
     fontFamily: "Avenir-Light",
     fontSize: 14,
     color: "#892cdc",
-    paddingVertical: 30,
+    paddingVertical: "10%",
   },
 });
