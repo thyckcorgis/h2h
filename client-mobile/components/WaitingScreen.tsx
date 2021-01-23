@@ -77,7 +77,7 @@ export default function WaitingScreen({
 
   const startGameHandler = () => {
     if (!settings.customCards) {
-      socket.emit("start-game", code, () => startGameEvent());
+      socket.emit("start-game", code, startGameEvent());
     } else {
       socket.emit("add-custom", code);
       navigation.navigate("Custom", getParams());
