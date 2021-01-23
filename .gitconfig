@@ -1,0 +1,2 @@
+[alias]
+unfuck = reset HEAD~
