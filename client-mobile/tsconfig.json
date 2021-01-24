@@ -9,5 +9,6 @@
     "resolveJsonModule": true,
     "strict": true
   },
-  "include": ["custom.d.ts"]
+  "include": ["custom.d.ts", "__tests"],
+  "typeAcquisition": { "include": ["jest"] }
 }
