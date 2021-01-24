@@ -229,7 +229,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "white",
     padding: "5%",
-    height: "40%",
+    height: "50%",
     width: "80%",
     opacity: 0.9,
     alignItems: "center",
