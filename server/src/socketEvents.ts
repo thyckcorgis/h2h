@@ -52,7 +52,7 @@ export const join: SocketEvent<EventHandler> = (socket) => (name, code, fn) => {
     settings: rooms[code].settings,
   };
   fn(res);
-  socket.to(code).emit("player-joined", name);
+  socket.to(code).emit("player-joined", { name, socketID: socket.id });
 };
 
 const quitRoom = (socket: Socket, code: string): Room | undefined => {
