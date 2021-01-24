@@ -27,7 +27,7 @@ interface LobbyScreenProps extends ScreenProps {
 
 const Item = ({ user }) => (
   <View>
-    <Text style={{ ...styles.bigText, paddingVertical: "1%" }}>
+    <Text style={{ ...styles.smallText, paddingVertical: "2%" }}>
       {user.name}
     </Text>
   </View>
