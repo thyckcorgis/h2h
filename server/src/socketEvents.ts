@@ -41,7 +41,6 @@ export const join: SocketEvent<EventHandler> = (socket) => (name, code, fn) => {
 
   if (room.userExists(name)) return fn(errorMessage("Name is already taken"));
 
-  console.log(socket.id);
   room.addUser(name, socket.id);
   socket.join(code);
   const res: JoinServerResponse = {
@@ -164,13 +163,10 @@ export const startGame: SocketEvent<AnonEventHandler> = (socket) => (
 
 export const disconnecting: SocketEvent<() => void> = (socket) => () => {
   const code = Array.from(socket.rooms)[1];
-  console.log(code);
   if (!code) return;
   if (rooms[code].gameStarted) {
     quitGame(socket)(code, true);
-    console.log(socket.id);
   } else {
-    console.log(code);
     quitLobby(socket)(code, true);
   }
 };
