@@ -164,7 +164,11 @@ export const startGame: SocketEvent<AnonEventHandler> = (socket) => (
 
 export const disconnecting: SocketEvent<() => void> = (socket) => () => {
   const code = Array.from(socket.rooms)[1];
+  console.log(code);
   if (!code) return;
   if (rooms[code].gameStarted) quitGame(socket)(code, true);
-  else quitLobby(socket)(code, true);
+  else {
+    console.log(code);
+    quitLobby(socket)(code, true);
+  }
 };

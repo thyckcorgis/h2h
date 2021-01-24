@@ -38,5 +38,5 @@ io.on("connection", (socket: Socket) => {
 
   socket.on("next-card", Events.nextCard(socket));
 
-  socket.on("disconnecting", Events.disconnecting);
+  socket.on("disconnecting", Events.disconnecting(socket));
 });
