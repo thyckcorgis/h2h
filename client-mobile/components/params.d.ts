@@ -1,4 +1,4 @@
-import { Settings } from "../../types";
+import { User, Settings } from "../../types";
 
 export interface CustomCardParams {
   code: string;
@@ -7,12 +7,12 @@ export interface CustomCardParams {
 }
 
 export interface GameParams extends CustomCardParams {
-  currentPlayer: string;
+  currentPlayer: User;
   currentCard: string;
-  users: string[];
+  users: User[];
 }
 
 export interface LobbyParams extends CustomCardParams {
-  users: string[];
+  users: User[];
   settings: Settings;
 }

@@ -16,7 +16,7 @@ import { SettingsButton, StartButton, QuitButton } from "../assets/images";
 import ScreenProps from "./ScreenProps";
 import { Route } from "@react-navigation/native";
 
-import { QuitLobbyResponse, Settings } from "../../types";
+import { User, QuitLobbyResponse, Settings } from "../../types";
 import SettingsModal from "./SettingsModal";
 import { LobbyParams } from "./params";
 import startGameEventCallback from "./startGame";
@@ -25,15 +25,15 @@ interface LobbyScreenProps extends ScreenProps {
   route: Route<"Lobby", LobbyParams>;
 }
 
-const Item = ({ title }: { title: string }) => (
+const Item = ({ user }) => (
   <View>
-    <Text style={{ ...styles.bigText, paddingVertical: "1%" }}>{title}</Text>
+    <Text style={{ ...styles.bigText, paddingVertical: "1%" }}>
+      {user.name}
+    </Text>
   </View>
 );
 
-const renderItem: ListRenderItem<string> = (child) => (
-  <Item title={child.item} />
-);
+const renderItem: ListRenderItem<User> = ({ item }) => <Item user={item} />;
 
 function randCode() {
   return (Math.floor(Math.random() * 90000) + 10000).toString();
@@ -65,13 +65,13 @@ export default function LobbyScreen({ navigation, route }: LobbyScreenProps) {
     });
     socket.on("quit-lobby", ({ newHost, users }: QuitLobbyResponse) => {
       setUsers(users);
-      setHost(newHost === "" ? isHost : name === newHost);
+      setHost(newHost ? newHost.name === name : isHost);
     });
 
     socket.on("setting", (settings: Settings) => setSettings(settings));
 
-    socket.on("player-joined", (name: string) => {
-      setUsers((users: string[]) => [...users, name]);
+    socket.on("player-joined", (user: User) => {
+      setUsers((users) => [...users, user]);
     });
   }, [isHost]);
 
@@ -89,7 +89,7 @@ export default function LobbyScreen({ navigation, route }: LobbyScreenProps) {
   };
 
   const quitLobbyHandler = () => {
-    socket.emit("quit-lobby", code, name, isHost);
+    socket.emit("quit-lobby", code, isHost);
     navigation.navigate("Home", { name });
   };
 

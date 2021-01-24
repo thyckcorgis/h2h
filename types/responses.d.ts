@@ -1,4 +1,5 @@
 import Settings from "./settings";
+import User from "./user";
 
 export interface ServerMessageResponse {
   ok: boolean;
@@ -7,24 +8,25 @@ export interface ServerMessageResponse {
 
 export interface NextCardResponse {
   currentCard: string;
-  currentPlayer: string;
+  currentPlayer: User;
 }
 export interface JoinServerResponse
   extends ServerMessageResponse,
     NextCardResponse {
-  users: string[];
+  users: User[];
   gameStarted: boolean;
   settings: Settings;
 }
 
 export interface StartGameResponse extends NextCardResponse {
-  users: string[];
+  users: User[];
 }
 
 export interface QuitLobbyResponse {
-  newHost: string;
-  users: string[];
+  newHost: User | undefined;
+  users: User[];
 }
-export interface QuitGameResponse extends QuitLobbyResponse, NextCardResponse {
-  playerQuit: string;
+export interface QuitGameResponse extends NextCardResponse {
+  newHost: User | undefined;
+  playerQuit: string; // socket id
 }

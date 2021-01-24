@@ -10,7 +10,9 @@ import {
   SocketEvent,
   StartGameResponse,
 } from "../../types";
+import { Socket } from "socket.io";
 import Room from "./Room";
+import { User } from "../../types";
 
 const rooms: { [T: string]: Room } = {};
 const roomExists = (code: string) => rooms[code] != null;
@@ -18,35 +20,29 @@ const removeRoom = (code: string) => {
   delete rooms[code];
 };
 
-function createRoom(name: string) {
+function createRoom(name: string, socketID: string) {
   let code = randCode();
   while (roomExists(code)) code = randCode();
 
-  rooms[code] = new Room(name);
+  rooms[code] = new Room(name, socketID);
   return code;
 }
 
-export const createEvent: SocketEvent<AnonEventHandler> = (socket) => (
-  name,
-  fn
-) => {
-  const code = createRoom(name);
+export const create: SocketEvent<AnonEventHandler> = (socket) => (name, fn) => {
+  const code = createRoom(name, socket.id);
   socket.join(code);
   fn(code);
 };
 
-export const joinEvent: SocketEvent<EventHandler> = (socket) => (
-  name,
-  code,
-  fn
-) => {
+export const join: SocketEvent<EventHandler> = (socket) => (name, code, fn) => {
   if (!roomExists(code)) return fn(errorMessage("Room does not exist"));
 
   const room = rooms[code];
 
   if (room.userExists(name)) return fn(errorMessage("Name is already taken"));
 
-  room.addUser(name);
+  console.log(socket.id);
+  room.addUser(name, socket.id);
   socket.join(code);
   const res: JoinServerResponse = {
     ok: true,
@@ -58,42 +54,46 @@ export const joinEvent: SocketEvent<EventHandler> = (socket) => (
     settings: rooms[code].settings,
   };
   fn(res);
-  socket.to(code).emit("player-joined", name);
+  const user: User = { name, socketID: socket.id };
+  socket.to(code).emit("player-joined", user);
 };
-export const quitGameEvent: SocketEvent<QuitHandler> = (socket) => (
-  code,
-  name,
-  isHost
-) => {
+
+const quitRoom = (socket: Socket, code: string): Room | undefined => {
   socket.leave(code);
   if (!roomExists(code)) return;
 
   const room = rooms[code];
 
-  room.removeUser(name);
-  if (room.isEmpty()) return removeRoom(code);
+  room.removeUser(socket.id);
+  if (room.isEmpty()) {
+    removeRoom(code);
+    return;
+  }
 
+  return room;
+};
+
+export const quitGame: SocketEvent<QuitHandler> = (socket) => (
+  code,
+  isHost
+) => {
+  const room = quitRoom(socket, code);
+  if (!room) return;
   const broadcast: QuitGameResponse = {
-    playerQuit: name,
+    playerQuit: socket.id,
     currentPlayer: room.getCurrentPlayer(),
     currentCard: room.getCurrentCard(),
     newHost: room.getNewHost(isHost),
-    users: rooms[code].users,
   };
   socket.to(code).emit("quit-game", broadcast);
 };
 
-export const quitLobbyEvent: SocketEvent<QuitHandler> = (socket) => (
+export const quitLobby: SocketEvent<QuitHandler> = (socket) => (
   code,
-  name,
   isHost
 ) => {
-  socket.leave(code);
-
-  if (!roomExists(code)) return;
-  const room = rooms[code];
-  room.removeUser(name);
-  if (room.isEmpty()) return removeRoom(code);
+  const room = quitRoom(socket, code);
+  if (!room) return;
 
   const broadcast: QuitLobbyResponse = {
     newHost: room.getNewHost(isHost),
@@ -103,7 +103,7 @@ export const quitLobbyEvent: SocketEvent<QuitHandler> = (socket) => (
   socket.to(code).emit("quit-lobby", broadcast);
 };
 
-export const customCardEvent: EventHandler = (code, question, fn) => {
+export const customCard: EventHandler = (code, question, fn) => {
   if (!roomExists(code)) return;
 
   const room = rooms[code];
@@ -114,7 +114,7 @@ export const customCardEvent: EventHandler = (code, question, fn) => {
   fn({ ok: true, message: "Added anonymous custom card" });
 };
 
-export const nextCardEvent: SocketEvent<AnonEventHandler> = (socket) => (
+export const nextCard: SocketEvent<AnonEventHandler> = (socket) => (
   code,
   fn
 ) => {
@@ -131,7 +131,7 @@ export const nextCardEvent: SocketEvent<AnonEventHandler> = (socket) => (
   socket.to(code).emit("next-card", res);
 };
 
-export const settingEvent: SocketEvent<SettingHandler> = (socket) => (
+export const setting: SocketEvent<SettingHandler> = (socket) => (
   code,
   settings
 ) => {
@@ -141,7 +141,7 @@ export const settingEvent: SocketEvent<SettingHandler> = (socket) => (
   socket.to(code).emit("setting", settings);
 };
 
-export const startGameEvent: SocketEvent<AnonEventHandler> = (socket) => (
+export const startGame: SocketEvent<AnonEventHandler> = (socket) => (
   code,
   fn
 ) => {
@@ -160,4 +160,17 @@ export const startGameEvent: SocketEvent<AnonEventHandler> = (socket) => (
 
   fn(res);
   socket.to(code).emit("start-game", res);
+};
+
+export const disconnecting: SocketEvent<() => void> = (socket) => () => {
+  const code = Array.from(socket.rooms)[1];
+  console.log(code);
+  if (!code) return;
+  if (rooms[code].gameStarted) {
+    quitGame(socket)(code, true);
+    console.log(socket.id);
+  } else {
+    console.log(code);
+    quitLobby(socket)(code, true);
+  }
 };

@@ -21,7 +21,7 @@ import {
 import socket from "../socket";
 import ScreenProps from "./ScreenProps";
 
-import { NextCardResponse, QuitGameResponse } from "../../types";
+import { User, NextCardResponse, QuitGameResponse } from "../../types";
 import { GameParams } from "./params";
 
 interface GameScreenProps extends ScreenProps {
@@ -51,42 +51,43 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
     setCurrentPlayer(currentPlayer);
   };
 
-  const Item = ({ title }: { title: string }) => (
+  const Item = ({ user }) => (
     <View>
       <Text
         style={{
           ...styles.smallText,
+          color: currentPlayer.name === user.name ? "#892cdc" : "white",
           fontSize: 24,
           paddingVertical: "1%",
-          color: currentPlayer == title ? "#892cdc" : "white",
         }}
       >
-        {title}
+        {user.name}
       </Text>
     </View>
   );
 
-  const renderItem: ListRenderItem<string> = ({ item }) => (
-    <Item title={item} />
-  );
+  const renderItem: ListRenderItem<User> = ({ item }) => <Item user={item} />;
 
   useEffect(() => {
-    socket.on("player-joined", (name: string) => {
-      setMessage(`${name} has joined the game.`);
+    socket.on("player-joined", (user: User) => {
+      setMessage(`${user.name} has joined the game.`);
       setRipe(false);
       setTimeout(() => {
         setMessage("");
       }, 3000);
-      setUsers((users) => [...users, name]);
+      setUsers((users) => [...users, user]);
     });
 
     socket.on("next-card", updateCurrent);
     socket.on("quit-game", (res: QuitGameResponse) => {
-      const { newHost, users, playerQuit } = res;
-      setUsers(users);
-      setHost(newHost === "" ? isHost : name === newHost);
+      const { newHost, playerQuit } = res;
+      const userQuit = users.find((user) => user.socketID === playerQuit);
+      setUsers((currentUsers) =>
+        currentUsers.filter((user) => user.socketID !== playerQuit)
+      );
+      setHost(newHost ? name === newHost.name : isHost);
       updateCurrent(res);
-      setMessage(`${playerQuit} has quit the game.`);
+      setMessage(`${userQuit.name} has quit the game.`);
       setRipe(true);
       setTimeout(() => {
         setMessage("");
@@ -99,14 +100,14 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
   };
 
   const quitGameHandler = () => {
-    socket.emit("quit-game", code, name, isHost);
+    socket.emit("quit-game", code, isHost);
     navigation.navigate("Home", { name });
   };
 
   const [usersVisible, setUsersVisible] = useState(false);
 
   const nextButton =
-    isTurn(name, currentPlayer) && currentCard != null ? (
+    isTurn(name, currentPlayer.name) && currentCard != null ? (
       <TouchableOpacity onPress={nextCardHandler}>
         <NextButton height={85} />
       </TouchableOpacity>
@@ -131,7 +132,7 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
         >
           <Text style={styles.smallText}>
             {currentCard != null
-              ? isTurn(name, currentPlayer)
+              ? isTurn(name, currentPlayer.name)
                 ? "It is your turn. Ask the group the question below."
                 : `It is ${currentPlayer}'s turn.`
               : "You ran out of cards. Try different categories to access new cards."}
@@ -140,12 +141,12 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
         <View style={styles.cardScreen}>
           <View
             style={
-              isTurn(name, currentPlayer)
+              isTurn(name, currentPlayer.name)
                 ? styles.cardContainer
                 : styles.transparentCardContainer
             }
           >
-            {isTurn(name, currentPlayer) ? (
+            {isTurn(name, currentPlayer.name) ? (
               <Text style={styles.bigText}>{currentCard}</Text>
             ) : (
               <CardBack width={"100%"} height={"100%"} />
@@ -168,7 +169,7 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
                 <FlatList
                   data={users}
                   renderItem={renderItem}
-                  keyExtractor={(item) => item}
+                  keyExtractor={(item) => item.name}
                   extraData={users}
                 />
               </View>

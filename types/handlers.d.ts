@@ -20,7 +20,7 @@ export type AnonEventHandler = (code: string, fn: AckFn) => void;
 
 export type EventHandler = (name: string, code: string, fn: AckFn) => void;
 
-export type QuitHandler = (code: string, name: string, isHost: boolean) => void;
+export type QuitHandler = (code: string, isHost: boolean) => void;
 
 export type SettingHandler = (code: string, settings: Settings) => void;
 

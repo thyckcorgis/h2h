@@ -15,4 +15,5 @@ export {
   QuitGameResponse,
 } from "./responses";
 
+export { default as User } from "./user";
 export { default as Settings } from "./settings";

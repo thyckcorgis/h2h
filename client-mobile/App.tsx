@@ -17,7 +17,7 @@ import {
 
 const Stack = createStackNavigator();
 
-const forFade: StackCardStyleInterpolator = ({ current: progress }) => ({
+const forFade: StackCardStyleInterpolator = ({ current: { progress } }) => ({
   cardStyle: {
     opacity: progress,
   },
