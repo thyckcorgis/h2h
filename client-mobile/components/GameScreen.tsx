@@ -68,12 +68,12 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
 
   useEffect(() => {
     socket.on("player-joined", (user: User) => {
-      setMessage(`${name} has joined the game.`);
+      setMessage(`${user.name} has joined the game.`);
       setRipe(false);
       setTimeout(() => {
         setMessage("");
       }, 3000);
-      setUsers((users) => [...users, user]);
+      setUsers((users) => [...users, user.name]);
     });
 
     socket.on("next-card", updateCurrent);
