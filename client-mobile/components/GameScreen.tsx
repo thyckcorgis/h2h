@@ -51,20 +51,20 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
     setCurrentPlayer(currentPlayer);
   };
 
-  const Item = ({ title }: { title: User }) => (
+  const Item = ({ user }) => (
     <View>
       <Text
         style={{
           ...styles.smallText,
-          color: currentPlayer.name == title.name ? "#892cdc" : "white",
+          color: currentPlayer.name == user.name ? "#892cdc" : "white",
         }}
       >
-        {title}
+        {user.name}
       </Text>
     </View>
   );
 
-  const renderItem: ListRenderItem<User> = ({ item }) => <Item title={item} />;
+  const renderItem: ListRenderItem<User> = ({ item }) => <Item user={item} />;
 
   useEffect(() => {
     socket.on("player-joined", (user: User) => {
