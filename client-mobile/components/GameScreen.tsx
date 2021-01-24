@@ -73,7 +73,7 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
       setTimeout(() => {
         setMessage("");
       }, 3000);
-      setUsers((users) => [...users, user.name]);
+      setUsers((users) => [...users, user]);
     });
 
     socket.on("next-card", updateCurrent);
