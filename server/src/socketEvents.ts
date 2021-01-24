@@ -12,6 +12,7 @@ import {
 } from "../../types";
 import { Socket } from "socket.io";
 import Room from "./Room";
+import { User } from "../../types";
 
 const rooms: { [T: string]: Room } = {};
 const roomExists = (code: string) => rooms[code] != null;
@@ -52,7 +53,8 @@ export const join: SocketEvent<EventHandler> = (socket) => (name, code, fn) => {
     settings: rooms[code].settings,
   };
   fn(res);
-  socket.to(code).emit("player-joined", { name, socketID: socket.id });
+  const user: User = { name, socketID: socket.id };
+  socket.to(code).emit("player-joined", user);
 };
 
 const quitRoom = (socket: Socket, code: string): Room | undefined => {
