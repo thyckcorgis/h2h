@@ -23,7 +23,7 @@ export interface StartGameResponse extends NextCardResponse {
 }
 
 export interface QuitLobbyResponse {
-  newHost: string;
+  newHost: User | undefined;
   users: User[];
 }
 export interface QuitGameResponse extends QuitLobbyResponse, NextCardResponse {
