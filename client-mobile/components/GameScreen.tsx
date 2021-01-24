@@ -57,7 +57,7 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
         style={{
           ...styles.smallText,
           color: currentPlayer.name === user.name ? "#892cdc" : "white",
-          fontSize: 24,
+          fontSize: 20,
           paddingVertical: "1%",
         }}
       >
@@ -164,7 +164,7 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
         >
           <View style={styles.modalContainer}>
             <View style={styles.modalView}>
-              <Text style={styles.bigText}>Who's in the room?</Text>
+              <Text style={{...styles.bigText, fontSize: 24}}>Who's in the room?</Text>
               <View style={styles.listContainer}>
                 <FlatList
                   data={users}
@@ -229,7 +229,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "white",
     padding: "5%",
-    height: "40%",
+    height: "50%",
     width: "80%",
     opacity: 0.9,
     alignItems: "center",
