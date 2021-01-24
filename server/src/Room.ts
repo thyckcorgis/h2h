@@ -70,7 +70,7 @@ export default class Room {
   }
 
   getNewHost(isHost: boolean) {
-    return isHost ? this.users[0] : "";
+    return isHost ? this.users[0] : undefined;
   }
 
   startGame() {
