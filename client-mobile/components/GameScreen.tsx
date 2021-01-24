@@ -141,12 +141,12 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
         <View style={styles.cardScreen}>
           <View
             style={
-              isTurn(name, currentPlayer.name)
+              isTurn(name, currentPlayer.name) && currentCard != ""
                 ? styles.cardContainer
                 : styles.transparentCardContainer
             }
           >
-            {isTurn(name, currentPlayer.name) ? (
+            {isTurn(name, currentPlayer.name) && currentCard != "" ? (
               <Text style={styles.bigText}>{currentCard}</Text>
             ) : (
               <CardBack width={"100%"} height={"100%"} />
