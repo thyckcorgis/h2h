@@ -82,7 +82,7 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
       setUsers((currentUsers) =>
         currentUsers.filter((user) => user.socketID !== playerQuit)
       );
-      setHost(newHost === "" ? isHost : name === newHost);
+      setHost(newHost ? name === newHost.name : isHost);
       updateCurrent(res);
       setMessage(
         `${users.find(
