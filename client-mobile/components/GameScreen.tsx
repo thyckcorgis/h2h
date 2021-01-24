@@ -68,7 +68,7 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
 
   useEffect(() => {
     socket.on("player-joined", (user: User) => {
-      setMessage(`${name} has joined the game.`);
+      setMessage(`${user.name} has joined the game.`);
       setRipe(false);
       setTimeout(() => {
         setMessage("");
@@ -128,7 +128,7 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
           {currentCard != null
             ? isTurn(name, currentPlayer.name)
               ? "It is your turn. Ask the group the question below."
-              : `It is ${currentPlayer}'s turn.`
+              : `It is ${currentPlayer.name}'s turn.`
             : "You ran out of cards. Try different categories to access new cards."}
         </Text>
         <View
