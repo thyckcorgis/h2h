@@ -52,7 +52,7 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
       const params: LobbyParams = {
         name,
         code,
-        users: [name],
+        users: [{ name, socketID: socket.id }],
         isHost: true,
         settings,
       };
