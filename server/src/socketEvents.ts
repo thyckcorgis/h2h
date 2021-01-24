@@ -41,6 +41,7 @@ export const join: SocketEvent<EventHandler> = (socket) => (name, code, fn) => {
 
   if (room.userExists(name)) return fn(errorMessage("Name is already taken"));
 
+  console.log(socket.id);
   room.addUser(name, socket.id);
   socket.join(code);
   const res: JoinServerResponse = {
@@ -83,7 +84,6 @@ export const quitGame: SocketEvent<QuitHandler> = (socket) => (
     currentPlayer: room.getCurrentPlayer(),
     currentCard: room.getCurrentCard(),
     newHost: room.getNewHost(isHost),
-    users: rooms[code].users,
   };
   socket.to(code).emit("quit-game", broadcast);
 };
@@ -166,8 +166,10 @@ export const disconnecting: SocketEvent<() => void> = (socket) => () => {
   const code = Array.from(socket.rooms)[1];
   console.log(code);
   if (!code) return;
-  if (rooms[code].gameStarted) quitGame(socket)(code, true);
-  else {
+  if (rooms[code].gameStarted) {
+    quitGame(socket)(code, true);
+    console.log(socket.id);
+  } else {
     console.log(code);
     quitLobby(socket)(code, true);
   }

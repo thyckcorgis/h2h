@@ -26,6 +26,7 @@ export interface QuitLobbyResponse {
   newHost: User | undefined;
   users: User[];
 }
-export interface QuitGameResponse extends QuitLobbyResponse, NextCardResponse {
+export interface QuitGameResponse extends NextCardResponse {
+  newHost: User | undefined;
   playerQuit: string; // socket id
 }

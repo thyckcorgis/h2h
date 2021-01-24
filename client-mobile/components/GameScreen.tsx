@@ -78,17 +78,14 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
 
     socket.on("next-card", updateCurrent);
     socket.on("quit-game", (res: QuitGameResponse) => {
-      const { newHost, users, playerQuit } = res;
+      const { newHost, playerQuit } = res;
+      const userQuit = users.find((user) => user.socketID === playerQuit);
       setUsers((currentUsers) =>
         currentUsers.filter((user) => user.socketID !== playerQuit)
       );
       setHost(newHost ? name === newHost.name : isHost);
       updateCurrent(res);
-      setMessage(
-        `${users.find(
-          (user) => user.socketID == playerQuit
-        )} has quit the game.`
-      );
+      setMessage(`${userQuit.name} has quit the game.`);
       setRipe(true);
       setTimeout(() => {
         setMessage("");
