@@ -107,7 +107,7 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
   const [usersVisible, setUsersVisible] = useState(false);
 
   const nextButton =
-    isTurn(name, currentPlayer.name) && currentCard != null ? (
+    isTurn(name, currentPlayer.name) && currentCard != "" ? (
       <TouchableOpacity onPress={nextCardHandler}>
         <NextButton height={85} />
       </TouchableOpacity>
@@ -131,7 +131,7 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
           }}
         >
           <Text style={styles.smallText}>
-            {currentCard != null
+            {currentCard != ""
               ? isTurn(name, currentPlayer.name)
                 ? "It is your turn. Ask the group the question below."
                 : `It is ${currentPlayer}'s turn.`
