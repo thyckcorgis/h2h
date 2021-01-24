@@ -27,7 +27,7 @@ interface LobbyScreenProps extends ScreenProps {
 
 const Item = ({ title }: { title: string }) => (
   <View>
-    <Text style={{ ...styles.bigText, paddingVertical: "1%" }}>{title}</Text>
+    <Text style={{ ...styles.smallText, paddingVertical: "2%" }}>{title}</Text>
   </View>
 );
 
