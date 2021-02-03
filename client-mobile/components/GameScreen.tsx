@@ -8,8 +8,8 @@ import {
   Modal,
   FlatList,
   ListRenderItem,
+  TouchableOpacity,
 } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
 
 import {
   UserButton,
@@ -164,7 +164,9 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
         >
           <View style={styles.modalContainer}>
             <View style={styles.modalView}>
-              <Text style={{...styles.bigText, fontSize: 24}}>Who's in the room?</Text>
+              <Text style={{ ...styles.bigText, fontSize: 24 }}>
+                Who's in the room?
+              </Text>
               <View style={styles.listContainer}>
                 <FlatList
                   data={users}
