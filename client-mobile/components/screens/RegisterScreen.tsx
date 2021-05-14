@@ -11,6 +11,9 @@ import {
 } from "react-native";
 import { useState } from "react";
 
+import Styles from "../styles";
+import SafeView from "../basics/SafeView";
+
 import ScreenProps from "../ScreenProps";
 import Mission from "../basics/Mission";
 import Features from "../basics/Features";
