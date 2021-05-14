@@ -19,4 +19,9 @@ export default StyleSheet.create({
     color: "white",
     textAlign: "center",
   },
+  continueText: {
+    fontFamily: "Avenir-Light",
+    fontSize: 14,
+    color: "#892cdc",
+  },
 });
