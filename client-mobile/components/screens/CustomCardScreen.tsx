@@ -7,14 +7,14 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { useState } from "react";
-import socket from "../socket";
-import { StartButton, SubmitCardButton } from "../assets/images";
-import ScreenProps from "./ScreenProps";
+import socket from "../../socket";
+import { StartButton, SubmitCardButton } from "../../assets/images";
+import ScreenProps from "../ScreenProps";
 import { Route } from "@react-navigation/native";
 
-import { CustomCardParams } from "./params";
-import startGameEventCallback from "./startGame";
-import { ServerMessageResponse } from "../../types";
+import { CustomCardParams } from "../params";
+import startGameEventCallback from "../startGame";
+import { ServerMessageResponse } from "../../../types";
 
 interface CustomCardScreenProps extends ScreenProps {
   route: Route<"Custom", CustomCardParams>;

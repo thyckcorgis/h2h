@@ -11,11 +11,11 @@ import {
 } from "react-native";
 import { useState } from "react";
 
-import ScreenProps from "./ScreenProps";
-import Mission from "./Mission";
-import Features from "./Features";
+import ScreenProps from "../ScreenProps";
+import Mission from "../basics/Mission";
+import Features from "../basics/Features";
 
-import { RegisterButton, HelpButton, MissionButton } from "../assets/images/";
+import { RegisterButton, HelpButton, MissionButton } from "../../assets/images";
 
 export default function RegisterScreen({ navigation }: ScreenProps) {
   const [name, setName] = useState("");

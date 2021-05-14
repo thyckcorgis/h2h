@@ -16,13 +16,13 @@ import {
   NextButton,
   QuitButton,
   CardBack,
-} from "../assets/images/";
+} from "../../assets/images";
 
-import socket from "../socket";
-import ScreenProps from "./ScreenProps";
+import socket from "../../socket";
+import ScreenProps from "../ScreenProps";
 
-import { User, NextCardResponse, QuitGameResponse } from "../../types";
-import { GameParams } from "./params";
+import { User, NextCardResponse, QuitGameResponse } from "../../../types";
+import { GameParams } from "../params";
 
 interface GameScreenProps extends ScreenProps {
   route: Route<"Game", GameParams>;

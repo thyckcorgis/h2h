@@ -2,8 +2,8 @@ import React from "react";
 import { View, Text, StyleSheet, Dimensions } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-import { H2HLogo, CorgiLogo } from "../assets/images/";
-import ScreenProps from "./ScreenProps";
+import { H2HLogo, CorgiLogo } from "../../assets/images";
+import ScreenProps from "../ScreenProps";
 
 const screenWidth = Dimensions.get("window").width;
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Text, View, StyleSheet, ScrollView } from "react-native";
 
-import { Settings } from "../../types";
+import { Settings } from "../../../types";
 import CheckBox from "./Checkbox";
 
 function toggle<T>(fn: React.Dispatch<T>) {

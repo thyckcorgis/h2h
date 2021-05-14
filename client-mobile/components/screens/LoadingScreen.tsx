@@ -1,25 +1,26 @@
 import React from "react";
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
-import ScreenProps from "./ScreenProps";
+import Styles from "../styles";
+import ScreenProps from "../ScreenProps";
 
 export default function LoadingScreen({ navigation }: ScreenProps) {
   return (
-    <View style={styles.screen}>
+    <View style={Styles.screen}>
       <TouchableOpacity
         onPress={() => navigation.navigate("Start")}
-        style={styles.screen}
+        style={Styles.screen}
       >
-        <Text style={styles.bigText}>confessation</Text>
+        <Text style={Styles.bigText}>confessation</Text>
         <View style={{ flexDirection: "row", paddingVertical: 30 }}>
-          <Text style={{ ...styles.smallText, fontStyle: "italic" }}>
+          <Text style={{ ...Styles.smallText, fontStyle: "italic" }}>
             [ˌkɑn.fɛsˈseɪ.ʃən]
           </Text>
-          <Text style={{ ...styles.smallText, fontWeight: "bold" }}>
+          <Text style={{ ...Styles.smallText, fontWeight: "bold" }}>
             {" "}
             ⋅ noun
           </Text>
         </View>
-        <Text style={styles.smallText}>
+        <Text style={Styles.smallText}>
           a difficult but meaningful conversation.
         </Text>
         <Text style={styles.continueText}>Tap to continue.</Text>
@@ -29,26 +30,6 @@ export default function LoadingScreen({ navigation }: ScreenProps) {
 }
 
 const styles = StyleSheet.create({
-  screen: {
-    padding: "10%",
-    alignItems: "center",
-    justifyContent: "center",
-    flex: 1,
-    backgroundColor: "black",
-    height: "100%",
-    width: "100%",
-  },
-  bigText: {
-    fontFamily: "Georgia",
-    fontSize: 30,
-    color: "white",
-  },
-  smallText: {
-    fontFamily: "Georgia",
-    fontSize: 18,
-    color: "white",
-    textAlign: "center",
-  },
   continueText: {
     fontFamily: "Avenir-Light",
     fontSize: 14,

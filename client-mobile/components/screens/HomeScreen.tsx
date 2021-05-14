@@ -8,13 +8,13 @@ import {
 } from "react-native";
 import { useState } from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import socket from "../socket";
+import socket from "../../socket";
 
-import { HostButton, JoinButton } from "../assets/images/";
-import ScreenProps from "./ScreenProps";
+import { HostButton, JoinButton } from "../../assets/images";
+import ScreenProps from "../ScreenProps";
 import { Route } from "@react-navigation/native";
-import { JoinServerResponse, Settings } from "../../types";
-import { GameParams, LobbyParams } from "./params";
+import { JoinServerResponse, Settings } from "../../../types";
+import { GameParams, LobbyParams } from "../params";
 
 interface HomeParams {
   name: string;

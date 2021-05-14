@@ -10,16 +10,16 @@ import {
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-import socket from "../socket";
+import socket from "../../socket";
 
-import { SettingsButton, StartButton, QuitButton } from "../assets/images";
-import ScreenProps from "./ScreenProps";
+import { SettingsButton, StartButton, QuitButton } from "../../assets/images";
+import ScreenProps from "../ScreenProps";
 import { Route } from "@react-navigation/native";
 
-import { User, QuitLobbyResponse, Settings } from "../../types";
-import SettingsModal from "./SettingsModal";
-import { LobbyParams } from "./params";
-import startGameEventCallback from "./startGame";
+import { User, QuitLobbyResponse, Settings } from "../../../types";
+import SettingsModal from "../basics/SettingsModal";
+import { LobbyParams } from "../params";
+import startGameEventCallback from "../startGame";
 
 interface LobbyScreenProps extends ScreenProps {
   route: Route<"Lobby", LobbyParams>;

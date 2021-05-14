@@ -1,7 +1,7 @@
 import React from "react";
 import { TouchableOpacity } from "react-native";
 
-import { EnOn, EnOff } from "../assets/images/";
+import { EnOn, EnOff } from "../../assets/images";
 
 interface CheckboxProps {
   disabled: boolean;
