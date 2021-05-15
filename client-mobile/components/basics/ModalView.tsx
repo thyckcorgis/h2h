@@ -21,18 +21,18 @@ const ModalView: FC<ModalViewProps> = ({ children, visible, setVisible }) => (
     visible={visible}
     onRequestClose={() => setVisible(false)}
   >
-    <TouchableWithoutFeedback onPress={() => setVisible(false)}>
-      <View style={styles.modalContainer}>
-        <View style={styles.modalView}>
-          <View style={{ flex: 1 }}>{children}</View>
-          <View style={styles.closeContainer}>
-            <TouchableOpacity onPress={() => setVisible(false)}>
-              <Text style={styles.closeText}>Close</Text>
-            </TouchableOpacity>
-          </View>
+    {/* <TouchableWithoutFeedback onPress={() => setVisible(false)}> */}
+    <View style={styles.modalContainer}>
+      <View style={styles.modalView}>
+        <View style={{ flex: 1 }}>{children}</View>
+        <View style={styles.closeContainer}>
+          <TouchableOpacity onPress={() => setVisible(false)}>
+            <Text style={styles.closeText}>Close</Text>
+          </TouchableOpacity>
         </View>
       </View>
-    </TouchableWithoutFeedback>
+    </View>
+    {/* </TouchableWithoutFeedback> */}
   </Modal>
 );
 
