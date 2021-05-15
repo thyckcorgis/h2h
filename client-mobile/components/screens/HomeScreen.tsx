@@ -27,6 +27,9 @@ interface HomeScreenProps extends ScreenProps {
   route: Route<"Home", HomeParams>;
 }
 
+const serverDownMessage =
+  "Oh noes!! The sewvew is down :( We are so sooo sowwy. Pwetty pwease cum back watew";
+
 export default function HomeScreen({ navigation, route }: HomeScreenProps) {
   const [code, setCode] = useState("");
   const [joinErrorMessage, setJoinErrorMessage] = useState("");
@@ -44,7 +47,7 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
   const hostGameHandler = () => {
     setJoinErrorMessage("");
     if (!socket.connected) {
-      setHostErrorMessage("Server is currently down.");
+      setHostErrorMessage(serverDownMessage);
       return socket.connect();
     }
 
@@ -64,7 +67,7 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
   const joinGameHandler = () => {
     setHostErrorMessage("");
     if (!socket.connected) {
-      setJoinErrorMessage("Server is currently down.");
+      setJoinErrorMessage(serverDownMessage);
       return socket.connect();
     }
 
