@@ -5,8 +5,10 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   KeyboardAvoidingView,
   SafeAreaView,
+  Keyboard,
 } from "react-native";
 import { useState } from "react";
 
@@ -36,40 +38,42 @@ export default function RegisterScreen({ navigation }: ScreenProps) {
   };
 
   return (
-    <SafeAreaView style={Styles.screen}>
-      <KeyboardAvoidingView behavior="padding">
-        <View style={styles.topContainer}>
-          <TouchableOpacity onPress={() => setFeaturesVisible(true)}>
-            <HelpButton />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => setMissionVisible(true)}>
-            <MissionButton />
-          </TouchableOpacity>
-          <ModalView visible={featuresVisible} setVisible={setFeaturesVisible}>
-            <Features />
-          </ModalView>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <SafeAreaView style={Styles.screen}>
+        <KeyboardAvoidingView behavior="padding">
+          <View style={styles.topContainer}>
+            <TouchableOpacity onPress={() => setFeaturesVisible(true)}>
+              <HelpButton />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => setMissionVisible(true)}>
+              <MissionButton />
+            </TouchableOpacity>
+            <ModalView visible={featuresVisible} setVisible={setFeaturesVisible}>
+              <Features />
+            </ModalView>
 
-          <ModalView visible={missionVisible} setVisible={setMissionVisible}>
-            <Mission />
-          </ModalView>
-        </View>
+            <ModalView visible={missionVisible} setVisible={setMissionVisible}>
+              <Mission />
+            </ModalView>
+          </View>
 
-        <View style={styles.container}>
-          <Text style={Styles.bigText}>Ready to Talk?</Text>
-          <TextInput
-            style={Styles.inputField}
-            placeholder="Your name"
-            placeholderTextColor="grey"
-            onChangeText={(text) => setName(text)}
-            value={name}
-          />
-          <Text style={Styles.errorText}>{errorMessage}</Text>
-          <TouchableOpacity onPress={registerHandler}>
-            <RegisterButton />
-          </TouchableOpacity>
-        </View>
-      </KeyboardAvoidingView>
-    </SafeAreaView>
+          <View style={styles.container}>
+            <Text style={Styles.bigText}>Ready to Talk?</Text>
+            <TextInput
+              style={Styles.inputField}
+              placeholder="Your name"
+              placeholderTextColor="grey"
+              onChangeText={(text) => setName(text)}
+              value={name}
+            />
+            <Text style={Styles.errorText}>{errorMessage}</Text>
+            <TouchableOpacity onPress={registerHandler}>
+              <RegisterButton />
+            </TouchableOpacity>
+          </View>
+        </KeyboardAvoidingView>
+      </SafeAreaView>
+    </TouchableWithoutFeedback>
   );
 }
 
