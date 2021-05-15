@@ -17,7 +17,7 @@ import ScreenProps from "../ScreenProps";
 import { Route } from "@react-navigation/native";
 
 import { User, QuitLobbyResponse, Settings } from "../../../types";
-import SettingsModal from "../basics/SettingsModal";
+import SettingsModal from "../modals/SettingsModal";
 import { LobbyParams } from "../params";
 import startGameEventCallback from "../startGame";
 
