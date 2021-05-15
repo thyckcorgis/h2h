@@ -84,7 +84,6 @@ const styles = StyleSheet.create({
   topContainer: {
     flex: 1,
     flexDirection: "row",
-    alignItems: "center",
     justifyContent: "space-between",
     width: Dimensions.get("window").width,
     padding: "2%",
