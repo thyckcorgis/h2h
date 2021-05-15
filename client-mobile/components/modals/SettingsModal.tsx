@@ -36,73 +36,71 @@ export default function SettingsModal({
   }, [happy, heavy, toTheSpeaker, selfReflection, customCards]);
 
   return (
-    <>
-      <ScrollView style={styles.container}>
-        <View style={styles.filterContainer}>
-          <CheckBox
-            disabled={!isHost}
-            value={happy}
-            onValueChange={toggle(setHappy)}
-          />
-          <Text style={styles.smallText}>Happy</Text>
-        </View>
+    <ScrollView style={styles.container}>
+      <View style={styles.filterContainer}>
+        <CheckBox
+          disabled={!isHost}
+          value={happy}
+          onValueChange={toggle(setHappy)}
+        />
+        <Text style={styles.smallText}>Happy</Text>
+      </View>
 
-        <View style={styles.filterContainer}>
-          <CheckBox
-            disabled={!isHost}
-            value={selfReflection}
-            onValueChange={toggle(setSelfReflection)}
-          />
-          <Text style={styles.smallText}>Self-reflection</Text>
-        </View>
+      <View style={styles.filterContainer}>
+        <CheckBox
+          disabled={!isHost}
+          value={selfReflection}
+          onValueChange={toggle(setSelfReflection)}
+        />
+        <Text style={styles.smallText}>Self-reflection</Text>
+      </View>
 
-        <View style={styles.filterContainer}>
-          <CheckBox
-            disabled={!isHost}
-            value={heavy}
-            onValueChange={toggle(setHeavy)}
-          />
-          <Text style={styles.smallText}>Heavy</Text>
-        </View>
+      <View style={styles.filterContainer}>
+        <CheckBox
+          disabled={!isHost}
+          value={heavy}
+          onValueChange={toggle(setHeavy)}
+        />
+        <Text style={styles.smallText}>Heavy</Text>
+      </View>
 
-        <View style={styles.filterContainer}>
-          <CheckBox
-            disabled={!isHost}
-            value={toTheSpeaker}
-            onValueChange={toggle(setToTheSpeaker)}
-          />
-          <Text style={styles.smallText}>To the Speaker</Text>
-        </View>
+      <View style={styles.filterContainer}>
+        <CheckBox
+          disabled={!isHost}
+          value={toTheSpeaker}
+          onValueChange={toggle(setToTheSpeaker)}
+        />
+        <Text style={styles.smallText}>To the Speaker</Text>
+      </View>
 
-        <View style={styles.filterContainer}>
-          <CheckBox
-            disabled={!isHost}
-            value={customCards}
-            onValueChange={toggle(setCustomCards)}
-          />
-          <Text style={styles.smallText}>Custom Cards</Text>
-        </View>
-        {/* Added random placeholders yeet lmao */}
-        <View style={styles.filterContainer}>
-          <Text style={styles.smallText}>Random stuff</Text>
-        </View>
-        <View style={styles.filterContainer}>
-          <Text style={styles.smallText}>Random stuff</Text>
-        </View>
-        <View style={styles.filterContainer}>
-          <Text style={styles.smallText}>Random stuff</Text>
-        </View>
-        <View style={styles.filterContainer}>
-          <Text style={styles.smallText}>Random stuff</Text>
-        </View>
-        <View style={styles.filterContainer}>
-          <Text style={styles.smallText}>Random stuff</Text>
-        </View>
-        <View style={styles.filterContainer}>
-          <Text style={styles.smallText}>Random stuff</Text>
-        </View>
-      </ScrollView>
-    </>
+      <View style={styles.filterContainer}>
+        <CheckBox
+          disabled={!isHost}
+          value={customCards}
+          onValueChange={toggle(setCustomCards)}
+        />
+        <Text style={styles.smallText}>Custom Cards</Text>
+      </View>
+      {/* Added random placeholders yeet lmao */}
+      <View style={styles.filterContainer}>
+        <Text style={styles.smallText}>Random stuff</Text>
+      </View>
+      <View style={styles.filterContainer}>
+        <Text style={styles.smallText}>Random stuff</Text>
+      </View>
+      <View style={styles.filterContainer}>
+        <Text style={styles.smallText}>Random stuff</Text>
+      </View>
+      <View style={styles.filterContainer}>
+        <Text style={styles.smallText}>Random stuff</Text>
+      </View>
+      <View style={styles.filterContainer}>
+        <Text style={styles.smallText}>Random stuff</Text>
+      </View>
+      <View style={styles.filterContainer}>
+        <Text style={styles.smallText}>Random stuff</Text>
+      </View>
+    </ScrollView>
   );
 }
 
