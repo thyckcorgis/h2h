@@ -7,10 +7,7 @@ export default function startGameEventCallback(
   preParams: CustomCardParams
 ) {
   return (res: StartGameResponse) => {
-    const params: GameParams = {
-      ...preParams,
-      ...res,
-    };
+    const params: GameParams = { ...preParams, ...res };
     navigation.navigate("Game", params);
   };
 }

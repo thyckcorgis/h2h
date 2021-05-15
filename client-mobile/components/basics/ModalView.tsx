@@ -32,11 +32,7 @@ const ModalView: FC<ModalViewProps> = ({ children, visible, setVisible }) => (
 export default ModalView;
 
 const styles = StyleSheet.create({
-  modalContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
+  modalContainer: { flex: 1, justifyContent: "center", alignItems: "center" },
   modalView: {
     backgroundColor: "black",
     borderRadius: 20,
@@ -54,8 +50,5 @@ const styles = StyleSheet.create({
     borderColor: "white",
     borderRadius: 20,
   },
-  closeText: {
-    ...Styles.smallText,
-    padding: "5%",
-  },
+  closeText: { ...Styles.smallText, padding: "5%" },
 });

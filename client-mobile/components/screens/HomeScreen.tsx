@@ -66,21 +66,12 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
       return socket.connect();
     }
 
-    if (code.length !== 5)
-      return setJoinErrorMessage("Please enter a valid 5-digit code.");
+    if (code.length !== 5) return setJoinErrorMessage("Please enter a valid 5-digit code.");
 
     setJoinErrorMessage("");
 
     socket.emit("join", name, code, (res: JoinServerResponse) => {
-      const {
-        ok,
-        users,
-        message,
-        settings,
-        gameStarted,
-        currentCard,
-        currentPlayer,
-      } = res;
+      const { ok, users, message, settings, gameStarted, currentCard, currentPlayer } = res;
       if (ok) {
         if (gameStarted) {
           const params: GameParams = {
@@ -137,13 +128,6 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    marginVertical: "5%",
-    alignItems: "center",
-  },
-  bigText: {
-    ...Styles.bigText,
-    paddingBottom: "5%",
-    fontFamily: "Avenir-Light",
-  },
+  container: { marginVertical: "5%", alignItems: "center" },
+  bigText: { ...Styles.bigText, paddingBottom: "5%", fontFamily: "Avenir-Light" },
 });

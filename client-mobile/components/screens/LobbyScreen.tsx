@@ -27,9 +27,7 @@ interface LobbyScreenProps extends ScreenProps {
 
 const Item = ({ user }) => (
   <View>
-    <Text style={{ ...styles.smallText, paddingVertical: "2%" }}>
-      {user.name}
-    </Text>
+    <Text style={{ ...styles.smallText, paddingVertical: "2%" }}>{user.name}</Text>
   </View>
 );
 
@@ -40,13 +38,7 @@ function randCode() {
 }
 
 export default function LobbyScreen({ navigation, route }: LobbyScreenProps) {
-  const {
-    name,
-    code,
-    users: _users,
-    isHost: _isHost,
-    settings: _settings,
-  } = route.params;
+  const { name, code, users: _users, isHost: _isHost, settings: _settings } = route.params;
   const [settingsVisible, setSettingsVisible] = useState(false);
 
   const [settings, setSettings] = useState(_settings);
@@ -125,20 +117,14 @@ export default function LobbyScreen({ navigation, route }: LobbyScreenProps) {
           <View style={styles.modalContainer}>
             <View style={styles.modalView}>
               <Text style={styles.bigText}>Game Settings</Text>
-              <SettingsModal
-                isHost={isHost}
-                settings={settings}
-                onChangeSettings={setSettings}
-              />
+              <SettingsModal isHost={isHost} settings={settings} onChangeSettings={setSettings} />
               <TouchableOpacity
                 onPress={() => {
                   setSettingsVisible(!settingsVisible);
                 }}
               >
                 <View style={styles.closeContainer}>
-                  <Text style={{ ...styles.smallText, padding: "5%" }}>
-                    Close
-                  </Text>
+                  <Text style={{ ...styles.smallText, padding: "5%" }}>Close</Text>
                 </View>
               </TouchableOpacity>
             </View>
@@ -174,18 +160,8 @@ const styles = StyleSheet.create({
     height: "100%",
     width: "100%",
   },
-  codeText: {
-    fontSize: 30,
-    color: "#892cdc",
-    paddingTop: "10%",
-    fontFamily: "Avenir-Light",
-  },
-  bigText: {
-    fontSize: 30,
-    color: "white",
-    textAlign: "center",
-    fontFamily: "Avenir-Light",
-  },
+  codeText: { fontSize: 30, color: "#892cdc", paddingTop: "10%", fontFamily: "Avenir-Light" },
+  bigText: { fontSize: 30, color: "white", textAlign: "center", fontFamily: "Avenir-Light" },
   listContainer: {
     borderWidth: 1,
     borderColor: "white",
@@ -196,36 +172,18 @@ const styles = StyleSheet.create({
     padding: "4%",
     alignItems: "center",
   },
-  list: {
-    color: "white",
-  },
-  buttonContainer: {
-    margin: "3%",
-    alignItems: "center",
-  },
-  filterContainer: {
-    flexDirection: "row",
-    marginVertical: "5%",
-  },
+  list: { color: "white" },
+  buttonContainer: { margin: "3%", alignItems: "center" },
+  filterContainer: { flexDirection: "row", marginVertical: "5%" },
   smallText: {
     fontSize: 18,
     color: "white",
     textAlign: "center",
     fontFamily: "Avenir-Light",
   },
-  quit: {
-    flexDirection: "row",
-    alignSelf: "flex-start",
-  },
-  modalContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  navBar: {
-    alignItems: "baseline",
-    justifyContent: "center",
-  },
+  quit: { flexDirection: "row", alignSelf: "flex-start" },
+  modalContainer: { flex: 1, justifyContent: "center", alignItems: "center" },
+  navBar: { alignItems: "baseline", justifyContent: "center" },
   modalView: {
     backgroundColor: "black",
     borderRadius: 20,

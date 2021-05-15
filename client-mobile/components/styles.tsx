@@ -10,28 +10,15 @@ export default StyleSheet.create({
     borderColor: "red",
     borderWidth: 1,
   },
-  bigText: {
-    fontFamily: "Avenir-Light",
-    fontSize: 30,
-    color: "white",
-  },
-  smallText: {
-    fontFamily: "Avenir-Light",
-    fontSize: 18,
-    color: "white",
-    textAlign: "center",
-  },
+  bigText: { fontFamily: "Avenir-Light", fontSize: 30, color: "white" },
+  smallText: { fontFamily: "Avenir-Light", fontSize: 18, color: "white", textAlign: "center" },
+  continueText: { fontFamily: "Avenir-Light", fontSize: 14, color: "#892cdc" },
   errorText: {
     fontFamily: "Avenir-Light",
     fontSize: 14,
     textAlign: "center",
     color: "red",
     padding: 10,
-  },
-  continueText: {
-    fontFamily: "Avenir-Light",
-    fontSize: 14,
-    color: "#892cdc",
   },
   inputField: {
     padding: "2%",

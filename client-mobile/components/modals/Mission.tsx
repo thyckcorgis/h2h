@@ -30,15 +30,6 @@ Remember: The goal is to spark conversation.`}
 }
 
 const styles = StyleSheet.create({
-  bigText: {
-    ...Styles.bigText,
-    fontFamily: "Avenir-Light",
-    textAlign: "center",
-  },
-  smallText: {
-    ...Styles.smallText,
-    fontFamily: "Avenir-Light",
-    fontSize: 14,
-    padding: "3%",
-  },
+  bigText: { ...Styles.bigText, fontFamily: "Avenir-Light", textAlign: "center" },
+  smallText: { ...Styles.smallText, fontFamily: "Avenir-Light", fontSize: 14, padding: "3%" },
 });

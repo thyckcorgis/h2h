@@ -6,7 +6,6 @@ import {
   TextInput,
   TouchableOpacity,
   KeyboardAvoidingView,
-  Modal,
   SafeAreaView,
 } from "react-native";
 import { useState } from "react";
@@ -31,9 +30,8 @@ export default function RegisterScreen({ navigation }: ScreenProps) {
     if (name === "") {
       setErrorMessage("Please enter a name.");
       return;
-    } else {
-      setErrorMessage(null);
     }
+    setErrorMessage(null);
     navigation.navigate("Home", { name });
   };
 

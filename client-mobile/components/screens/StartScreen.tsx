@@ -27,9 +27,4 @@ export default function LoadingScreen({ navigation }: ScreenProps) {
   );
 }
 
-const styles = StyleSheet.create({
-  corgiBox: {
-    alignItems: "center",
-    marginBottom: "15%",
-  },
-});
+const styles = StyleSheet.create({ corgiBox: { alignItems: "center", marginBottom: "15%" } });

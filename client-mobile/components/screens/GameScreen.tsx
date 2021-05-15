@@ -11,12 +11,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-import {
-  UserButton,
-  NextButton,
-  QuitButton,
-  CardBack,
-} from "../../assets/images";
+import { UserButton, NextButton, QuitButton, CardBack } from "../../assets/images";
 
 import socket from "../../socket";
 import ScreenProps from "../ScreenProps";
@@ -82,9 +77,7 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
     socket.on("quit-game", (res: QuitGameResponse) => {
       const { playerQuit, newHost, currentCard, currentPlayer } = res;
       const userQuit = users.find((user) => user.socketID === playerQuit);
-      setUsers((currentUsers) =>
-        currentUsers.filter((user) => user.socketID !== playerQuit)
-      );
+      setUsers((currentUsers) => currentUsers.filter((user) => user.socketID !== playerQuit));
       setHost(newHost ? name === newHost.name : isHost);
       updateCurrent({ currentCard, currentPlayer });
       setMessage(`${userQuit.name} has quit the game.`);
@@ -118,9 +111,7 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
   return (
     <SafeAreaView style={styles.screen}>
       <View style={styles.screen}>
-        <Text style={{ ...styles.smallText, color: ripe ? "red" : "green" }}>
-          {message}
-        </Text>
+        <Text style={{ ...styles.smallText, color: ripe ? "red" : "green" }}>{message}</Text>
         <Text style={styles.codeText}>Room code: {code}</Text>
         <Text style={styles.bigText}>{name}</Text>
         <View
@@ -164,9 +155,7 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
         >
           <View style={styles.modalContainer}>
             <View style={styles.modalView}>
-              <Text style={{ ...styles.bigText, fontSize: 24 }}>
-                Who's in the room?
-              </Text>
+              <Text style={{ ...styles.bigText, fontSize: 24 }}>Who's in the room?</Text>
               <View style={styles.listContainer}>
                 <FlatList
                   data={users}
@@ -181,9 +170,7 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
                 }}
               >
                 <View style={styles.closeContainer}>
-                  <Text style={{ ...styles.smallText, padding: "5%" }}>
-                    Close
-                  </Text>
+                  <Text style={{ ...styles.smallText, padding: "5%" }}>Close</Text>
                 </View>
               </TouchableOpacity>
             </View>
@@ -219,12 +206,7 @@ const styles = StyleSheet.create({
     backgroundColor: "black",
     textAlign: "center",
   },
-  modalContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    width: "100%",
-  },
+  modalContainer: { flex: 1, justifyContent: "center", alignItems: "center", width: "100%" },
   modalView: {
     backgroundColor: "black",
     borderRadius: 20,
@@ -236,21 +218,9 @@ const styles = StyleSheet.create({
     opacity: 0.9,
     alignItems: "center",
   },
-  closeContainer: {
-    marginTop: "5%",
-    borderWidth: 1,
-    borderColor: "white",
-    borderRadius: 20,
-  },
-  listContainer: {
-    flex: 1,
-    width: "80%",
-    marginVertical: "1%",
-  },
-  cardScreen: {
-    width: "60%",
-    height: "45%",
-  },
+  closeContainer: { marginTop: "5%", borderWidth: 1, borderColor: "white", borderRadius: 20 },
+  listContainer: { flex: 1, width: "80%", marginVertical: "1%" },
+  cardScreen: { width: "60%", height: "45%" },
   cardContainer: {
     flex: 1,
     width: "100%",
@@ -275,12 +245,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     width: "100%",
   },
-  codeText: {
-    fontSize: 30,
-    color: "#892cdc",
-    paddingTop: "5%",
-    fontFamily: "Avenir-Light",
-  },
+  codeText: { fontSize: 30, color: "#892cdc", paddingTop: "5%", fontFamily: "Avenir-Light" },
   bigText: {
     fontSize: 30,
     color: "white",
@@ -288,10 +253,5 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontFamily: "Avenir-Light",
   },
-  smallText: {
-    fontSize: 18,
-    fontFamily: "Avenir-Light",
-    color: "white",
-    textAlign: "center",
-  },
+  smallText: { fontSize: 18, fontFamily: "Avenir-Light", color: "white", textAlign: "center" },
 });
