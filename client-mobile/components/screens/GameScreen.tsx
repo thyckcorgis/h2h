@@ -46,7 +46,7 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
     setCurrentPlayer(currentPlayer);
   };
 
-  const Item = ({ user }) => (
+  const Item = ({ user }: { user: User }) => (
     <View>
       <Text
         style={{
@@ -67,9 +67,7 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
     socket.on("player-joined", (user: User) => {
       setMessage(`${user.name} has joined the game.`);
       setRipe(false);
-      setTimeout(() => {
-        setMessage("");
-      }, 3000);
+      setTimeout(() => setMessage(""), 3000);
       setUsers((users) => [...users, user]);
     });
 
@@ -82,15 +80,11 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
       updateCurrent({ currentCard, currentPlayer });
       setMessage(`${userQuit.name} has quit the game.`);
       setRipe(true);
-      setTimeout(() => {
-        setMessage("");
-      }, 3000);
+      setTimeout(() => setMessage(""), 3000);
     });
   }, []);
 
-  const nextCardHandler = () => {
-    socket.emit("next-card", code, updateCurrent);
-  };
+  const nextCardHandler = () => socket.emit("next-card", code, updateCurrent);
 
   const quitGameHandler = () => {
     socket.emit("quit-game", code, isHost);
@@ -114,13 +108,7 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
         <Text style={{ ...styles.smallText, color: ripe ? "red" : "green" }}>{message}</Text>
         <Text style={styles.codeText}>Room code: {code}</Text>
         <Text style={styles.bigText}>{name}</Text>
-        <View
-          style={{
-            width: "100%",
-            height: "10%",
-            marginVertical: "1%",
-          }}
-        >
+        <View style={{ width: "100%", height: "10%", marginVertical: "1%" }}>
           <Text style={styles.smallText}>
             {currentCard != ""
               ? isTurn(name, currentPlayer.name)
@@ -149,9 +137,7 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
           animationType="slide"
           transparent={true}
           visible={usersVisible}
-          onRequestClose={() => {
-            setUsersVisible(!usersVisible);
-          }}
+          onRequestClose={() => setUsersVisible(!usersVisible)}
         >
           <View style={styles.modalContainer}>
             <View style={styles.modalView}>
@@ -164,11 +150,7 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
                   extraData={users}
                 />
               </View>
-              <TouchableOpacity
-                onPress={() => {
-                  setUsersVisible(!usersVisible);
-                }}
-              >
+              <TouchableOpacity onPress={() => setUsersVisible(!usersVisible)}>
                 <View style={styles.closeContainer}>
                   <Text style={{ ...styles.smallText, padding: "5%" }}>Close</Text>
                 </View>
@@ -178,11 +160,7 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
         </Modal>
 
         <View style={styles.navBar}>
-          <TouchableOpacity
-            onPress={() => {
-              setUsersVisible(true);
-            }}
-          >
+          <TouchableOpacity onPress={() => setUsersVisible(true)}>
             <UserButton height={95} />
           </TouchableOpacity>
           {nextButton}
