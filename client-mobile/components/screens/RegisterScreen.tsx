@@ -48,10 +48,10 @@ export default function RegisterScreen({ navigation }: ScreenProps) {
             <TouchableOpacity onPress={() => setMissionVisible(true)}>
               <MissionButton />
             </TouchableOpacity>
+
             <ModalView visible={featuresVisible} setVisible={setFeaturesVisible}>
               <Features />
             </ModalView>
-
             <ModalView visible={missionVisible} setVisible={setMissionVisible}>
               <Mission />
             </ModalView>
@@ -81,16 +81,17 @@ const styles = StyleSheet.create({
   topContainer: {
     flex: 1,
     flexDirection: "row",
-    alignItems: "stretch",
+    alignItems: "center",
     justifyContent: "space-between",
-    borderColor: "white",
-    borderWidth: 1,
+    // width: "100%",
+    // borderColor: "white",
+    // borderWidth: 1,
   },
   container: {
     flex: 11,
-    borderColor: "white",
-    borderWidth: 1,
     justifyContent: "center",
     alignItems: "center",
+    // borderColor: "white",
+    // borderWidth: 1,
   },
 });
