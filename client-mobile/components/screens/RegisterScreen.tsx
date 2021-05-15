@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   Modal,
-  SafeAreaView,
 } from "react-native";
 import { useState } from "react";
 
@@ -38,11 +37,23 @@ export default function RegisterScreen({ navigation }: ScreenProps) {
   };
 
   return (
-    <SafeAreaView style={styles.screen}>
-      <KeyboardAvoidingView style={styles.screen} behavior="padding">
-        {/* This is the view containing the modals */}
+    <SafeView>
+      <KeyboardAvoidingView style={Styles.screen} behavior="padding">
         <View style={styles.topContainer}>
-          {/* Makes features visible */}
+          <TouchableOpacity
+            onPress={() => setFeaturesVisible(!featuresVisible)}
+          >
+            <HelpButton />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              setMissionVisible(!missionVisible);
+            }}
+          >
+            <MissionButton />
+          </TouchableOpacity>
+
+          {/* FEATURES MODAL */}
           <Modal
             animationType="slide"
             transparent={true}
@@ -53,25 +64,21 @@ export default function RegisterScreen({ navigation }: ScreenProps) {
           >
             <View style={styles.modalContainer}>
               <View style={styles.modalView}>
-                <View style={{ flex: 9 }}>
+                <View style={{ flex: 1 }}>
                   <Features />
                 </View>
                 <View style={styles.closeContainer}>
                   <TouchableOpacity
                     onPress={() => setFeaturesVisible(!featuresVisible)}
                   >
-                    <Text style={styles.smallText}>Close</Text>
+                    <Text style={styles.closeText}>Close</Text>
                   </TouchableOpacity>
                 </View>
               </View>
             </View>
           </Modal>
-          <TouchableOpacity
-            onPress={() => setFeaturesVisible(!featuresVisible)}
-          >
-            <HelpButton />
-          </TouchableOpacity>
-          {/* Makes mission visible */}
+
+          {/* MISSION MODAL */}
           <Modal
             animationType="slide"
             transparent={true}
@@ -82,95 +89,46 @@ export default function RegisterScreen({ navigation }: ScreenProps) {
           >
             <View style={styles.modalContainer}>
               <View style={styles.modalView}>
-                <View style={{ flex: 9 }}>
+                <View style={{ flex: 1 }}>
                   <Mission />
                 </View>
                 <View style={styles.closeContainer}>
                   <TouchableOpacity
                     onPress={() => setMissionVisible(!missionVisible)}
                   >
-                    <Text style={styles.smallText}>Close</Text>
+                    <Text style={styles.closeText}>Close</Text>
                   </TouchableOpacity>
                 </View>
               </View>
             </View>
           </Modal>
-          <TouchableOpacity
-            onPress={() => {
-              setMissionVisible(!missionVisible);
-            }}
-          >
-            <MissionButton />
-          </TouchableOpacity>
         </View>
 
         {/* This is where the register name part starts */}
         <View style={styles.container}>
-          <Text style={styles.bigText}>Ready to Talk?</Text>
+          <Text style={Styles.bigText}>Ready to Talk?</Text>
           <TextInput
-            style={styles.inputField}
+            style={Styles.inputField}
             placeholder="Your name"
             placeholderTextColor="grey"
             onChangeText={(text) => setName(text)}
             value={name}
           />
-          <Text
-            style={{
-              ...styles.smallText,
-              color: "red",
-              padding: 10,
-              marginBottom: 30,
-            }}
-          >
-            {errorMessage}
-          </Text>
+          <Text style={Styles.errorText}>{errorMessage}</Text>
           <TouchableOpacity onPress={registerHandler}>
             <RegisterButton />
           </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
-    </SafeAreaView>
+    </SafeView>
   );
 }
 
 const styles = StyleSheet.create({
-  screen: {
-    padding: "5%",
-    alignItems: "center",
-    justifyContent: "center",
-    flex: 1,
-    backgroundColor: "black",
-    height: "100%",
-    width: "100%",
-  },
   container: {
-    flex: 3,
+    // flex: 3,
     alignItems: "center",
     width: "100%",
-  },
-  bigText: {
-    fontFamily: "Avenir-Light",
-    fontSize: 30,
-    color: "white",
-  },
-  inputField: {
-    padding: "2%",
-    paddingTop: "5%",
-    width: "70%",
-    textAlign: "left",
-    alignSelf: "center",
-    borderBottomWidth: 1,
-    borderColor: "white",
-    fontSize: 18,
-    color: "white",
-    fontFamily: "Avenir-Light",
-  },
-  smallText: {
-    fontSize: 14,
-    color: "white",
-    textAlign: "center",
-    padding: "5%",
-    fontFamily: "Avenir-Light",
   },
   modalContainer: {
     flex: 1,
@@ -197,11 +155,16 @@ const styles = StyleSheet.create({
     borderColor: "white",
     borderRadius: 20,
   },
+  closeText: {
+    ...Styles.smallText,
+    padding: "5%",
+  },
   topContainer: {
     flexDirection: "row",
-    flex: 1,
-    justifyContent: "space-between",
-    marginTop: "5%",
-    width: "100%",
+    // width: "100%",
+    // justifyContent: "space-between",
+    alignItems: "center",
+    borderColor: "white",
+    borderWidth: 1,
   },
 });
