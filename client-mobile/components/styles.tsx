@@ -36,7 +36,7 @@ export default StyleSheet.create({
   inputField: {
     padding: "2%",
     paddingTop: "5%",
-    width: "70%",
+    width: "75%",
     textAlign: "left",
     alignSelf: "center",
     borderBottomWidth: 1,
