@@ -126,16 +126,20 @@ export default function RegisterScreen({ navigation }: ScreenProps) {
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 3,
+    flex: 1,
     alignItems: "center",
-    width: "100%",
+  },
+  topContainer: {
+    flexDirection: "row",
+    // justifyContent: "space-between",
+    alignItems: "center",
+    borderColor: "white",
+    borderWidth: 1,
   },
   modalContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    // margin: "10%",
-    // padding: "10%",
   },
   modalView: {
     backgroundColor: "black",
@@ -143,7 +147,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "white",
     padding: "5%",
-    // justifyContent: "center",
     height: "70%",
     width: "80%",
     opacity: 0.9,
@@ -158,13 +161,5 @@ const styles = StyleSheet.create({
   closeText: {
     ...Styles.smallText,
     padding: "5%",
-  },
-  topContainer: {
-    flexDirection: "row",
-    // width: "100%",
-    // justifyContent: "space-between",
-    alignItems: "center",
-    borderColor: "white",
-    borderWidth: 1,
   },
 });
