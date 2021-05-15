@@ -22,8 +22,6 @@ import Features from "../modals/Features";
 
 import { RegisterButton, HelpButton, MissionButton } from "../../assets/images";
 
-const screenWidth = Dimensions.get("window").width;
-
 export default function RegisterScreen({ navigation }: ScreenProps) {
   const [name, setName] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -41,8 +39,8 @@ export default function RegisterScreen({ navigation }: ScreenProps) {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <SafeAreaView style={Styles.screen}>
+    <SafeAreaView style={Styles.screen}>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <KeyboardAvoidingView behavior="padding">
           <View style={styles.topContainer}>
             <TouchableOpacity onPress={() => setFeaturesVisible(true)}>
@@ -75,8 +73,8 @@ export default function RegisterScreen({ navigation }: ScreenProps) {
             </TouchableOpacity>
           </View>
         </KeyboardAvoidingView>
-      </SafeAreaView>
-    </TouchableWithoutFeedback>
+      </TouchableWithoutFeedback>
+    </SafeAreaView>
   );
 }
 
@@ -86,7 +84,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     width: Dimensions.get("window").width,
-    padding: "2%",
+    padding: "5%",
   },
   container: {
     flex: 11,
