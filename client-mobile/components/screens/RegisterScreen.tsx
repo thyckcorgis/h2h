@@ -81,8 +81,8 @@ const styles = StyleSheet.create({
   topContainer: {
     flex: 1,
     flexDirection: "row",
-    alignItems: "center",
     justifyContent: "space-between",
+    alignItems: "center",
     // width: "100%",
     // borderColor: "white",
     // borderWidth: 1,
