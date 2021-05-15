@@ -11,12 +11,12 @@ export default function LoadingScreen({ navigation }: ScreenProps) {
         onPress={() => navigation.navigate("Start")}
         style={Styles.screen}
       >
-        <Text style={Styles.bigText}>confessation</Text>
+        <Text style={styles.bigText}>confessation</Text>
         <View style={styles.rowAlign}>
           <Text style={styles.italicsText}>[ˌkɑn.fɛsˈseɪ.ʃən]</Text>
           <Text style={styles.boldText}> ⋅ noun</Text>
         </View>
-        <Text style={Styles.smallText}>
+        <Text style={styles.smallText}>
           a difficult but meaningful conversation.
         </Text>
         <Text style={styles.continueText}>Tap to continue.</Text>
@@ -26,6 +26,8 @@ export default function LoadingScreen({ navigation }: ScreenProps) {
 }
 
 const styles = StyleSheet.create({
+  bigText: { ...Styles.bigText, fontFamily: "Georgia" },
+  smallText: { ...Styles.smallText, fontFamily: "Georgia" },
   continueText: { ...Styles.continueText, paddingVertical: "10%" },
   boldText: { ...Styles.smallText, fontWeight: "bold" },
   italicsText: { ...Styles.smallText, fontStyle: "italic" },
