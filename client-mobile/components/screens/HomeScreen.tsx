@@ -6,6 +6,8 @@ import {
   TextInput,
   KeyboardAvoidingView,
   TouchableOpacity,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native";
 import { useState } from "react";
 import socket from "../../socket";
@@ -100,30 +102,32 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
   };
 
   return (
-    <KeyboardAvoidingView style={Styles.screen} behavior="padding">
-      <View style={styles.container}>
-        <Text style={styles.bigText}>Host Confessation</Text>
-        <TouchableOpacity onPress={hostGameHandler}>
-          <HostButton />
-        </TouchableOpacity>
-        <Text style={Styles.errorText}>{hostErrorMessage}</Text>
-      </View>
-      <View style={styles.container}>
-        <Text style={styles.bigText}>Join Confessation</Text>
-        <TextInput
-          placeholder="Enter a room code"
-          placeholderTextColor="grey"
-          onChangeText={(text) => setCode(text)}
-          value={code}
-          keyboardType="number-pad"
-          style={Styles.inputField}
-        />
-        <Text style={Styles.errorText}>{joinErrorMessage}</Text>
-        <TouchableOpacity onPress={joinGameHandler}>
-          <JoinButton />
-        </TouchableOpacity>
-      </View>
-    </KeyboardAvoidingView>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <KeyboardAvoidingView style={Styles.screen} behavior="padding">
+        <View style={styles.container}>
+          <Text style={styles.bigText}>Host Confessation</Text>
+          <TouchableOpacity onPress={hostGameHandler}>
+            <HostButton />
+          </TouchableOpacity>
+          <Text style={Styles.errorText}>{hostErrorMessage}</Text>
+        </View>
+        <View style={styles.container}>
+          <Text style={styles.bigText}>Join Confessation</Text>
+          <TextInput
+            placeholder="Enter a room code"
+            placeholderTextColor="grey"
+            onChangeText={(text) => setCode(text)}
+            value={code}
+            keyboardType="number-pad"
+            style={Styles.inputField}
+          />
+          <Text style={Styles.errorText}>{joinErrorMessage}</Text>
+          <TouchableOpacity onPress={joinGameHandler}>
+            <JoinButton />
+          </TouchableOpacity>
+        </View>
+      </KeyboardAvoidingView>
+    </TouchableWithoutFeedback>
   );
 }
 
