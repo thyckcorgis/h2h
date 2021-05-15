@@ -29,7 +29,11 @@ const styles = StyleSheet.create({
   bigText: { ...Styles.bigText, fontFamily: "Georgia" },
   smallText: { ...Styles.smallText, fontFamily: "Georgia" },
   continueText: { ...Styles.continueText, paddingVertical: "10%" },
-  boldText: { ...Styles.smallText, fontWeight: "bold" },
-  italicsText: { ...Styles.smallText, fontStyle: "italic" },
+  boldText: { ...Styles.smallText, fontFamily: "Georgia", fontWeight: "bold" },
+  italicsText: {
+    ...Styles.smallText,
+    fontFamily: "Georgia",
+    fontStyle: "italic",
+  },
   rowAlign: { flexDirection: "row", paddingVertical: "10%" },
 });
