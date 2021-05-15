@@ -14,8 +14,8 @@ import { useState } from "react";
 import Styles from "../styles";
 
 import ScreenProps from "../ScreenProps";
-import Mission from "../basics/Mission";
-import Features from "../basics/Features";
+import Mission from "../modals/Mission";
+import Features from "../modals/Features";
 
 import { RegisterButton, HelpButton, MissionButton } from "../../assets/images";
 
