@@ -9,6 +9,7 @@ import {
   KeyboardAvoidingView,
   SafeAreaView,
   Keyboard,
+  Dimensions,
 } from "react-native";
 import { useState } from "react";
 
@@ -20,6 +21,8 @@ import Mission from "../modals/Mission";
 import Features from "../modals/Features";
 
 import { RegisterButton, HelpButton, MissionButton } from "../../assets/images";
+
+const screenWidth = Dimensions.get("window").width;
 
 export default function RegisterScreen({ navigation }: ScreenProps) {
   const [name, setName] = useState("");
@@ -83,15 +86,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    // width: "100%",
-    // borderColor: "white",
-    // borderWidth: 1,
+    width: Dimensions.get("window").width,
+    padding: "2%",
   },
   container: {
     flex: 11,
     justifyContent: "center",
     alignItems: "center",
-    // borderColor: "white",
-    // borderWidth: 1,
   },
 });
