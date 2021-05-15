@@ -14,6 +14,7 @@ import { useState } from "react";
 import Styles from "../styles";
 
 import ScreenProps from "../ScreenProps";
+import ModalView from "../basics/ModalView";
 import Mission from "../modals/Mission";
 import Features from "../modals/Features";
 
@@ -40,71 +41,21 @@ export default function RegisterScreen({ navigation }: ScreenProps) {
     <SafeAreaView style={Styles.screen}>
       <KeyboardAvoidingView behavior="padding">
         <View style={styles.topContainer}>
-          <TouchableOpacity
-            onPress={() => setFeaturesVisible(!featuresVisible)}
-          >
+          <TouchableOpacity onPress={() => setFeaturesVisible(true)}>
             <HelpButton />
           </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              setMissionVisible(!missionVisible);
-            }}
-          >
+          <TouchableOpacity onPress={() => setMissionVisible(true)}>
             <MissionButton />
           </TouchableOpacity>
+          <ModalView visible={featuresVisible} setVisible={setFeaturesVisible}>
+            <Features />
+          </ModalView>
 
-          {/* FEATURES MODAL */}
-          <Modal
-            animationType="slide"
-            transparent={true}
-            visible={featuresVisible}
-            onRequestClose={() => {
-              setFeaturesVisible(!featuresVisible);
-            }}
-          >
-            <View style={styles.modalContainer}>
-              <View style={styles.modalView}>
-                <View style={{ flex: 1 }}>
-                  <Features />
-                </View>
-                <View style={styles.closeContainer}>
-                  <TouchableOpacity
-                    onPress={() => setFeaturesVisible(!featuresVisible)}
-                  >
-                    <Text style={styles.closeText}>Close</Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </View>
-          </Modal>
-
-          {/* MISSION MODAL */}
-          <Modal
-            animationType="slide"
-            transparent={true}
-            visible={missionVisible}
-            onRequestClose={() => {
-              setMissionVisible(!missionVisible);
-            }}
-          >
-            <View style={styles.modalContainer}>
-              <View style={styles.modalView}>
-                <View style={{ flex: 1 }}>
-                  <Mission />
-                </View>
-                <View style={styles.closeContainer}>
-                  <TouchableOpacity
-                    onPress={() => setMissionVisible(!missionVisible)}
-                  >
-                    <Text style={styles.closeText}>Close</Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </View>
-          </Modal>
+          <ModalView visible={missionVisible} setVisible={setMissionVisible}>
+            <Mission />
+          </ModalView>
         </View>
 
-        {/* This is where the register name part starts */}
         <View style={styles.container}>
           <Text style={Styles.bigText}>Ready to Talk?</Text>
           <TextInput
@@ -139,31 +90,5 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     justifyContent: "center",
     alignItems: "center",
-  },
-  modalContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  modalView: {
-    backgroundColor: "black",
-    borderRadius: 20,
-    borderWidth: 1,
-    borderColor: "white",
-    padding: "5%",
-    height: "70%",
-    width: "80%",
-    opacity: 0.9,
-    alignItems: "center",
-  },
-  closeContainer: {
-    marginTop: "5%",
-    borderWidth: 1,
-    borderColor: "white",
-    borderRadius: 20,
-  },
-  closeText: {
-    ...Styles.smallText,
-    padding: "5%",
   },
 });
