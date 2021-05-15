@@ -7,6 +7,8 @@ export default StyleSheet.create({
     justifyContent: "center",
     flex: 1,
     backgroundColor: "black",
+    borderColor: "red",
+    borderWidth: 1,
   },
   bigText: {
     fontFamily: "Avenir-Light",

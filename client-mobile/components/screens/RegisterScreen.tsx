@@ -7,11 +7,11 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   Modal,
+  SafeAreaView,
 } from "react-native";
 import { useState } from "react";
 
 import Styles from "../styles";
-import SafeView from "../basics/SafeView";
 
 import ScreenProps from "../ScreenProps";
 import Mission from "../basics/Mission";
@@ -37,8 +37,8 @@ export default function RegisterScreen({ navigation }: ScreenProps) {
   };
 
   return (
-    <SafeView>
-      <KeyboardAvoidingView style={Styles.screen} behavior="padding">
+    <SafeAreaView style={Styles.screen}>
+      <KeyboardAvoidingView behavior="padding">
         <View style={styles.topContainer}>
           <TouchableOpacity
             onPress={() => setFeaturesVisible(!featuresVisible)}
@@ -120,21 +120,25 @@ export default function RegisterScreen({ navigation }: ScreenProps) {
           </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
-    </SafeView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-  },
   topContainer: {
+    flex: 1,
     flexDirection: "row",
-    // justifyContent: "space-between",
-    alignItems: "center",
+    alignItems: "stretch",
+    justifyContent: "space-between",
     borderColor: "white",
     borderWidth: 1,
+  },
+  container: {
+    flex: 11,
+    borderColor: "white",
+    borderWidth: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
   modalContainer: {
     flex: 1,
