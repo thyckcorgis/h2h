@@ -5,16 +5,17 @@ import {
   StyleSheet,
   TextInput,
   KeyboardAvoidingView,
+  TouchableOpacity,
 } from "react-native";
 import { useState } from "react";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import socket from "../../socket";
-
-import { HostButton, JoinButton } from "../../assets/images";
 import ScreenProps from "../ScreenProps";
 import { Route } from "@react-navigation/native";
 import { JoinServerResponse, Settings } from "../../../types";
 import { GameParams, LobbyParams } from "../params";
+
+import Styles from "../styles";
+import { HostButton, JoinButton } from "../../assets/images";
 
 interface HomeParams {
   name: string;
@@ -41,9 +42,7 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
   const hostGameHandler = () => {
     setJoinErrorMessage("");
     if (!socket.connected) {
-      setHostErrorMessage(
-        "Oh noes!! The sewvew is down :( We are so sooo sowwy. Pwetty pwease cum back watew"
-      );
+      setHostErrorMessage("Server is currently down.");
       return socket.connect();
     }
 
@@ -63,9 +62,7 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
   const joinGameHandler = () => {
     setHostErrorMessage("");
     if (!socket.connected) {
-      setJoinErrorMessage(
-        "Oh noes!! The sewvew is down :( We are so sooo sowwy. Pwetty pwease cum back later"
-      );
+      setJoinErrorMessage("Server is currently down.");
       return socket.connect();
     }
 
@@ -112,15 +109,13 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
   };
 
   return (
-    <KeyboardAvoidingView style={styles.screen} behavior="padding">
+    <KeyboardAvoidingView style={Styles.screen} behavior="padding">
       <View style={styles.container}>
         <Text style={styles.bigText}>Host Confessation</Text>
         <TouchableOpacity onPress={hostGameHandler}>
-          <HostButton width={250} />
+          <HostButton />
         </TouchableOpacity>
-        <Text style={{ ...styles.smallText, color: "red" }}>
-          {hostErrorMessage}
-        </Text>
+        <Text style={Styles.errorText}>{hostErrorMessage}</Text>
       </View>
       <View style={styles.container}>
         <Text style={styles.bigText}>Join Confessation</Text>
@@ -130,13 +125,11 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
           onChangeText={(text) => setCode(text)}
           value={code}
           keyboardType="number-pad"
-          style={styles.inputField}
+          style={Styles.inputField}
         />
-        <Text style={{ ...styles.smallText, color: "red" }}>
-          {joinErrorMessage}
-        </Text>
-        <TouchableOpacity style={{ marginTop: "5%" }} onPress={joinGameHandler}>
-          <JoinButton width={250} />
+        <Text style={Styles.errorText}>{joinErrorMessage}</Text>
+        <TouchableOpacity onPress={joinGameHandler}>
+          <JoinButton />
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
@@ -144,43 +137,13 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
 }
 
 const styles = StyleSheet.create({
-  screen: {
-    padding: "5%",
-    alignItems: "center",
-    justifyContent: "center",
-    flex: 1,
-    backgroundColor: "black",
-    height: "100%",
-    width: "100%",
-  },
   container: {
-    // padding: "3%",
     marginVertical: "5%",
     alignItems: "center",
-    width: "100%",
   },
   bigText: {
-    fontSize: 30,
-    color: "white",
+    ...Styles.bigText,
     paddingBottom: "5%",
     fontFamily: "Avenir-Light",
-  },
-  inputField: {
-    padding: "2%",
-    paddingTop: "5%",
-    width: "70%",
-    textAlign: "left",
-    alignSelf: "center",
-    borderBottomWidth: 1,
-    borderColor: "white",
-    fontSize: 18,
-    color: "white",
-    fontFamily: "Avenir-Light",
-  },
-  smallText: {
-    fontSize: 14,
-    color: "white",
-    textAlign: "center",
-    marginVertical: "3%",
   },
 });
