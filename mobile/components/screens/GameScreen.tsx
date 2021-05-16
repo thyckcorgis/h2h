@@ -9,6 +9,7 @@ import {
   FlatList,
   ListRenderItem,
   TouchableOpacity,
+  ViewStyle,
 } from "react-native";
 
 import { UserButton, NextButton, QuitButton, CardBack } from "../../assets/images";
@@ -18,6 +19,8 @@ import ScreenProps from "../ScreenProps";
 
 import { User, NextCardResponse, QuitGameResponse } from "../../../types";
 import { GameParams } from "../params";
+
+import Styles from "../styles";
 
 interface GameScreenProps extends ScreenProps {
   route: Route<"Game", GameParams>;
@@ -50,7 +53,7 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
     <View>
       <Text
         style={{
-          ...styles.smallText,
+          ...Styles.smallText,
           color: currentPlayer.name === user.name ? "#892cdc" : "white",
           fontSize: 20,
           paddingVertical: "1%",
@@ -111,11 +114,11 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
   return (
     <SafeAreaView style={styles.screen}>
       <View style={styles.screen}>
-        <Text style={{ ...styles.smallText, color: ripe ? "red" : "green" }}>{message}</Text>
+        <Text style={{ ...Styles.smallText, color: ripe ? "red" : "green" }}>{message}</Text>
         <Text style={styles.codeText}>Room code: {code}</Text>
         <Text style={styles.bigText}>{name}</Text>
         <View style={{ width: "100%", height: "10%", marginVertical: "1%" }}>
-          <Text style={styles.smallText}>
+          <Text style={Styles.smallText}>
             {currentCard != ""
               ? isTurn(name, currentPlayer.name)
                 ? "It is your turn. Ask the group the question below."
@@ -158,7 +161,7 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
               </View>
               <TouchableOpacity onPress={() => setUsersVisible(!usersVisible)}>
                 <View style={styles.closeContainer}>
-                  <Text style={{ ...styles.smallText, padding: "5%" }}>Close</Text>
+                  <Text style={{ ...Styles.smallText, padding: "5%" }}>Close</Text>
                 </View>
               </TouchableOpacity>
             </View>
@@ -181,16 +184,13 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
 
 const styles = StyleSheet.create({
   screen: {
+    ...Styles.center,
+    ...Styles.full,
     padding: "5%",
-    alignItems: "center",
-    justifyContent: "center",
-    flex: 1,
-    height: "100%",
-    width: "100%",
     backgroundColor: "black",
     textAlign: "center",
   },
-  modalContainer: { flex: 1, justifyContent: "center", alignItems: "center", width: "100%" },
+  modalContainer: { ...Styles.center, width: "100%" },
   modalView: {
     backgroundColor: "black",
     borderRadius: 20,
@@ -205,18 +205,9 @@ const styles = StyleSheet.create({
   closeContainer: { marginTop: "5%", borderWidth: 1, borderColor: "white", borderRadius: 20 },
   listContainer: { flex: 1, width: "80%", marginVertical: "1%" },
   cardScreen: { width: "60%", height: "45%" },
-  cardContainer: {
-    flex: 1,
-    width: "100%",
-    height: "100%",
-    backgroundColor: "#892cdc",
-    borderRadius: 20,
-    alignItems: "center",
-    justifyContent: "center",
-  },
+  cardContainer: { ...Styles.center, ...Styles.full, backgroundColor: "#892cdc", borderRadius: 20 },
   transparentCardContainer: {
-    width: "100%",
-    height: "100%",
+    ...Styles.full,
     backgroundColor: "transparent",
     borderRadius: 20,
     alignItems: "center",
@@ -229,13 +220,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     width: "100%",
   },
-  codeText: { fontSize: 30, color: "#892cdc", paddingTop: "5%", fontFamily: "Avenir-Light" },
-  bigText: {
-    fontSize: 30,
-    color: "white",
-    padding: "5%",
-    textAlign: "center",
-    fontFamily: "Avenir-Light",
-  },
-  smallText: { fontSize: 18, fontFamily: "Avenir-Light", color: "white", textAlign: "center" },
+  codeText: { ...Styles.continueText, fontSize: 30, paddingTop: "5%" },
+  bigText: { ...Styles.bigText, padding: "5%", textAlign: "center" },
 });

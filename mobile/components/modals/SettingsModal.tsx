@@ -4,6 +4,8 @@ import { Text, View, StyleSheet, ScrollView } from "react-native";
 import { Settings } from "../../../types";
 import CheckBox from "../basics/Checkbox";
 
+import Styles from "../styles";
+
 function toggle<T>(fn: React.Dispatch<T>) {
   return (newVal: T) => fn(newVal);
 }
@@ -73,11 +75,5 @@ export default function SettingsModal({ isHost, settings, onChangeSettings }: Se
 const styles = StyleSheet.create({
   container: { width: "70%", height: "90%", margin: "5%" },
   filterContainer: { flexDirection: "row", marginVertical: "3%", alignItems: "center" },
-  smallText: {
-    fontSize: 18,
-    color: "white",
-    fontFamily: "Avenir-Light",
-    textAlignVertical: "center",
-    flexShrink: 1,
-  },
+  smallText: { ...Styles.smallText, textAlignVertical: "center", flexShrink: 1 },
 });

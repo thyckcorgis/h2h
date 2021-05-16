@@ -19,6 +19,6 @@ const ModalContentWrapper: FC<ModalContentWrapperProps> = ({ label, text }) => (
 export default ModalContentWrapper;
 
 const styles = StyleSheet.create({
-  bigText: { ...Styles.bigText, fontFamily: "Avenir-Light", textAlign: "center" },
-  smallText: { ...Styles.smallText, fontFamily: "Avenir-Light", fontSize: 14, padding: "3%" },
+  bigText: { ...Styles.bigText, textAlign: "center" },
+  smallText: { ...Styles.smallText, fontSize: 14, padding: "3%" },
 });

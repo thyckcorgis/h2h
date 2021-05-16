@@ -8,12 +8,12 @@ export default function LoadingScreen({ navigation }: ScreenProps) {
   return (
     <SafeView>
       <TouchableOpacity onPress={() => navigation.navigate("Start")} style={Styles.screen}>
-        <Text style={styles.bigText}>confessation</Text>
+        <Text style={Styles.bigGeorgiaText}>confessation</Text>
         <View style={styles.rowAlign}>
           <Text style={styles.italicsText}>[ˌkɑn.fɛsˈseɪ.ʃən]</Text>
           <Text style={styles.boldText}> ⋅ noun</Text>
         </View>
-        <Text style={styles.smallText}>a difficult but meaningful conversation.</Text>
+        <Text style={Styles.smallGeorgiaText}>a difficult but meaningful conversation.</Text>
         <Text style={styles.continueText}>Tap to continue.</Text>
       </TouchableOpacity>
     </SafeView>
@@ -21,10 +21,8 @@ export default function LoadingScreen({ navigation }: ScreenProps) {
 }
 
 const styles = StyleSheet.create({
-  bigText: { ...Styles.bigText, fontFamily: "Georgia" },
-  smallText: { ...Styles.smallText, fontFamily: "Georgia" },
   continueText: { ...Styles.continueText, paddingVertical: "10%" },
-  boldText: { ...Styles.smallText, fontFamily: "Georgia", fontWeight: "bold" },
-  italicsText: { ...Styles.smallText, fontFamily: "Georgia", fontStyle: "italic" },
+  boldText: { ...Styles.smallGeorgiaText, fontWeight: "bold" },
+  italicsText: { ...Styles.smallGeorgiaText, fontStyle: "italic" },
   rowAlign: { flexDirection: "row", paddingVertical: "10%" },
 });

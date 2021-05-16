@@ -10,6 +10,8 @@ import { CustomCardParams } from "../params";
 import startGameEventCallback from "../startGame";
 import { ServerMessageResponse } from "../../../types";
 
+import Styles from "../styles";
+
 interface CustomCardScreenProps extends ScreenProps {
   route: Route<"Custom", CustomCardParams>;
 }
@@ -56,26 +58,7 @@ export default function CustomCardScreen({ navigation, route }: CustomCardScreen
 }
 
 const styles = StyleSheet.create({
-  screen: {
-    padding: "5%",
-    alignItems: "center",
-    justifyContent: "center",
-    flex: 1,
-    backgroundColor: "black",
-    height: "100%",
-    width: "100%",
-  },
-  inputField: {
-    padding: "2%",
-    paddingTop: "5%",
-    width: "70%",
-    textAlign: "left",
-    alignSelf: "center",
-    borderBottomWidth: 1,
-    borderColor: "white",
-    fontSize: 18,
-    color: "white",
-    fontFamily: "Avenir-Light",
-  },
-  bigText: { fontFamily: "Avenir-Light", fontSize: 30, color: "white", textAlign: "center" },
+  screen: { ...Styles.screen, padding: "5%", height: "100%", width: "100%" },
+  inputField: { ...Styles.inputField, width: "70%" },
+  bigText: { ...Styles.bigText, textAlign: "center" },
 });
