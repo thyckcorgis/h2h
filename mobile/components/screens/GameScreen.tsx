@@ -28,8 +28,6 @@ interface GameScreenProps extends ScreenProps {
   route: Route<"Game", GameParams>;
 }
 
-const isTurn = (name: string, current: string) => name === current;
-
 export default function GameScreen({ route, navigation }: GameScreenProps) {
   const {
     code,
@@ -46,9 +44,27 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
   const [message, setMessage] = useState("");
   const [ripe, setRipe] = useState(true);
 
+  const isTurn = () => name === currentPlayer.name;
+
   const updateCurrent = ({ currentPlayer, currentCard }: NextCardResponse) => {
     setCurrentCard(currentCard);
     setCurrentPlayer(currentPlayer);
+  };
+  const playerJoined = (user: User) => {
+    setMessage(`${user.name} has joined the game.`);
+    setRipe(false);
+    setTimeout(() => setMessage(""), 3000);
+    setUsers((users) => [...users, user]);
+  };
+  const quitGame = (res: QuitGameResponse) => {
+    const { playerQuit, newHost, currentCard, currentPlayer } = res;
+    const userQuit = users.find((user) => user.socketID === playerQuit);
+    setUsers((currentUsers) => currentUsers.filter((user) => user.socketID !== playerQuit));
+    setHost(newHost ? name === newHost.name : isHost);
+    updateCurrent({ currentCard, currentPlayer });
+    setMessage(`${userQuit.name} has quit the game.`);
+    setRipe(true);
+    setTimeout(() => setMessage(""), 3000);
   };
 
   const Item = ({ user }: { user: User }) => (
@@ -69,29 +85,14 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
   const renderItem: ListRenderItem<User> = ({ item }) => <Item user={item} />;
 
   useEffect(() => {
-    socket.on("player-joined", (user: User) => {
-      setMessage(`${user.name} has joined the game.`);
-      setRipe(false);
-      setTimeout(() => setMessage(""), 3000);
-      setUsers((users) => [...users, user]);
-    });
-
+    socket.on("player-joined", playerJoined);
     socket.on("next-card", updateCurrent);
-    socket.on("quit-game", (res: QuitGameResponse) => {
-      const { playerQuit, newHost, currentCard, currentPlayer } = res;
-      const userQuit = users.find((user) => user.socketID === playerQuit);
-      setUsers((currentUsers) => currentUsers.filter((user) => user.socketID !== playerQuit));
-      setHost(newHost ? name === newHost.name : isHost);
-      updateCurrent({ currentCard, currentPlayer });
-      setMessage(`${userQuit.name} has quit the game.`);
-      setRipe(true);
-      setTimeout(() => setMessage(""), 3000);
-    });
+    socket.on("quit-game", quitGame);
 
     return () => {
-      socket.off("player-joined");
-      socket.off("next-card");
-      socket.off("quit-game");
+      socket.off("player-joined", playerJoined);
+      socket.off("next-card", updateCurrent);
+      socket.off("quit-game", quitGame);
     };
   }, []);
 
@@ -105,7 +106,7 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
   const [usersVisible, setUsersVisible] = useState(false);
 
   const TurnButton = () =>
-    isTurn(name, currentPlayer.name) && currentCard != "" ? (
+    isTurn() && currentCard != "" ? (
       <TouchableOpacity onPress={nextCardHandler}>
         <NextButton height={85} />
       </TouchableOpacity>
@@ -117,7 +118,7 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
     <View style={{ width: "100%", height: "10%", marginVertical: "1%" }}>
       <Text style={Styles.smallText}>
         {currentCard != ""
-          ? isTurn(name, currentPlayer.name)
+          ? isTurn()
             ? "It is your turn. Ask the group the question below."
             : `It is ${currentPlayer.name}'s turn.`
           : "You ran out of cards. Try different categories to access new cards."}
@@ -146,7 +147,7 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
         <Text style={styles.codeText}>Room code: {code}</Text>
         <Text style={styles.bigText}>{name}</Text>
         <CurrentTurnMessage />
-        <Card isTurn={isTurn(name, currentPlayer.name)} currentCard={currentCard} />
+        <Card isTurn={isTurn()} currentCard={currentCard} />
         <ModalView component={PlayerList} visible={usersVisible} setVisible={setUsersVisible} />
         <NavBar quitButtonHandler={quitGameHandler} userButtonHandler={() => setUsersVisible(true)}>
           <TurnButton />
