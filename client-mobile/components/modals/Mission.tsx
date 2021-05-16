@@ -1,14 +1,9 @@
 import React from "react";
-import { Text, View, StyleSheet, ScrollView } from "react-native";
-import Styles from "../styles";
 
-export default function Mission() {
-  return (
-    <View>
-      <Text style={styles.bigText}>Our Mission:</Text>
-      <ScrollView>
-        <Text style={styles.smallText}>
-          {`Heart 2 Heart Confessations was built with the intention of fostering meaningful connections with your peers. By giving oppurtunities to share intimate conversations, it allows users to deepen existing relationships as well as form new ones.
+import ModalContentWrapper from "./ModalContentWrapper";
+
+const missionText = `\
+Heart 2 Heart Confessations was built with the intention of fostering meaningful connections with your peers. By giving oppurtunities to share intimate conversations, it allows users to deepen existing relationships as well as form new ones.
 
 Here’s our suggestion on how to use this app:
 
@@ -22,14 +17,8 @@ Here’s our suggestion on how to use this app:
 
 5. Answer honestly and let everyone have a chance to speak and listen.
 
-Remember: The goal is to spark conversation.`}
-        </Text>
-      </ScrollView>
-    </View>
-  );
-}
+Remember: The goal is to spark conversation.`;
 
-const styles = StyleSheet.create({
-  bigText: { ...Styles.bigText, fontFamily: "Avenir-Light", textAlign: "center" },
-  smallText: { ...Styles.smallText, fontFamily: "Avenir-Light", fontSize: 14, padding: "3%" },
-});
+export default function Mission() {
+  return <ModalContentWrapper label="Our Mission:" text={missionText} />;
+}
