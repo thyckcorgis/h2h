@@ -5,9 +5,10 @@ import Styles from "../styles";
 interface ModalViewProps {
   visible: boolean;
   setVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  component: FC;
 }
 
-const ModalView: FC<ModalViewProps> = ({ children, visible, setVisible }) => (
+const ModalView: FC<ModalViewProps> = ({ component: Component, visible, setVisible }) => (
   <Modal
     animationType="slide"
     transparent={true}
@@ -17,7 +18,7 @@ const ModalView: FC<ModalViewProps> = ({ children, visible, setVisible }) => (
     {/* <TouchableWithoutFeedback onPress={() => setVisible(false)}> */}
     <View style={styles.modalContainer}>
       <View style={styles.modalView}>
-        <View style={{ flex: 1 }}>{children}</View>
+        <Component />
         <View style={styles.closeContainer}>
           <TouchableOpacity onPress={() => setVisible(false)}>
             <Text style={styles.closeText}>Close</Text>
