@@ -1,12 +1,5 @@
 import React, { FC } from "react";
-import {
-  View,
-  Text,
-  Modal,
-  StyleSheet,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-} from "react-native";
+import { View, Text, Modal, StyleSheet, TouchableOpacity } from "react-native";
 import Styles from "../styles";
 
 interface ModalViewProps {

@@ -28,9 +28,7 @@ export default function CustomCardScreen({ navigation, route }: CustomCardScreen
   const getParams = () => ({ code, name, isHost });
   const startGameEvent = () => startGameEventCallback(navigation, getParams());
 
-  const startGameHandler = () => {
-    socket.emit("start-game", code, startGameEvent());
-  };
+  const startGameHandler = () => socket.emit("start-game", code, startGameEvent());
 
   const start = isHost ? (
     <TouchableOpacity onPress={startGameHandler}>
