@@ -82,6 +82,12 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
       setRipe(true);
       setTimeout(() => setMessage(""), 3000);
     });
+
+    return () => {
+      socket.off("player-joined");
+      socket.off("next-card");
+      socket.off("quit-game");
+    };
   }, []);
 
   const nextCardHandler = () => socket.emit("next-card", code, updateCurrent);
