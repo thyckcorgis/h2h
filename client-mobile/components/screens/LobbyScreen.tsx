@@ -52,19 +52,21 @@ export default function LobbyScreen({ navigation, route }: LobbyScreenProps) {
 
   useEffect(() => {
     socket.on("start-game", startGameEvent());
-    socket.on("add-custom", () => {
-      navigation.navigate("Custom", getParams());
-    });
+    socket.on("add-custom", () => navigation.navigate("Custom", getParams()));
     socket.on("quit-lobby", ({ newHost, users }: QuitLobbyResponse) => {
       setUsers(users);
       setHost(newHost ? newHost.name === name : isHost);
     });
-
     socket.on("setting", (settings: Settings) => setSettings(settings));
+    socket.on("player-joined", (user: User) => setUsers((users) => [...users, user]));
 
-    socket.on("player-joined", (user: User) => {
-      setUsers((users) => [...users, user]);
-    });
+    return () => {
+      socket.off("start-game");
+      socket.off("add-custom");
+      socket.off("quit-lobby");
+      socket.off("setting");
+      socket.off("player-joined");
+    };
   }, [isHost]);
 
   useEffect(() => {
