@@ -19,6 +19,8 @@ import ScreenProps from "../ScreenProps";
 import { User, NextCardResponse, QuitGameResponse } from "../../../types";
 import { GameParams } from "../params";
 
+import Card from "../basics/Card";
+
 import Styles from "../styles";
 
 interface GameScreenProps extends ScreenProps {
@@ -122,24 +124,6 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
     </View>
   );
 
-  const Card = () => (
-    <View style={styles.cardScreen}>
-      <View
-        style={
-          isTurn(name, currentPlayer.name) && currentCard != ""
-            ? styles.cardContainer
-            : styles.transparentCardContainer
-        }
-      >
-        {isTurn(name, currentPlayer.name) && currentCard != "" ? (
-          <Text style={styles.bigText}>{currentCard}</Text>
-        ) : (
-          <CardBack width={"100%"} height={"100%"} />
-        )}
-      </View>
-    </View>
-  );
-
   const PlayerList = () => (
     <Modal
       animationType="slide"
@@ -187,7 +171,7 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
         <Text style={styles.codeText}>Room code: {code}</Text>
         <Text style={styles.bigText}>{name}</Text>
         <CurrentTurnMessage />
-        <Card />
+        <Card isTurn={isTurn(name, currentPlayer.name)} currentCard={currentCard} />
         <PlayerList />
         <NavBar />
       </View>
@@ -217,15 +201,6 @@ const styles = StyleSheet.create({
   },
   closeContainer: { marginTop: "5%", borderWidth: 1, borderColor: "white", borderRadius: 20 },
   listContainer: { flex: 1, width: "80%", marginVertical: "1%" },
-  cardScreen: { width: "60%", height: "45%" },
-  cardContainer: { ...Styles.center, ...Styles.full, backgroundColor: "#892cdc", borderRadius: 20 },
-  transparentCardContainer: {
-    ...Styles.full,
-    backgroundColor: "transparent",
-    borderRadius: 20,
-    alignItems: "center",
-    justifyContent: "center",
-  },
   navBar: {
     marginTop: "10%",
     flexDirection: "row",
