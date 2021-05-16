@@ -9,7 +9,6 @@ import {
   FlatList,
   ListRenderItem,
   TouchableOpacity,
-  ViewStyle,
 } from "react-native";
 
 import { UserButton, NextButton, QuitButton, CardBack } from "../../assets/images";
@@ -102,7 +101,7 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
 
   const [usersVisible, setUsersVisible] = useState(false);
 
-  const nextButton =
+  const TurnButton = () =>
     isTurn(name, currentPlayer.name) && currentCard != "" ? (
       <TouchableOpacity onPress={nextCardHandler}>
         <NextButton height={85} />
@@ -174,7 +173,7 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
       <TouchableOpacity onPress={() => setUsersVisible(true)}>
         <UserButton height={95} />
       </TouchableOpacity>
-      {nextButton}
+      <TurnButton />
       <TouchableOpacity onPress={quitGameHandler}>
         <QuitButton height={95} />
       </TouchableOpacity>
