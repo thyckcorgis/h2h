@@ -5,7 +5,6 @@ import {
   SafeAreaView,
   Text,
   StyleSheet,
-  Modal,
   FlatList,
   ListRenderItem,
   TouchableOpacity,
@@ -23,6 +22,7 @@ import Card from "../basics/Card";
 import NavBar from "../basics/Navbar";
 
 import Styles from "../styles";
+import ModalView from "../basics/ModalView";
 
 interface GameScreenProps extends ScreenProps {
   route: Route<"Game", GameParams>;
@@ -126,31 +126,17 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
   );
 
   const PlayerList = () => (
-    <Modal
-      animationType="slide"
-      transparent={true}
-      visible={usersVisible}
-      onRequestClose={() => setUsersVisible(!usersVisible)}
-    >
-      <View style={styles.modalContainer}>
-        <View style={styles.modalView}>
-          <Text style={{ ...styles.bigText, fontSize: 24 }}>Who's in the room?</Text>
-          <View style={styles.listContainer}>
-            <FlatList
-              data={users}
-              renderItem={renderItem}
-              keyExtractor={(item) => item.name}
-              extraData={users}
-            />
-          </View>
-          <TouchableOpacity onPress={() => setUsersVisible(!usersVisible)}>
-            <View style={styles.closeContainer}>
-              <Text style={{ ...Styles.smallText, padding: "5%" }}>Close</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
+    <>
+      <Text style={{ ...styles.bigText, fontSize: 24 }}>Who's in the room?</Text>
+      <View style={styles.listContainer}>
+        <FlatList
+          data={users}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.name}
+          extraData={users}
+        />
       </View>
-    </Modal>
+    </>
   );
 
   return (
@@ -161,7 +147,7 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
         <Text style={styles.bigText}>{name}</Text>
         <CurrentTurnMessage />
         <Card isTurn={isTurn(name, currentPlayer.name)} currentCard={currentCard} />
-        <PlayerList />
+        <ModalView component={PlayerList} visible={usersVisible} setVisible={setUsersVisible} />
         <NavBar quitButtonHandler={quitGameHandler} userButtonHandler={() => setUsersVisible(true)}>
           <TurnButton />
         </NavBar>
@@ -178,19 +164,6 @@ const styles = StyleSheet.create({
     backgroundColor: "black",
     textAlign: "center",
   },
-  modalContainer: { ...Styles.center, width: "100%" },
-  modalView: {
-    backgroundColor: "black",
-    borderRadius: 20,
-    borderWidth: 1,
-    borderColor: "white",
-    padding: "5%",
-    height: "50%",
-    width: "80%",
-    opacity: 0.9,
-    alignItems: "center",
-  },
-  closeContainer: { marginTop: "5%", borderWidth: 1, borderColor: "white", borderRadius: 20 },
   listContainer: { flex: 1, width: "80%", marginVertical: "1%" },
   codeText: { ...Styles.continueText, fontSize: 30, paddingTop: "5%" },
   bigText: { ...Styles.bigText, padding: "5%", textAlign: "center" },
