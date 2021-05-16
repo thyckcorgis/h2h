@@ -111,72 +111,86 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
       <NextButton opacity={0.5} height={85} />
     );
 
+  const CurrentTurnMessage = () => (
+    <View style={{ width: "100%", height: "10%", marginVertical: "1%" }}>
+      <Text style={Styles.smallText}>
+        {currentCard != ""
+          ? isTurn(name, currentPlayer.name)
+            ? "It is your turn. Ask the group the question below."
+            : `It is ${currentPlayer.name}'s turn.`
+          : "You ran out of cards. Try different categories to access new cards."}
+      </Text>
+    </View>
+  );
+
+  const Card = () => (
+    <View style={styles.cardScreen}>
+      <View
+        style={
+          isTurn(name, currentPlayer.name) && currentCard != ""
+            ? styles.cardContainer
+            : styles.transparentCardContainer
+        }
+      >
+        {isTurn(name, currentPlayer.name) && currentCard != "" ? (
+          <Text style={styles.bigText}>{currentCard}</Text>
+        ) : (
+          <CardBack width={"100%"} height={"100%"} />
+        )}
+      </View>
+    </View>
+  );
+
+  const PlayerList = () => (
+    <Modal
+      animationType="slide"
+      transparent={true}
+      visible={usersVisible}
+      onRequestClose={() => setUsersVisible(!usersVisible)}
+    >
+      <View style={styles.modalContainer}>
+        <View style={styles.modalView}>
+          <Text style={{ ...styles.bigText, fontSize: 24 }}>Who's in the room?</Text>
+          <View style={styles.listContainer}>
+            <FlatList
+              data={users}
+              renderItem={renderItem}
+              keyExtractor={(item) => item.name}
+              extraData={users}
+            />
+          </View>
+          <TouchableOpacity onPress={() => setUsersVisible(!usersVisible)}>
+            <View style={styles.closeContainer}>
+              <Text style={{ ...Styles.smallText, padding: "5%" }}>Close</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </Modal>
+  );
+
+  const NavBar = () => (
+    <View style={styles.navBar}>
+      <TouchableOpacity onPress={() => setUsersVisible(true)}>
+        <UserButton height={95} />
+      </TouchableOpacity>
+      {nextButton}
+      <TouchableOpacity onPress={quitGameHandler}>
+        <QuitButton height={95} />
+      </TouchableOpacity>
+    </View>
+  );
+
   return (
     <SafeAreaView style={styles.screen}>
       <View style={styles.screen}>
         <Text style={{ ...Styles.smallText, color: ripe ? "red" : "green" }}>{message}</Text>
         <Text style={styles.codeText}>Room code: {code}</Text>
         <Text style={styles.bigText}>{name}</Text>
-        <View style={{ width: "100%", height: "10%", marginVertical: "1%" }}>
-          <Text style={Styles.smallText}>
-            {currentCard != ""
-              ? isTurn(name, currentPlayer.name)
-                ? "It is your turn. Ask the group the question below."
-                : `It is ${currentPlayer.name}'s turn.`
-              : "You ran out of cards. Try different categories to access new cards."}
-          </Text>
-        </View>
-        <View style={styles.cardScreen}>
-          <View
-            style={
-              isTurn(name, currentPlayer.name) && currentCard != ""
-                ? styles.cardContainer
-                : styles.transparentCardContainer
-            }
-          >
-            {isTurn(name, currentPlayer.name) && currentCard != "" ? (
-              <Text style={styles.bigText}>{currentCard}</Text>
-            ) : (
-              <CardBack width={"100%"} height={"100%"} />
-            )}
-          </View>
-        </View>
-
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={usersVisible}
-          onRequestClose={() => setUsersVisible(!usersVisible)}
-        >
-          <View style={styles.modalContainer}>
-            <View style={styles.modalView}>
-              <Text style={{ ...styles.bigText, fontSize: 24 }}>Who's in the room?</Text>
-              <View style={styles.listContainer}>
-                <FlatList
-                  data={users}
-                  renderItem={renderItem}
-                  keyExtractor={(item) => item.name}
-                  extraData={users}
-                />
-              </View>
-              <TouchableOpacity onPress={() => setUsersVisible(!usersVisible)}>
-                <View style={styles.closeContainer}>
-                  <Text style={{ ...Styles.smallText, padding: "5%" }}>Close</Text>
-                </View>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </Modal>
-
-        <View style={styles.navBar}>
-          <TouchableOpacity onPress={() => setUsersVisible(true)}>
-            <UserButton height={95} />
-          </TouchableOpacity>
-          {nextButton}
-          <TouchableOpacity onPress={quitGameHandler}>
-            <QuitButton height={95} />
-          </TouchableOpacity>
-        </View>
+        <CurrentTurnMessage />
+        <Card />
+        <PlayerList />
+        <NavBar />
       </View>
     </SafeAreaView>
   );
