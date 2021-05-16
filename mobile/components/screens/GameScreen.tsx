@@ -1,5 +1,5 @@
-import { Route } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
+import { Route } from "@react-navigation/native";
 import {
   View,
   SafeAreaView,
@@ -11,7 +11,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-import { UserButton, NextButton, QuitButton, CardBack } from "../../assets/images";
+import { NextButton } from "../../assets/images";
 
 import socket from "../../socket";
 import ScreenProps from "../ScreenProps";
@@ -20,6 +20,7 @@ import { User, NextCardResponse, QuitGameResponse } from "../../../types";
 import { GameParams } from "../params";
 
 import Card from "../basics/Card";
+import NavBar from "../basics/Navbar";
 
 import Styles from "../styles";
 
@@ -152,18 +153,6 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
     </Modal>
   );
 
-  const NavBar = () => (
-    <View style={styles.navBar}>
-      <TouchableOpacity onPress={() => setUsersVisible(true)}>
-        <UserButton height={95} />
-      </TouchableOpacity>
-      <TurnButton />
-      <TouchableOpacity onPress={quitGameHandler}>
-        <QuitButton height={95} />
-      </TouchableOpacity>
-    </View>
-  );
-
   return (
     <SafeAreaView style={styles.screen}>
       <View style={styles.screen}>
@@ -173,7 +162,9 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
         <CurrentTurnMessage />
         <Card isTurn={isTurn(name, currentPlayer.name)} currentCard={currentCard} />
         <PlayerList />
-        <NavBar />
+        <NavBar quitButtonHandler={quitGameHandler} userButtonHandler={() => setUsersVisible(true)}>
+          <TurnButton />
+        </NavBar>
       </View>
     </SafeAreaView>
   );
@@ -201,13 +192,6 @@ const styles = StyleSheet.create({
   },
   closeContainer: { marginTop: "5%", borderWidth: 1, borderColor: "white", borderRadius: 20 },
   listContainer: { flex: 1, width: "80%", marginVertical: "1%" },
-  navBar: {
-    marginTop: "10%",
-    flexDirection: "row",
-    alignItems: "flex-end",
-    justifyContent: "space-between",
-    width: "100%",
-  },
   codeText: { ...Styles.continueText, fontSize: 30, paddingTop: "5%" },
   bigText: { ...Styles.bigText, padding: "5%", textAlign: "center" },
 });
