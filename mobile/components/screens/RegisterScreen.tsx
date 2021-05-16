@@ -26,8 +26,8 @@ export default function RegisterScreen({ navigation }: ScreenProps) {
   const [name, setName] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
-  const [featuresVisible, setFeaturesVisible] = useState(false);
-  const [missionVisible, setMissionVisible] = useState(false);
+  const [features, setFeatures] = useState(false);
+  const [mission, setMission] = useState(false);
 
   const registerHandler = () => {
     if (name === "") {
@@ -43,19 +43,15 @@ export default function RegisterScreen({ navigation }: ScreenProps) {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <KeyboardAvoidingView behavior="padding">
           <View style={styles.topContainer}>
-            <TouchableOpacity onPress={() => setFeaturesVisible(true)}>
+            <TouchableOpacity onPress={() => setFeatures(true)}>
               <HelpButton />
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => setMissionVisible(true)}>
+            <TouchableOpacity onPress={() => setMission(true)}>
               <MissionButton />
             </TouchableOpacity>
 
-            <ModalView visible={featuresVisible} setVisible={setFeaturesVisible}>
-              <Features />
-            </ModalView>
-            <ModalView visible={missionVisible} setVisible={setMissionVisible}>
-              <Mission />
-            </ModalView>
+            <ModalView visible={features} setVisible={setFeatures} component={Features} />
+            <ModalView visible={mission} setVisible={setMission} component={Mission} />
           </View>
 
           <View style={styles.container}>

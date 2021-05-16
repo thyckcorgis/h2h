@@ -8,7 +8,7 @@ interface ModalContentWrapperProps {
 }
 
 const ModalContentWrapper: FC<ModalContentWrapperProps> = ({ label, text }) => (
-  <View>
+  <View style={{ flex: 1 }}>
     <Text style={styles.bigText}>{label}</Text>
     <ScrollView>
       <Text style={styles.smallText}>{text}</Text>
