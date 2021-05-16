@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, Dimensions } from "react-native";
+import { View, Text, StyleSheet, Dimensions, Linking } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 import { H2HLogo, CorgiLogo } from "../../assets/images";
@@ -19,15 +19,12 @@ export default function LoadingScreen({ navigation }: ScreenProps) {
         </View>
       </TouchableOpacity>
       <View style={styles.corgiBox}>
-        <CorgiLogo width={screenWidth} />
+        <TouchableOpacity onPress={() => Linking.openURL("https://thyck.top")}>
+          <CorgiLogo width={screenWidth} />
+        </TouchableOpacity>
       </View>
     </SafeView>
   );
 }
 
-const styles = StyleSheet.create({
-  corgiBox: {
-    alignItems: "center",
-    marginBottom: "15%",
-  },
-});
+const styles = StyleSheet.create({ corgiBox: { alignItems: "center", marginBottom: "15%" } });

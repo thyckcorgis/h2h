@@ -5,16 +5,19 @@ import {
   StyleSheet,
   TextInput,
   KeyboardAvoidingView,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native";
 import { useState } from "react";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import socket from "../../socket";
-
-import { HostButton, JoinButton } from "../../assets/images";
 import ScreenProps from "../ScreenProps";
 import { Route } from "@react-navigation/native";
 import { JoinServerResponse, Settings } from "../../../types";
 import { GameParams, LobbyParams } from "../params";
+
+import Styles from "../styles";
+import { HostButton, JoinButton } from "../../assets/images";
 
 interface HomeParams {
   name: string;
@@ -68,21 +71,12 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
       return socket.connect();
     }
 
-    if (code.length !== 5)
-      return setJoinErrorMessage("Please enter a valid 5-digit code.");
+    if (code.length !== 5) return setJoinErrorMessage("Please enter a valid 5-digit code.");
 
     setJoinErrorMessage("");
 
     socket.emit("join", name, code, (res: JoinServerResponse) => {
-      const {
-        ok,
-        users,
-        message,
-        settings,
-        gameStarted,
-        currentCard,
-        currentPlayer,
-      } = res;
+      const { ok, users, message, settings, gameStarted, currentCard, currentPlayer } = res;
       if (ok) {
         if (gameStarted) {
           const params: GameParams = {
@@ -111,75 +105,36 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
   };
 
   return (
-    <KeyboardAvoidingView style={styles.screen} behavior="padding">
-      <View style={styles.container}>
-        <Text style={styles.bigText}>Host Confessation</Text>
-        <TouchableOpacity onPress={hostGameHandler}>
-          <HostButton width={250} />
-        </TouchableOpacity>
-        <Text style={{ ...styles.smallText, color: "red" }}>
-          {hostErrorMessage}
-        </Text>
-      </View>
-      <View style={styles.container}>
-        <Text style={styles.bigText}>Join Confessation</Text>
-        <TextInput
-          placeholder="Enter a room code"
-          placeholderTextColor="grey"
-          onChangeText={(text) => setCode(text)}
-          value={code}
-          keyboardType="number-pad"
-          style={styles.inputField}
-        />
-        <Text style={{ ...styles.smallText, color: "red" }}>
-          {joinErrorMessage}
-        </Text>
-        <TouchableOpacity style={{ marginTop: "5%" }} onPress={joinGameHandler}>
-          <JoinButton width={250} />
-        </TouchableOpacity>
-      </View>
-    </KeyboardAvoidingView>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <KeyboardAvoidingView style={Styles.screen} behavior="padding">
+        <View style={styles.container}>
+          <Text style={styles.bigText}>Host Confessation</Text>
+          <TouchableOpacity onPress={hostGameHandler}>
+            <HostButton />
+          </TouchableOpacity>
+          <Text style={Styles.errorText}>{hostErrorMessage}</Text>
+        </View>
+        <View style={styles.container}>
+          <Text style={styles.bigText}>Join Confessation</Text>
+          <TextInput
+            placeholder="Enter a room code"
+            placeholderTextColor="grey"
+            onChangeText={(text) => setCode(text)}
+            value={code}
+            keyboardType="number-pad"
+            style={Styles.inputField}
+          />
+          <Text style={Styles.errorText}>{joinErrorMessage}</Text>
+          <TouchableOpacity onPress={joinGameHandler}>
+            <JoinButton />
+          </TouchableOpacity>
+        </View>
+      </KeyboardAvoidingView>
+    </TouchableWithoutFeedback>
   );
 }
 
 const styles = StyleSheet.create({
-  screen: {
-    padding: "5%",
-    alignItems: "center",
-    justifyContent: "center",
-    flex: 1,
-    backgroundColor: "black",
-    height: "100%",
-    width: "100%",
-  },
-  container: {
-    // padding: "3%",
-    marginVertical: "5%",
-    alignItems: "center",
-    width: "100%",
-  },
-  bigText: {
-    fontSize: 30,
-    color: "white",
-    paddingBottom: "5%",
-    fontFamily: "Avenir-Light",
-  },
-  inputField: {
-    padding: "2%",
-    paddingTop: "5%",
-    width: "70%",
-    textAlign: "left",
-    alignSelf: "center",
-    borderBottomWidth: 1,
-    borderColor: "white",
-    fontSize: 18,
-    color: "white",
-    fontFamily: "Avenir-Light",
-  },
-  smallText: {
-    fontSize: 14,
-    color: "white",
-    textAlign: "center",
-    marginVertical: "3%",
-  },
+  container: { marginVertical: "5%", alignItems: "center" },
+  bigText: { ...Styles.bigText, paddingBottom: "5%", fontFamily: "Avenir-Light" },
 });

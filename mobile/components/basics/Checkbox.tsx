@@ -9,15 +9,9 @@ interface CheckboxProps {
   onValueChange: React.Dispatch<boolean>;
 }
 
-export default function Checkbox({
-  disabled,
-  value,
-  onValueChange,
-}: CheckboxProps) {
+export default function Checkbox({ disabled, value, onValueChange }: CheckboxProps) {
   const touchHandler = () => {
-    if (disabled) {
-      return;
-    }
+    if (disabled) return;
     onValueChange(!value);
   };
 

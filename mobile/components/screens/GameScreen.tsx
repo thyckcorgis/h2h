@@ -11,12 +11,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-import {
-  UserButton,
-  NextButton,
-  QuitButton,
-  CardBack,
-} from "../../assets/images";
+import { UserButton, NextButton, QuitButton, CardBack } from "../../assets/images";
 
 import socket from "../../socket";
 import ScreenProps from "../ScreenProps";
@@ -51,7 +46,7 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
     setCurrentPlayer(currentPlayer);
   };
 
-  const Item = ({ user }) => (
+  const Item = ({ user }: { user: User }) => (
     <View>
       <Text
         style={{
@@ -72,9 +67,7 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
     socket.on("player-joined", (user: User) => {
       setMessage(`${user.name} has joined the game.`);
       setRipe(false);
-      setTimeout(() => {
-        setMessage("");
-      }, 3000);
+      setTimeout(() => setMessage(""), 3000);
       setUsers((users) => [...users, user]);
     });
 
@@ -82,22 +75,22 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
     socket.on("quit-game", (res: QuitGameResponse) => {
       const { playerQuit, newHost, currentCard, currentPlayer } = res;
       const userQuit = users.find((user) => user.socketID === playerQuit);
-      setUsers((currentUsers) =>
-        currentUsers.filter((user) => user.socketID !== playerQuit)
-      );
+      setUsers((currentUsers) => currentUsers.filter((user) => user.socketID !== playerQuit));
       setHost(newHost ? name === newHost.name : isHost);
       updateCurrent({ currentCard, currentPlayer });
       setMessage(`${userQuit.name} has quit the game.`);
       setRipe(true);
-      setTimeout(() => {
-        setMessage("");
-      }, 3000);
+      setTimeout(() => setMessage(""), 3000);
     });
+
+    return () => {
+      socket.off("player-joined");
+      socket.off("next-card");
+      socket.off("quit-game");
+    };
   }, []);
 
-  const nextCardHandler = () => {
-    socket.emit("next-card", code, updateCurrent);
-  };
+  const nextCardHandler = () => socket.emit("next-card", code, updateCurrent);
 
   const quitGameHandler = () => {
     socket.emit("quit-game", code, isHost);
@@ -118,18 +111,10 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
   return (
     <SafeAreaView style={styles.screen}>
       <View style={styles.screen}>
-        <Text style={{ ...styles.smallText, color: ripe ? "red" : "green" }}>
-          {message}
-        </Text>
+        <Text style={{ ...styles.smallText, color: ripe ? "red" : "green" }}>{message}</Text>
         <Text style={styles.codeText}>Room code: {code}</Text>
         <Text style={styles.bigText}>{name}</Text>
-        <View
-          style={{
-            width: "100%",
-            height: "10%",
-            marginVertical: "1%",
-          }}
-        >
+        <View style={{ width: "100%", height: "10%", marginVertical: "1%" }}>
           <Text style={styles.smallText}>
             {currentCard != ""
               ? isTurn(name, currentPlayer.name)
@@ -158,15 +143,11 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
           animationType="slide"
           transparent={true}
           visible={usersVisible}
-          onRequestClose={() => {
-            setUsersVisible(!usersVisible);
-          }}
+          onRequestClose={() => setUsersVisible(!usersVisible)}
         >
           <View style={styles.modalContainer}>
             <View style={styles.modalView}>
-              <Text style={{ ...styles.bigText, fontSize: 24 }}>
-                Who's in the room?
-              </Text>
+              <Text style={{ ...styles.bigText, fontSize: 24 }}>Who's in the room?</Text>
               <View style={styles.listContainer}>
                 <FlatList
                   data={users}
@@ -175,15 +156,9 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
                   extraData={users}
                 />
               </View>
-              <TouchableOpacity
-                onPress={() => {
-                  setUsersVisible(!usersVisible);
-                }}
-              >
+              <TouchableOpacity onPress={() => setUsersVisible(!usersVisible)}>
                 <View style={styles.closeContainer}>
-                  <Text style={{ ...styles.smallText, padding: "5%" }}>
-                    Close
-                  </Text>
+                  <Text style={{ ...styles.smallText, padding: "5%" }}>Close</Text>
                 </View>
               </TouchableOpacity>
             </View>
@@ -191,11 +166,7 @@ export default function GameScreen({ route, navigation }: GameScreenProps) {
         </Modal>
 
         <View style={styles.navBar}>
-          <TouchableOpacity
-            onPress={() => {
-              setUsersVisible(true);
-            }}
-          >
+          <TouchableOpacity onPress={() => setUsersVisible(true)}>
             <UserButton height={95} />
           </TouchableOpacity>
           {nextButton}
@@ -219,12 +190,7 @@ const styles = StyleSheet.create({
     backgroundColor: "black",
     textAlign: "center",
   },
-  modalContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    width: "100%",
-  },
+  modalContainer: { flex: 1, justifyContent: "center", alignItems: "center", width: "100%" },
   modalView: {
     backgroundColor: "black",
     borderRadius: 20,
@@ -236,21 +202,9 @@ const styles = StyleSheet.create({
     opacity: 0.9,
     alignItems: "center",
   },
-  closeContainer: {
-    marginTop: "5%",
-    borderWidth: 1,
-    borderColor: "white",
-    borderRadius: 20,
-  },
-  listContainer: {
-    flex: 1,
-    width: "80%",
-    marginVertical: "1%",
-  },
-  cardScreen: {
-    width: "60%",
-    height: "45%",
-  },
+  closeContainer: { marginTop: "5%", borderWidth: 1, borderColor: "white", borderRadius: 20 },
+  listContainer: { flex: 1, width: "80%", marginVertical: "1%" },
+  cardScreen: { width: "60%", height: "45%" },
   cardContainer: {
     flex: 1,
     width: "100%",
@@ -275,12 +229,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     width: "100%",
   },
-  codeText: {
-    fontSize: 30,
-    color: "#892cdc",
-    paddingTop: "5%",
-    fontFamily: "Avenir-Light",
-  },
+  codeText: { fontSize: 30, color: "#892cdc", paddingTop: "5%", fontFamily: "Avenir-Light" },
   bigText: {
     fontSize: 30,
     color: "white",
@@ -288,10 +237,5 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontFamily: "Avenir-Light",
   },
-  smallText: {
-    fontSize: 18,
-    fontFamily: "Avenir-Light",
-    color: "white",
-    textAlign: "center",
-  },
+  smallText: { fontSize: 18, fontFamily: "Avenir-Light", color: "white", textAlign: "center" },
 });

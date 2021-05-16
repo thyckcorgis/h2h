@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  KeyboardAvoidingView,
-  Text,
-  TextInput,
-  StyleSheet,
-  TouchableOpacity,
-} from "react-native";
+import { KeyboardAvoidingView, Text, TextInput, StyleSheet, TouchableOpacity } from "react-native";
 import { useState } from "react";
 import socket from "../../socket";
 import { StartButton, SubmitCardButton } from "../../assets/images";
@@ -20,10 +14,7 @@ interface CustomCardScreenProps extends ScreenProps {
   route: Route<"Custom", CustomCardParams>;
 }
 
-export default function CustomCardScreen({
-  navigation,
-  route,
-}: CustomCardScreenProps) {
+export default function CustomCardScreen({ navigation, route }: CustomCardScreenProps) {
   const { code, name, isHost } = route.params;
   const [question, setQuestion] = useState("");
 
@@ -37,9 +28,7 @@ export default function CustomCardScreen({
   const getParams = () => ({ code, name, isHost });
   const startGameEvent = () => startGameEventCallback(navigation, getParams());
 
-  const startGameHandler = () => {
-    socket.emit("start-game", code, startGameEvent());
-  };
+  const startGameHandler = () => socket.emit("start-game", code, startGameEvent());
 
   const start = isHost ? (
     <TouchableOpacity onPress={startGameHandler}>
@@ -49,9 +38,7 @@ export default function CustomCardScreen({
 
   return (
     <KeyboardAvoidingView style={styles.screen} behavior="padding">
-      <Text style={styles.bigText}>
-        Add custom card(s) to be read anonymously
-      </Text>
+      <Text style={styles.bigText}>Add custom card(s) to be read anonymously</Text>
       <TextInput
         multiline={true}
         style={styles.inputField}
@@ -90,10 +77,5 @@ const styles = StyleSheet.create({
     color: "white",
     fontFamily: "Avenir-Light",
   },
-  bigText: {
-    fontFamily: "Avenir-Light",
-    fontSize: 30,
-    color: "white",
-    textAlign: "center",
-  },
+  bigText: { fontFamily: "Avenir-Light", fontSize: 30, color: "white", textAlign: "center" },
 });
