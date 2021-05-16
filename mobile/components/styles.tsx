@@ -1,20 +1,19 @@
-import { StyleSheet, TextStyle } from "react-native";
+import { StyleSheet, TextStyle, ViewStyle } from "react-native";
 
 const baseText = { fontFamily: "Avenir-Light", color: "white" };
 const smallText: TextStyle = { ...baseText, fontSize: 18, textAlign: "center" };
+const bigText: TextStyle = { ...baseText, fontSize: 30 };
 const continueText = { ...baseText, fontSize: 14, color: "#892cdc" };
+const center: ViewStyle = { alignItems: "center", justifyContent: "center", flex: 1 };
 export default StyleSheet.create({
   baseText,
   smallText,
+  center,
   continueText,
-  screen: {
-    padding: "10%",
-    alignItems: "center",
-    justifyContent: "center",
-    flex: 1,
-    backgroundColor: "black",
-  },
-  bigText: { ...baseText, fontSize: 30 },
+  bigText,
+  screen: { ...center, padding: "10%", backgroundColor: "black" },
+  smallGeorgiaText: { ...smallText, fontFamily: "Georgia" },
+  bigGeorgiaText: { ...bigText, fontFamily: "Georgia" },
   errorText: { ...continueText, textAlign: "center", color: "red", padding: 10 },
   inputField: {
     ...smallText,
@@ -26,4 +25,5 @@ export default StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: "white",
   },
+  full: { width: "100%", height: "100%" },
 });
